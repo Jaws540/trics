@@ -1,21 +1,20 @@
 package characterSheet;
 
-import java.util.Arrays;
-import java.util.List;
-
-import characterSheet.features.Field;
+import features.Fields;
+import utils.JSONUtils;
+import utils.JSONify;
 
 /**
  * Basic information needed for a character
  * @author Jacob
  *
  */
-public class Info {
+public class Info implements JSONify {
 	
-	private final String characterName;
 	private final String playerName;
+	private final String characterName;
 	
-	private final List<Field<?>> additionalInfo;
+	private final Fields otherData;
 	
 	/**
 	 * Creates character information
@@ -23,43 +22,43 @@ public class Info {
 	 * @param pname - Player Name
 	 * @param other	- Additional info a character may need (ex: level, exp, race, classes).
 	 */
-	public Info(String cname, String pname, Field<?>[] other) {
-		this.characterName 	= cname;
+	public Info(String pname, String cname, Fields otherData) {
 		this.playerName 	= pname;
-		this.additionalInfo = Arrays.asList(other);
-	}
-
-	public String getCharacterName() {
-		return characterName;
+		this.characterName 	= cname;
+		this.otherData 		= otherData;
 	}
 
 	public String getPlayerName() {
 		return playerName;
 	}
 
-	/**
-	 * Gets the names of all the Fields in the additional info list
-	 * @return A String array of names
-	 */
-	public String[] getFieldNames() {
-		String[] names = new String[this.additionalInfo.size()];
-		for(int i = 0; i < this.additionalInfo.size(); i++) {
-			names[i] = this.additionalInfo.get(i).getIdentifier();
-		}
-		return names;
+	public String getCharacterName() {
+		return characterName;
 	}
-	
-	/**
-	 * Gets a specific Field object
-	 * @param identifier - The name of the Field
-	 * @return The Field object (Can be edited)
-	 */
-	public Field<?> getField(String identifier) {
-		for(Field<?> f : this.additionalInfo) {
-			if(f.getIdentifier().equals(identifier))
-				return f;
-		}
-		return null;
+
+	public Fields getOtherData() {
+		return otherData;
+	}
+
+	@Override
+	public String toJSON(int indent) {
+		String indentString = JSONUtils.getIndent(indent);
+		StringBuilder output = new StringBuilder();
+		
+		output.append("{\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONify("Player Name", this.playerName));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONify("Character Name", this.characterName));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONifyJSON("Other Data", this.otherData.toJSON(indent + 1)));
+		output.append("\n");
+		output.append(indentString.substring(0, indentString.length() - 1));
+		output.append("}");
+		
+		return output.toString();
 	}
 
 }

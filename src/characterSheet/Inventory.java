@@ -1,14 +1,16 @@
 package characterSheet;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import characterSheet.features.Feature;
-import characterSheet.features.Features;
+import features.Features;
 import items.Item;
+import utils.JSONUtils;
+import utils.JSONify;
 
-public class Inventory {
+public class Inventory implements JSONify {
 	
 	private final List<Item> items;
 	
@@ -22,9 +24,21 @@ public class Inventory {
 	 */
 	private final Features feats;
 	
-	public Inventory(Item[] items, Feature[] feats) {
-		this.items = Arrays.asList(items);
-		this.feats = new Features(feats);
+	public Inventory() {
+		this.items = new ArrayList<Item>();
+		this.feats = new Features();
+	}
+	
+	public Inventory(Item[] items, Features feats) {
+		if(items != null)
+			this.items = Arrays.asList(items);
+		else
+			this.items = new ArrayList<Item>();
+		
+		if(feats != null)
+			this.feats = feats;
+		else
+			this.feats = new Features();
 	}
 	
 	/**
@@ -56,6 +70,37 @@ public class Inventory {
 	
 	public Features getFeatures() {
 		return feats;
+	}
+
+	@Override
+	public String toJSON(int indent) {
+		String indentString = JSONUtils.getIndent(indent);
+		StringBuilder output = new StringBuilder();
+		
+		output.append("{\n");
+		output.append(indentString);
+		output.append("\"Items\": [\n");
+		String indentString2 = JSONUtils.getIndent(indent + 1);
+		for(Item i : this.items) {
+			output.append(indentString2);
+			output.append(i.toJSON(indent + 2));
+			output.append(",\n");
+		}
+		if(this.items.size() > 0) {
+			// Remove trailing comma
+			output.deleteCharAt(output.length() - 2);
+			output.append(indentString);
+		}else {
+			output.deleteCharAt(output.length() - 1);
+		}
+		output.append("],\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONifyJSON("Features", this.feats.toJSON(indent + 1)));
+		output.append("\n");
+		output.append(indentString.substring(0, indentString.length() - 1));
+		output.append("}");
+		
+		return output.toString();
 	}
 
 }

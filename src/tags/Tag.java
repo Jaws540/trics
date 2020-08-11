@@ -1,6 +1,9 @@
 package tags;
 
-public class Tag {
+import utils.JSONUtils;
+import utils.JSONify;
+
+public class Tag implements JSONify {
 	
 	private final String tag;
 	
@@ -41,6 +44,11 @@ public class Tag {
 		
 		// If the object is not a Tag or String, equality is not defined and should default to false
 		return false;
+	}
+
+	@Override
+	public String toJSON(int indent) {
+		return "\"" + this.tag + "\"";
 	}
 
 }

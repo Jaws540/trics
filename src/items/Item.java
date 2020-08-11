@@ -2,13 +2,16 @@ package items;
 
 import java.util.UUID;
 
-import characterSheet.features.Feature;
-import characterSheet.features.Features;
-import characterSheet.features.Field;
+import features.Feature;
+import features.Features;
+import features.Field;
+import features.Fields;
 import tags.Tag;
 import tags.Taggable;
+import utils.JSONUtils;
+import utils.JSONify;
 
-public class Item extends Taggable {
+public class Item extends Taggable implements JSONify {
 	
 	/*
 	 * std::item Feature Fields:
@@ -34,11 +37,10 @@ public class Item extends Taggable {
 	 * 				- onDrop: Runs when the item is removed from an inventory
 	 */
 	
+	private final UUID id;
+	
 	private final String name;
 	private final String description;
-	
-	// Alpha-numeric unique identifier for this specific item
-	private final UUID id;
 	
 	/*
 	 * Each item will have a standard 'std::item' feature.
@@ -47,6 +49,21 @@ public class Item extends Taggable {
 	 * be added into a separate feature.
 	 */
 	private final Features feats;
+	
+	public Item(UUID id, String name, String desc, double weight, double value, Features feats) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = desc;
+		
+		if(feats != null)
+			this.feats = feats;
+		else
+			this.feats = new Features();
+		
+		addBaseFeature(weight, value, false);
+	}
+	
 
 	/**
 	 * Creates an Item
@@ -58,16 +75,18 @@ public class Item extends Taggable {
 	 * @param value - The item's in-game value
 	 * @param id - a randomly generated UUID that is specific to each item (not each instance!)
 	 */
-	public Item(String name, String desc, double weight, double value, Feature[] feats, Tag[] tags, UUID id) {
-		super(tags);
+	public Item(UUID id, String name, String desc, double weight, double value, Features feats, boolean stackable) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.description = desc;
-		this.feats = new Features(feats);
-		this.id = id;
 		
-		Field<?>[] baseFields = {new Field<Double>("weight", weight), new Field<Double>("value", value)};
-		Feature base = new Feature("std::item", "Basic attributes for all items", baseFields, null, null, false);
-		this.feats.addFeature(base);
+		if(feats != null)
+			this.feats = feats;
+		else
+			this.feats = new Features();
+		
+		addBaseFeature(weight, value, stackable);
 	}
 	
 	/**
@@ -78,14 +97,35 @@ public class Item extends Taggable {
 	 * @param scripts - Any actions that can be taken with this item (Check the list of reserved scripts that can be added)
 	 * @param weight - The item's in-game weight
 	 * @param value - The item's in-game value
-	 * @param stdItemInfoSecret - Set to true to hide the weight and value of the item
+	 * @param stackable - Set to true to hide the weight and value of the item
 	 */
-	public Item(String name, String desc, double weight, double value, Feature[] feats, Tag[] tags, UUID id, boolean stdItemInfoSecret) {
-		this(name, desc, weight, value, feats, tags, id);
+	public Item(UUID id, String name, String desc, double weight, double value, Features feats, boolean stackable, Tag[] tags) {
+		super(tags);
+		this.id = id;
+		this.name = name;
+		this.description = desc;
 		
-		Field<?>[] baseFields = {new Field<Double>("weight", weight), new Field<Double>("value", value)};
-		Feature base = new Feature("std::item", "Basic attributes for all items", baseFields, null, null, stdItemInfoSecret);
+		if(feats != null)
+			this.feats = feats;
+		else
+			this.feats = new Features();
+		
+		addBaseFeature(weight, value, stackable);
+	}
+	
+	private void addBaseFeature(double weight, double value, boolean stackable) {
+		Field<?>[] tmp = {
+				new Field<Double>("weight", weight), 
+				new Field<Double>("value", value),
+				new Field<Boolean>("stackable", stackable)
+		};
+		Fields baseFields = new Fields(tmp);
+		Feature base = new Feature("std::item", "Basic attributes for all items", baseFields, null, null);
 		this.feats.addFeature(base);
+	}
+
+	public UUID getId() {
+		return id;
 	}
 	
 	public String getName() {
@@ -99,9 +139,32 @@ public class Item extends Taggable {
 	public Features getFeatures() {
 		return feats;
 	}
-
-	public UUID getId() {
-		return id;
+	
+	@Override
+	public String toJSON(int indent) {
+		String indentString = JSONUtils.getIndent(indent);
+		StringBuilder output = new StringBuilder();
+		
+		output.append("{\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONify("UUID", this.id.toString()));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONify("Name", this.name));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONify("Description", this.description));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONifyJSON("Features", this.feats.toJSON(indent + 1)));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONifyJSON("Tags", super.toJSON(indent + 1)));
+		output.append("\n");
+		output.append(indentString.substring(0, indentString.length() - 1));
+		output.append("}");
+		
+		return output.toString();
 	}
 
 }

@@ -1,0 +1,13 @@
+{
+    "Name": "Strength",
+    "Description": "Strength Ability",
+    "Fields": {
+        "Value": "18",
+        "Modifier": "4"
+    },
+    "Scripts": [],
+    "Tags": [
+        "Ability score",
+        "Modifier"
+    ]
+}

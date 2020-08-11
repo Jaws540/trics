@@ -1,14 +1,25 @@
 package tags;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Taggable {
+import utils.JSONUtils;
+import utils.JSONify;
+
+public abstract class Taggable implements JSONify{
 	
 	private List<Tag> tags;
 	
+	public Taggable() {
+		this.tags = new ArrayList<Tag>();
+	}
+	
 	public Taggable(Tag[] tags) {
-		this.tags = Arrays.asList(tags);
+		if(tags != null)
+			this.tags = Arrays.asList(tags);
+		else
+			this.tags = new ArrayList<Tag>();
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -60,5 +71,30 @@ public abstract class Taggable {
 	public Tag[] getTags() {
 		return (Tag[]) this.tags.toArray();
 	}
+
+	@Override
+	public String toJSON(int indent) {
+		String indentString = JSONUtils.getIndent(indent);
+		StringBuilder output = new StringBuilder();
+		
+		output.append("[\n");
+		for(Tag t : this.tags) {
+			output.append(indentString);
+			output.append(t.toJSON(indent + 1));
+			output.append(",\n");
+		}
+		if(this.tags.size() > 0) {
+			// Remove trailing comma
+			output.deleteCharAt(output.length() - 2);
+			output.append(indentString.substring(0, indentString.length() - 1));
+		}else {
+			output.deleteCharAt(output.length() - 1);
+		}
+		output.append("]");
+		
+		return output.toString();
+	}
+	
+	
 
 }

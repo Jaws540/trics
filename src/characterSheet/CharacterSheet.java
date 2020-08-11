@@ -1,26 +1,25 @@
 package characterSheet;
 
-import java.util.Arrays;
-import java.util.List;
-
-import characterSheet.features.Feature;
-import characterSheet.notes.Notes;
+import features.Features;
+import notes.Notes;
+import utils.JSONUtils;
+import utils.JSONify;
 
 /**
  * Interface for interaction with character sheets
  * @author Jacob
  *
  */
-public class CharacterSheet {
+public class CharacterSheet implements JSONify {
 	
 	private final Info generalInfo;
-	private final List<Feature> features;
+	private final Features feats;
 	private final Inventory inventory;
 	private final Notes notes;
 	
-	public CharacterSheet(Info info, Feature[] features, Inventory inventory, Notes notes) {
+	public CharacterSheet(Info info, Features feats, Inventory inventory, Notes notes) {
 		this.generalInfo = info;
-		this.features = Arrays.asList(features);
+		this.feats = feats;
 		this.inventory = inventory;
 		this.notes = notes;
 	}
@@ -29,29 +28,8 @@ public class CharacterSheet {
 		return generalInfo;
 	}
 
-	/**
-	 * Gets the names of all the Fields specifically defined for the feature
-	 * @return A String array of names
-	 */
-	public String[] getFeatureNames() {
-		String[] names = new String[this.features.size()];
-		for(int i = 0; i < this.features.size(); i++) {
-			names[i] = this.features.get(i).getName();
-		}
-		return names;
-	}
-	
-	/**
-	 * Gets a specific Field object
-	 * @param identifier - The name of the Field
-	 * @return The Field object (Can be edited)
-	 */
-	public Feature getFeature(String identifier) {
-		for(Feature f : this.features) {
-			if(f.getName().equals(identifier))
-				return f;
-		}
-		return null;
+	public Features getFeatures() {
+		return feats;
 	}
 
 	public Inventory getInventory() {
@@ -61,9 +39,28 @@ public class CharacterSheet {
 	public Notes getNotes() {
 		return notes;
 	}
-	
-	public static void main(String[] args) {
+
+	@Override
+	public String toJSON(int indent) {
+		String indentString = JSONUtils.getIndent(indent);
+		StringBuilder output = new StringBuilder();
 		
+		output.append("{\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONifyJSON("Info", this.generalInfo.toJSON(indent + 1)));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONifyJSON("Features", this.feats.toJSON(indent + 1)));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONifyJSON("Inventory", this.inventory.toJSON(indent + 1)));
+		output.append(",\n");
+		output.append(indentString);
+		output.append(JSONUtils.basicJSONifyJSON("Notes", this.notes.toJSON(indent + 1)));
+		output.append("\n");
+		output.append("}");
+		
+		return output.toString();
 	}
 
 }

@@ -1,6 +1,10 @@
-package characterSheet.notes;
+package notes;
 
 public class Notes extends NoteTree {
+	
+	public Notes() {
+		super("root");
+	}
 	
 	/**
 	 * Base entry into a Note Hierarchy.

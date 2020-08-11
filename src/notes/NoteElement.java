@@ -1,6 +1,8 @@
-package characterSheet.notes;
+package notes;
 
-public abstract class NoteElement {
+import utils.JSONify;
+
+public abstract class NoteElement implements JSONify {
 	
 	private String title;
 	
