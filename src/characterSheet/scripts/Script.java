@@ -1,4 +1,4 @@
-package CharacterSheetAPI.scripts;
+package characterSheet.scripts;
 
 /**
  * Source code that can be run by the user or system.
@@ -15,9 +15,12 @@ public class Script {
 	 */
 	private final String source;
 	
-	public Script(String id, String source) {
+	private final String description;
+	
+	public Script(String id, String source, String description) {
 		this.identifier = id;
 		this.source = source;
+		this.description = description;
 	}
 	
 	/**
@@ -40,5 +43,9 @@ public class Script {
 	 */
 	public void run(Environment env) {
 		System.out.println("TODO: Run scripts within an environment");
+	}
+
+	public String getDescription() {
+		return description;
 	}
 }

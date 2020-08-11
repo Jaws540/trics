@@ -1,4 +1,4 @@
-package CharacterSheetAPI.scripts;
+package characterSheet.scripts;
 
 import java.util.HashMap;
 

@@ -1,7 +1,9 @@
-package CharacterSheetAPI;
+package characterSheet;
 
 import java.util.Arrays;
 import java.util.List;
+
+import characterSheet.features.Field;
 
 /**
  * Basic information needed for a character
@@ -12,29 +14,18 @@ public class Info {
 	
 	private final String characterName;
 	private final String playerName;
-	private final int level;
-	private final int exp;
-	private final String raceName;
-	private final String[] classNames;
 	
 	private final List<Field<?>> additionalInfo;
 	
 	/**
 	 * Creates character information
-	 * @param cname 	 - Character Name
-	 * @param pname 	 - Player Name
-	 * @param level 	 - Character Level
-	 * @param exp 		 - Character Experience
-	 * @param rname		 - Race Name
-	 * @param classnames - Class Names
+	 * @param cname - Character Name
+	 * @param pname - Player Name
+	 * @param other	- Additional info a character may need (ex: level, exp, race, classes).
 	 */
-	public Info(String cname, String pname, int level, int exp, String rname, String[] classnames, Field<?>[] other) {
+	public Info(String cname, String pname, Field<?>[] other) {
 		this.characterName 	= cname;
 		this.playerName 	= pname;
-		this.level		 	= level;
-		this.exp		 	= exp;
-		this.raceName	 	= rname;
-		this.classNames 	= classnames;
 		this.additionalInfo = Arrays.asList(other);
 	}
 
@@ -44,22 +35,6 @@ public class Info {
 
 	public String getPlayerName() {
 		return playerName;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public int getExp() {
-		return exp;
-	}
-
-	public String getRaceName() {
-		return raceName;
-	}
-
-	public String[] getClassNames() {
-		return classNames;
 	}
 
 	/**

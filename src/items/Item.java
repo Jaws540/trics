@@ -1,17 +1,20 @@
 package items;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.UUID;
 
-import CharacterSheetAPI.Feature;
-import CharacterSheetAPI.Field;
+import characterSheet.features.Feature;
+import characterSheet.features.Features;
+import characterSheet.features.Field;
+import tags.Tag;
+import tags.Taggable;
 
-public class Item {
+public class Item extends Taggable {
 	
 	/*
 	 * std::item Feature Fields:
 	 * 		- weight: Carry weight for one of this item
 	 * 		- value: The coin value of this item
+	 * 		- stackable: If an item is stackable, it will not be modifiable.  This is so items can be edited but have the same name.
 	 * 
 	 * Reserved item features
 	 * 		- std::equippable: 
@@ -34,13 +37,16 @@ public class Item {
 	private final String name;
 	private final String description;
 	
+	// Alpha-numeric unique identifier for this specific item
+	private final UUID id;
+	
 	/*
 	 * Each item will have a standard 'std::item' feature.
 	 * This feat will contain the the reserved fields weight and value (not equipped!).
 	 * This will not contain the reserved scripts.  The reserved scripts must
 	 * be added into a separate feature.
 	 */
-	private final List<Feature> feats;
+	private final Features feats;
 
 	/**
 	 * Creates an Item
@@ -50,15 +56,18 @@ public class Item {
 	 * @param scripts - Any actions that can be taken with this item (Check the list of reserved scripts that can be added)
 	 * @param weight - The item's in-game weight
 	 * @param value - The item's in-game value
+	 * @param id - a randomly generated UUID that is specific to each item (not each instance!)
 	 */
-	public Item(String name, String desc, Feature[] feats, double weight, double value) {
+	public Item(String name, String desc, double weight, double value, Feature[] feats, Tag[] tags, UUID id) {
+		super(tags);
 		this.name = name;
 		this.description = desc;
-		this.feats = Arrays.asList(feats);
+		this.feats = new Features(feats);
+		this.id = id;
 		
 		Field<?>[] baseFields = {new Field<Double>("weight", weight), new Field<Double>("value", value)};
-		Feature base = new Feature("std::item", "Basic attributes for all items", baseFields, null, false);
-		this.feats.add(base);
+		Feature base = new Feature("std::item", "Basic attributes for all items", baseFields, null, null, false);
+		this.feats.addFeature(base);
 	}
 	
 	/**
@@ -71,14 +80,12 @@ public class Item {
 	 * @param value - The item's in-game value
 	 * @param stdItemInfoSecret - Set to true to hide the weight and value of the item
 	 */
-	public Item(String name, String desc, Feature[] feats, double weight, double value, boolean stdItemInfoSecret) {
-		this.name = name;
-		this.description = desc;
-		this.feats = Arrays.asList(feats);
+	public Item(String name, String desc, double weight, double value, Feature[] feats, Tag[] tags, UUID id, boolean stdItemInfoSecret) {
+		this(name, desc, weight, value, feats, tags, id);
 		
 		Field<?>[] baseFields = {new Field<Double>("weight", weight), new Field<Double>("value", value)};
-		Feature base = new Feature("std::item", "Basic attributes for all items", baseFields, null, stdItemInfoSecret);
-		this.feats.add(base);
+		Feature base = new Feature("std::item", "Basic attributes for all items", baseFields, null, null, stdItemInfoSecret);
+		this.feats.addFeature(base);
 	}
 	
 	public String getName() {
@@ -89,8 +96,12 @@ public class Item {
 		return this.description;
 	}
 	
-	public Feature[] getFeatures() {
-		return (Feature[]) this.feats.toArray();
+	public Features getFeatures() {
+		return feats;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 
 }

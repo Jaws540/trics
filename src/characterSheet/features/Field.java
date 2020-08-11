@@ -1,4 +1,4 @@
-package CharacterSheetAPI;
+package characterSheet.features;
 
 /**
  * Base unit of information
@@ -31,7 +31,7 @@ public class Field<T> {
 	 * Gets the value of this field
 	 * @return
 	 */
-	public Object getValue() {
+	public T getValue() {
 		return this.value;
 	}
 	

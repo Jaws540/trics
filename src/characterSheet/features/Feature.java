@@ -1,16 +1,18 @@
-package CharacterSheetAPI;
+package characterSheet.features;
 
 import java.util.Arrays;
 import java.util.List;
 
-import CharacterSheetAPI.scripts.Script;
+import characterSheet.scripts.Script;
+import tags.Tag;
+import tags.Taggable;
 
 /**
  * The main unit for values a character has
  * @author Jacob
  *
  */
-public class Feature {
+public class Feature extends Taggable {
 	
 	private final String name;
 	private final String description;
@@ -28,7 +30,8 @@ public class Feature {
 	 * @param fields - Information specific to this feature.  Ex: Ki Points
 	 * @param scripts - Actions that can be done wither by a trigger or manually by the user
 	 */
-	public Feature(String name, String desc, Field<?>[] fields, Script[] scripts, boolean secret) {
+	public Feature(String name, String desc, Field<?>[] fields, Script[] scripts, Tag[] tags, boolean secret) {
+		super(tags);
 		this.name = name;
 		this.description = desc;
 		this.fields = Arrays.asList(fields);
@@ -37,7 +40,7 @@ public class Feature {
 	}
 	
 	/**
-	 * @return Tthe name of the feature
+	 * @return The name of the feature
 	 */
 	public String getName() {
 		return this.name;
@@ -101,6 +104,10 @@ public class Feature {
 		return null;
 	}
 	
+	/**
+	 * Used to determine if the description, fields and scripts of this feature are secret
+	 * @return
+	 */
 	public boolean isSecret() {
 		return this.secret;
 	}
