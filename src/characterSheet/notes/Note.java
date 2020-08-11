@@ -1,6 +1,6 @@
 package characterSheet.notes;
 
-public class Note extends NoteTree {
+public class Note extends NoteElement {
 	
 	private String text;
 	

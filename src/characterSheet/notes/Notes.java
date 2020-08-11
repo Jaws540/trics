@@ -1,14 +1,15 @@
 package characterSheet.notes;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class Notes {
+public class Notes extends NoteTree {
 	
-	private final List<NoteTree> notes;
-	
+	/**
+	 * Base entry into a Note Hierarchy.
+	 * 
+	 * This class should be used as the root node for the Notes tree instead of a NoteTree node.
+	 * @param notes
+	 */
 	public Notes(NoteTree[] notes) {
-		this.notes = Arrays.asList(notes);
+		super("root", notes);
 	}
 
 }
