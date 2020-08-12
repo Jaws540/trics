@@ -92,7 +92,7 @@ public class Test {
 		notes.addNote(new Note("Something", "Lol, idk, I just needed something to test the JSON formatting with"));
 		
 		CharacterSheet character = new CharacterSheet(characterInfo, feats, inventory, notes);
-		System.out.println(CharacterUtils.saveCharacter(character, "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\testSave1.json"));
+		System.out.println(Utils.saveJSON(character, "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\testSave1.json"));
 	}
 
 }

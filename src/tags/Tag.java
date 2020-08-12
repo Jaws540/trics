@@ -1,6 +1,5 @@
 package tags;
 
-import utils.JSONUtils;
 import utils.JSONify;
 
 public class Tag implements JSONify {
