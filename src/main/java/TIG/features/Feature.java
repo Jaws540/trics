@@ -1,10 +1,10 @@
-package features;
+package TIG.features;
 
-import scripts.Scripts;
-import tags.Tag;
-import tags.Taggable;
-import utils.JSONUtils;
-import utils.JSONify;
+import TIG.scripts.Scripts;
+import TIG.tags.Tag;
+import TIG.tags.Taggable;
+import TIG.utils.JSONUtils;
+import TIG.utils.JSONify;
 
 /**
  * The main unit for values a character has

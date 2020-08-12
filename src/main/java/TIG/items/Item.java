@@ -1,15 +1,15 @@
-package items;
+package TIG.items;
 
 import java.util.UUID;
 
-import features.Feature;
-import features.Features;
-import features.Field;
-import features.Fields;
-import tags.Tag;
-import tags.Taggable;
-import utils.JSONUtils;
-import utils.JSONify;
+import TIG.features.Feature;
+import TIG.features.Features;
+import TIG.features.Field;
+import TIG.features.Fields;
+import TIG.tags.Tag;
+import TIG.tags.Taggable;
+import TIG.utils.JSONUtils;
+import TIG.utils.JSONify;
 
 public class Item extends Taggable implements JSONify {
 	

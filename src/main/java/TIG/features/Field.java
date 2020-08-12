@@ -1,7 +1,7 @@
-package features;
+package TIG.features;
 
-import utils.JSONUtils;
-import utils.JSONify;
+import TIG.utils.JSONUtils;
+import TIG.utils.JSONify;
 
 /**
  * Base unit of information

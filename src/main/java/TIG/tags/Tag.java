@@ -1,6 +1,6 @@
-package tags;
+package TIG.tags;
 
-import utils.JSONify;
+import TIG.utils.JSONify;
 
 public class Tag implements JSONify {
 	

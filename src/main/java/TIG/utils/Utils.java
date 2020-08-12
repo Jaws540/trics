@@ -1,10 +1,12 @@
-package utils;
+package TIG.utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import characterSheet.CharacterSheet;
+import com.google.gson.Gson;
+
+import TIG.characterSheet.CharacterSheet;
 
 public class Utils {
 	
@@ -29,6 +31,11 @@ public class Utils {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static boolean saveGSON(Object obj, String path) {
+		Gson gson = new Gson();
+		return false;
 	}
 
 }

@@ -1,7 +1,7 @@
-package scripts;
+package TIG.scripts;
 
-import utils.JSONUtils;
-import utils.JSONify;
+import TIG.utils.JSONUtils;
+import TIG.utils.JSONify;
 
 /**
  * Source code that can be run by the user or system.

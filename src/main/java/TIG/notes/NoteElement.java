@@ -1,6 +1,6 @@
-package notes;
+package TIG.notes;
 
-import utils.JSONify;
+import TIG.utils.JSONify;
 
 public abstract class NoteElement implements JSONify {
 	

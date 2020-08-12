@@ -1,14 +1,14 @@
-package characterSheet;
+package TIG.characterSheet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import features.Features;
-import items.Item;
-import utils.JSONUtils;
-import utils.JSONify;
+import TIG.features.Features;
+import TIG.items.Item;
+import TIG.utils.JSONUtils;
+import TIG.utils.JSONify;
 
 public class Inventory implements JSONify {
 	

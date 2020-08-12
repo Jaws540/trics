@@ -1,4 +1,4 @@
-package notes;
+package TIG.notes;
 
 public class Notes extends NoteTree {
 	

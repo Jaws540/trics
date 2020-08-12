@@ -1,9 +1,9 @@
-package characterSheet;
+package TIG.characterSheet;
 
-import features.Features;
-import notes.Notes;
-import utils.JSONUtils;
-import utils.JSONify;
+import TIG.features.Features;
+import TIG.notes.Notes;
+import TIG.utils.JSONUtils;
+import TIG.utils.JSONify;
 
 /**
  * Interface for interaction with character sheets

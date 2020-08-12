@@ -1,8 +1,8 @@
-package characterSheet;
+package TIG.characterSheet;
 
-import features.Fields;
-import utils.JSONUtils;
-import utils.JSONify;
+import TIG.features.Fields;
+import TIG.utils.JSONUtils;
+import TIG.utils.JSONify;
 
 /**
  * Basic information needed for a character

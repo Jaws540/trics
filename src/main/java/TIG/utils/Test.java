@@ -1,19 +1,19 @@
-package utils;
+package TIG.utils;
 
 import java.util.UUID;
 
-import characterSheet.CharacterSheet;
-import characterSheet.Info;
-import characterSheet.Inventory;
-import features.Feature;
-import features.Features;
-import features.Field;
-import features.Fields;
-import items.Item;
-import notes.Note;
-import notes.NoteTree;
-import notes.Notes;
-import tags.Tag;
+import TIG.characterSheet.CharacterSheet;
+import TIG.characterSheet.Info;
+import TIG.characterSheet.Inventory;
+import TIG.features.Feature;
+import TIG.features.Features;
+import TIG.features.Field;
+import TIG.features.Fields;
+import TIG.items.Item;
+import TIG.notes.Note;
+import TIG.notes.NoteTree;
+import TIG.notes.Notes;
+import TIG.tags.Tag;
 
 public class Test {
 	

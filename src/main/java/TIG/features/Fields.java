@@ -1,11 +1,11 @@
-package features;
+package TIG.features;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import utils.JSONUtils;
-import utils.JSONify;
+import TIG.utils.JSONUtils;
+import TIG.utils.JSONify;
 
 public class Fields implements JSONify {
 	

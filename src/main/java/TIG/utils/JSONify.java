@@ -1,4 +1,4 @@
-package utils;
+package TIG.utils;
 
 public interface JSONify {
 	

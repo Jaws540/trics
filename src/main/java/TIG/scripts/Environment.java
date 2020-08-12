@@ -1,4 +1,4 @@
-package scripts;
+package TIG.scripts;
 
 import java.util.HashMap;
 
