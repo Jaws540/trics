@@ -9,6 +9,7 @@ import characterSheet.CharacterSheet;
 public class Utils {
 	
 	public static CharacterSheet loadCharacter(String filePath) {
+		// TODO: Load character and all the subcomponents
 		return null;
 	}
 	
