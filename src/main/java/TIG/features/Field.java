@@ -12,8 +12,8 @@ public class Field<T> {
 	private T value;
 	private final String name;
 	
-	private final String idRegex = "^[A-Za-z_][A-Za-z0-9_]*$";
-	private final Pattern idPatt = Pattern.compile(idRegex);
+	private final transient String idRegex = "^[A-Za-z_][A-Za-z0-9_]*$";
+	private final transient Pattern idPatt = Pattern.compile(idRegex);
 	
 	/**
 	 * Create a Field that contains a single piece of information
