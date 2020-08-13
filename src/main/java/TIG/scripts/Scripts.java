@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import TIG.utils.JSONUtils;
-import TIG.utils.JSONify;
-
-public class Scripts implements JSONify {
+public class Scripts {
 	
 	private final List<Script> scripts;
 	
@@ -22,6 +19,10 @@ public class Scripts implements JSONify {
 			this.scripts = new ArrayList<Script>();
 	}
 	
+	public Scripts[] getScripts() {
+		return this.scripts.toArray(new Scripts[this.scripts.size()]);
+	}
+	
 	/**
 	 * Gets the names of all the Scripts defined for this feature
 	 * @return A String array of script names
@@ -29,7 +30,7 @@ public class Scripts implements JSONify {
 	public String[] getScriptNames() {
 		String[] names = new String[this.scripts.size()];
 		for(int i = 0; i < this.scripts.size(); i++) {
-			names[i] = this.scripts.get(i).getIdentifier();
+			names[i] = this.scripts.get(i).getName();
 		}
 		return names;
 	}
@@ -42,33 +43,10 @@ public class Scripts implements JSONify {
 	 */
 	public Script getScript(String identifier) {
 		for(Script s : this.scripts) {
-			if(s.getIdentifier().equals(identifier))
+			if(s.getName().equals(identifier))
 				return s;
 		}
 		return null;
-	}
-
-	@Override
-	public String toJSON(int indent) {
-		String indentString = JSONUtils.getIndent(indent);
-		StringBuilder output = new StringBuilder();
-		
-		output.append("[\n");
-		for(Script s : this.scripts) {
-			output.append(indentString);
-			output.append(s.toJSON(indent + 1));
-			output.append(",\n");
-		}
-		if(this.scripts.size() > 0) {
-			// Remove trailing comma
-			output.deleteCharAt(output.length() - 2);
-			output.append(indentString.substring(0, indentString.length() - 1));
-		}else {
-			output.deleteCharAt(output.length() - 1);
-		}
-		output.append("]");
-		
-		return output.toString();
 	}
 
 }

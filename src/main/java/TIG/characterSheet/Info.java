@@ -1,15 +1,13 @@
 package TIG.characterSheet;
 
 import TIG.features.Fields;
-import TIG.utils.JSONUtils;
-import TIG.utils.JSONify;
 
 /**
  * Basic information needed for a character
  * @author Jacob
  *
  */
-public class Info implements JSONify {
+public class Info {
 	
 	private final String playerName;
 	private final String characterName;
@@ -38,27 +36,6 @@ public class Info implements JSONify {
 
 	public Fields getOtherData() {
 		return otherData;
-	}
-
-	@Override
-	public String toJSON(int indent) {
-		String indentString = JSONUtils.getIndent(indent);
-		StringBuilder output = new StringBuilder();
-		
-		output.append("{\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("Player Name", this.playerName));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("Character Name", this.characterName));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONifyJSON("Other Data", this.otherData.toJSON(indent + 1)));
-		output.append("\n");
-		output.append(indentString.substring(0, indentString.length() - 1));
-		output.append("}");
-		
-		return output.toString();
 	}
 
 }

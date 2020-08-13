@@ -15,9 +15,10 @@ import TIG.notes.NoteTree;
 import TIG.notes.Notes;
 import TIG.tags.Tag;
 
-public class Test {
+public class TestData {
 	
-	public static void main(String[] args) {
+	public static CharacterSheet testCharacter;
+	static {
 		// INFO
 		Field<?>[] otherInfo = {
 			new Field<Integer>("Level", 6),
@@ -91,8 +92,7 @@ public class Test {
 		sessionNotes.addNote(new Note("Session 2", "It twas a long and grueling session, but I think I will prevail!"));
 		notes.addNote(new Note("Something", "Lol, idk, I just needed something to test the JSON formatting with"));
 		
-		CharacterSheet character = new CharacterSheet(characterInfo, feats, inventory, notes);
-		System.out.println(Utils.saveJSON(character, "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\testSave1.json"));
+		testCharacter = new CharacterSheet(characterInfo, feats, inventory, notes);
 	}
 
 }

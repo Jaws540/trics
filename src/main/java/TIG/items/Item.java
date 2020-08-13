@@ -8,10 +8,8 @@ import TIG.features.Field;
 import TIG.features.Fields;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
-import TIG.utils.JSONUtils;
-import TIG.utils.JSONify;
 
-public class Item extends Taggable implements JSONify {
+public class Item extends Taggable {
 	
 	/*
 	 * std::item Feature Fields:
@@ -37,7 +35,7 @@ public class Item extends Taggable implements JSONify {
 	 * 				- onDrop: Runs when the item is removed from an inventory
 	 */
 	
-	private final UUID id;
+	private final UUID uuid;
 	
 	private final String name;
 	private final String description;
@@ -52,7 +50,7 @@ public class Item extends Taggable implements JSONify {
 	
 	public Item(UUID id, String name, String desc, double weight, double value, Features feats) {
 		super();
-		this.id = id;
+		this.uuid = id;
 		this.name = name;
 		this.description = desc;
 		
@@ -77,7 +75,7 @@ public class Item extends Taggable implements JSONify {
 	 */
 	public Item(UUID id, String name, String desc, double weight, double value, Features feats, boolean stackable) {
 		super();
-		this.id = id;
+		this.uuid = id;
 		this.name = name;
 		this.description = desc;
 		
@@ -101,7 +99,7 @@ public class Item extends Taggable implements JSONify {
 	 */
 	public Item(UUID id, String name, String desc, double weight, double value, Features feats, boolean stackable, Tag[] tags) {
 		super(tags);
-		this.id = id;
+		this.uuid = id;
 		this.name = name;
 		this.description = desc;
 		
@@ -124,8 +122,8 @@ public class Item extends Taggable implements JSONify {
 		this.feats.addFeature(base);
 	}
 
-	public UUID getId() {
-		return id;
+	public UUID getUUID() {
+		return uuid;
 	}
 	
 	public String getName() {
@@ -138,33 +136,6 @@ public class Item extends Taggable implements JSONify {
 	
 	public Features getFeatures() {
 		return feats;
-	}
-	
-	@Override
-	public String toJSON(int indent) {
-		String indentString = JSONUtils.getIndent(indent);
-		StringBuilder output = new StringBuilder();
-		
-		output.append("{\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("UUID", this.id.toString()));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("Name", this.name));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("Description", this.description));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONifyJSON("Features", this.feats.toJSON(indent + 1)));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONifyJSON("Tags", super.toJSON(indent + 1)));
-		output.append("\n");
-		output.append(indentString.substring(0, indentString.length() - 1));
-		output.append("}");
-		
-		return output.toString();
 	}
 
 }

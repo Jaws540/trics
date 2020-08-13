@@ -1,16 +1,14 @@
 package TIG.features;
 
-import TIG.utils.JSONUtils;
-import TIG.utils.JSONify;
-
 /**
  * Base unit of information
  * @author Jacob
  *
  */
-public class Field<T> implements JSONify {
+public class Field<T> {
+	
 	private T value;
-	private final String identifier;
+	private final String name;
 	
 	/**
 	 * Create a Field that contains a single piece of information
@@ -18,7 +16,7 @@ public class Field<T> implements JSONify {
 	 * @param value - Value the field will contain
 	 */
 	public Field(String id, T value) {
-		this.identifier = id;
+		this.name = id;
 		this.value = value;
 	}
 	
@@ -27,7 +25,7 @@ public class Field<T> implements JSONify {
 	 * @return
 	 */
 	public String getIdentifier() {
-		return this.identifier;
+		return this.name;
 	}
 	
 	/**
@@ -48,31 +46,5 @@ public class Field<T> implements JSONify {
 		this.value  = newValue;
 		return oldValue;
 	}
-
-	@Override
-	public String toJSON(int indent) {
-		/*
-		String indentString = JSONUtils.getIndent(indent);
-		StringBuilder output = new StringBuilder();
-		
-		output.append("{");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("Name", this.identifier));
-		output.append(",");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("Value", this.value.toJSON(indent + 1)));
-		output.append("}");
-					
-		return output.toString();
-		* 
-		* Deciding to use the below code instead for now...
-		*/
-		
-		if(this.value instanceof JSONify) {
-			JSONify val = (JSONify) this.value;
-			return JSONUtils.basicJSONifyJSON(this.identifier, val.toJSON(indent + 1));
-		}else {
-			return JSONUtils.basicJSONify(this.identifier, this.value.toString());
-		}
-	}
+	
 }

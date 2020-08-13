@@ -3,12 +3,16 @@
  */
 package TIG;
 
+import TIG.utils.TestData;
+import TIG.utils.Utils;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    	// Save Path
+    	String path = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
+    	
+    	// Custom JSON Serialization
+    	System.out.println(Utils.saveJSON(TestData.testCharacter, path + "testSave1.json"));
     }
 }

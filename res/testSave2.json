@@ -1,0 +1,193 @@
+{
+  "info": {
+    "playerName": "Illra",
+    "characterName": "Jacob",
+    "otherData": {
+      "Level": 6,
+      "EXP": 25000,
+      "Race": "Dragonborn",
+      "Classes": "Fighter"
+    }
+  },
+  "features": [
+    {
+      "name": "Strength",
+      "description": "Strength Ability",
+      "fields": {
+        "Value": 18,
+        "Modifier": 4
+      },
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "name": "Dexterity",
+      "description": "Dexterity Ability",
+      "fields": {
+        "Value": 18,
+        "Modifier": 4
+      },
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "name": "Constitution",
+      "description": "Constitution Ability",
+      "fields": {
+        "Value": 18,
+        "Modifier": 4
+      },
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "name": "Intelligence",
+      "description": "Intelligence Ability",
+      "fields": {
+        "Value": 18,
+        "Modifier": 4
+      },
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "name": "Wisdom",
+      "description": "Wisdom Ability",
+      "fields": {
+        "Value": 18,
+        "Modifier": 4
+      },
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "name": "Charisma",
+      "description": "Charisma Ability",
+      "fields": {
+        "Value": 18,
+        "Modifier": 4
+      },
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    }
+  ],
+  "inventory": {
+    "items": [
+      {
+        "uuid": "ff59c35f-e3bc-4173-a69a-420411d8ce88",
+        "name": "Dagger",
+        "description": "Stab with it lol",
+        "feats": [
+          {
+            "name": "std::item",
+            "description": "Basic attributes for all items",
+            "fields": {
+              "weight": 1.0,
+              "value": 1.0,
+              "stackable": false
+            },
+            "scripts": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      {
+        "uuid": "5b17b80d-1a51-418f-ab8f-88001367be4e",
+        "name": "Sword",
+        "description": "Stab with it from farther away lol",
+        "feats": [
+          {
+            "name": "std::item",
+            "description": "Basic attributes for all items",
+            "fields": {
+              "weight": 15.0,
+              "value": 10.0,
+              "stackable": false
+            },
+            "scripts": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      {
+        "uuid": "6d667256-207b-4025-89e5-315e6d34650d",
+        "name": "Potion of Healing",
+        "description": "Get them life points back",
+        "feats": [
+          {
+            "name": "std::item",
+            "description": "Basic attributes for all items",
+            "fields": {
+              "weight": 0.5,
+              "value": 20.0,
+              "stackable": true
+            },
+            "scripts": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      {
+        "uuid": "cdcd082a-9762-448a-966d-fae2332e0cb4",
+        "name": "Potion of Healing",
+        "description": "Get them life points back",
+        "feats": [
+          {
+            "name": "std::item",
+            "description": "Basic attributes for all items",
+            "fields": {
+              "weight": 0.5,
+              "value": 20.0,
+              "stackable": true
+            },
+            "scripts": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      }
+    ],
+    "features": [
+      {
+        "name": "Base",
+        "description": "Basic inventory feature.",
+        "fields": {
+          "Carry Weight": 250,
+          "Current Weight": 0
+        },
+        "scripts": [],
+        "tags": []
+      }
+    ]
+  },
+  "notes": {
+    "children": [
+      {
+        "text": "Lol, idk, I just needed something to test the JSON formatting with",
+        "title": "Something"
+      }
+    ],
+    "title": "root"
+  }
+}

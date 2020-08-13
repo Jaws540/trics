@@ -3,15 +3,13 @@ package TIG.features;
 import TIG.scripts.Scripts;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
-import TIG.utils.JSONUtils;
-import TIG.utils.JSONify;
 
 /**
  * The main unit for values a character has
  * @author Jacob
  *
  */
-public class Feature extends Taggable implements JSONify {
+public class Feature extends Taggable {
 	
 	private final String name;
 	private final String description;
@@ -80,33 +78,6 @@ public class Feature extends Taggable implements JSONify {
 	
 	public Scripts getScripts() {
 		return this.scripts;
-	}
-
-	@Override
-	public String toJSON(int indent) {
-		String indentString = JSONUtils.getIndent(indent);
-		StringBuilder output = new StringBuilder();
-		
-		output.append("{\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("Name", getName()));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONify("Description", getDescription()));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONifyJSON("Fields", this.fields.toJSON(indent + 1)));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONifyJSON("Scripts", this.scripts.toJSON(indent + 1)));
-		output.append(",\n");
-		output.append(indentString);
-		output.append(JSONUtils.basicJSONifyJSON("Tags", super.toJSON(indent + 1)));
-		output.append("\n");
-		output.append(indentString.substring(0, indentString.length() - 1));
-		output.append("}");
-		
-		return output.toString();
 	}
 
 }

@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import TIG.utils.JSONUtils;
-import TIG.utils.JSONify;
-
-public class Fields implements JSONify {
+public class Fields {
 	
 	private final List<Field<?>> fields;
 	
@@ -47,27 +44,8 @@ public class Fields implements JSONify {
 		return null;
 	}
 
-	@Override
-	public String toJSON(int indent) {
-		String indentString = JSONUtils.getIndent(indent);
-		StringBuilder output = new StringBuilder();
-		
-		output.append("{\n");
-		for(Field<?> f : this.fields) {
-			output.append(indentString);
-			output.append(f.toJSON(indent));
-			output.append(",\n");
-		}
-		if(this.fields.size() > 0) {
-			// Remove trailing comma
-			output.deleteCharAt(output.length() - 2);
-			output.append(indentString.substring(0, indentString.length() - 1));
-		}else {
-			output.deleteCharAt(output.length() - 1);
-		}
-		output.append("}");
-		
-		return output.toString();
+	public Field<?>[] getFields() {
+		return this.fields.toArray(new Field<?>[this.fields.size()]);
 	}
 
 }
