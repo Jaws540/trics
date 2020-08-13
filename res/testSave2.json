@@ -2,21 +2,39 @@
   "info": {
     "playerName": "Illra",
     "characterName": "Jacob",
-    "otherData": {
-      "Level": 6,
-      "EXP": 25000,
-      "Race": "Dragonborn",
-      "Classes": "Fighter"
-    }
+    "otherData": [
+      {
+        "value": 6,
+        "name": "Level"
+      },
+      {
+        "value": 25000,
+        "name": "EXP"
+      },
+      {
+        "value": "Dragonborn",
+        "name": "Race"
+      },
+      {
+        "value": "Fighter",
+        "name": "Classes"
+      }
+    ]
   },
   "features": [
     {
       "name": "Strength",
       "description": "Strength Ability",
-      "fields": {
-        "Value": 18,
-        "Modifier": 4
-      },
+      "fields": [
+        {
+          "value": 18,
+          "name": "Value"
+        },
+        {
+          "value": 4,
+          "name": "Modifier"
+        }
+      ],
       "scripts": [],
       "tags": [
         "Ability score",
@@ -26,10 +44,16 @@
     {
       "name": "Dexterity",
       "description": "Dexterity Ability",
-      "fields": {
-        "Value": 18,
-        "Modifier": 4
-      },
+      "fields": [
+        {
+          "value": 18,
+          "name": "Value"
+        },
+        {
+          "value": 4,
+          "name": "Modifier"
+        }
+      ],
       "scripts": [],
       "tags": [
         "Ability score",
@@ -39,10 +63,16 @@
     {
       "name": "Constitution",
       "description": "Constitution Ability",
-      "fields": {
-        "Value": 18,
-        "Modifier": 4
-      },
+      "fields": [
+        {
+          "value": 18,
+          "name": "Value"
+        },
+        {
+          "value": 4,
+          "name": "Modifier"
+        }
+      ],
       "scripts": [],
       "tags": [
         "Ability score",
@@ -52,10 +82,16 @@
     {
       "name": "Intelligence",
       "description": "Intelligence Ability",
-      "fields": {
-        "Value": 18,
-        "Modifier": 4
-      },
+      "fields": [
+        {
+          "value": 18,
+          "name": "Value"
+        },
+        {
+          "value": 4,
+          "name": "Modifier"
+        }
+      ],
       "scripts": [],
       "tags": [
         "Ability score",
@@ -65,10 +101,16 @@
     {
       "name": "Wisdom",
       "description": "Wisdom Ability",
-      "fields": {
-        "Value": 18,
-        "Modifier": 4
-      },
+      "fields": [
+        {
+          "value": 18,
+          "name": "Value"
+        },
+        {
+          "value": 4,
+          "name": "Modifier"
+        }
+      ],
       "scripts": [],
       "tags": [
         "Ability score",
@@ -78,10 +120,16 @@
     {
       "name": "Charisma",
       "description": "Charisma Ability",
-      "fields": {
-        "Value": 18,
-        "Modifier": 4
-      },
+      "fields": [
+        {
+          "value": 18,
+          "name": "Value"
+        },
+        {
+          "value": 4,
+          "name": "Modifier"
+        }
+      ],
       "scripts": [],
       "tags": [
         "Ability score",
@@ -92,18 +140,27 @@
   "inventory": {
     "items": [
       {
-        "uuid": "ff59c35f-e3bc-4173-a69a-420411d8ce88",
+        "uuid": "9358a812-a5b4-4681-a262-104d1bec5132",
         "name": "Dagger",
         "description": "Stab with it lol",
         "feats": [
           {
             "name": "std::item",
             "description": "Basic attributes for all items",
-            "fields": {
-              "weight": 1.0,
-              "value": 1.0,
-              "stackable": false
-            },
+            "fields": [
+              {
+                "value": 1.0,
+                "name": "weight"
+              },
+              {
+                "value": 1.0,
+                "name": "value"
+              },
+              {
+                "value": false,
+                "name": "stackable"
+              }
+            ],
             "scripts": [],
             "tags": []
           }
@@ -111,18 +168,27 @@
         "tags": []
       },
       {
-        "uuid": "5b17b80d-1a51-418f-ab8f-88001367be4e",
+        "uuid": "b0b549a7-307b-4c27-9240-5d7e33586d5f",
         "name": "Sword",
         "description": "Stab with it from farther away lol",
         "feats": [
           {
             "name": "std::item",
             "description": "Basic attributes for all items",
-            "fields": {
-              "weight": 15.0,
-              "value": 10.0,
-              "stackable": false
-            },
+            "fields": [
+              {
+                "value": 15.0,
+                "name": "weight"
+              },
+              {
+                "value": 10.0,
+                "name": "value"
+              },
+              {
+                "value": false,
+                "name": "stackable"
+              }
+            ],
             "scripts": [],
             "tags": []
           }
@@ -130,18 +196,27 @@
         "tags": []
       },
       {
-        "uuid": "6d667256-207b-4025-89e5-315e6d34650d",
+        "uuid": "19b87589-35f8-423b-aad3-008e289facaa",
         "name": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
           {
             "name": "std::item",
             "description": "Basic attributes for all items",
-            "fields": {
-              "weight": 0.5,
-              "value": 20.0,
-              "stackable": true
-            },
+            "fields": [
+              {
+                "value": 0.5,
+                "name": "weight"
+              },
+              {
+                "value": 20.0,
+                "name": "value"
+              },
+              {
+                "value": true,
+                "name": "stackable"
+              }
+            ],
             "scripts": [],
             "tags": []
           }
@@ -149,18 +224,27 @@
         "tags": []
       },
       {
-        "uuid": "cdcd082a-9762-448a-966d-fae2332e0cb4",
+        "uuid": "ae724006-f4ed-4003-ad9f-909a5d57e204",
         "name": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
           {
             "name": "std::item",
             "description": "Basic attributes for all items",
-            "fields": {
-              "weight": 0.5,
-              "value": 20.0,
-              "stackable": true
-            },
+            "fields": [
+              {
+                "value": 0.5,
+                "name": "weight"
+              },
+              {
+                "value": 20.0,
+                "name": "value"
+              },
+              {
+                "value": true,
+                "name": "stackable"
+              }
+            ],
             "scripts": [],
             "tags": []
           }
@@ -172,10 +256,16 @@
       {
         "name": "Base",
         "description": "Basic inventory feature.",
-        "fields": {
-          "Carry Weight": 250,
-          "Current Weight": 0
-        },
+        "fields": [
+          {
+            "value": 250,
+            "name": "Carry Weight"
+          },
+          {
+            "value": 0,
+            "name": "Current Weight"
+          }
+        ],
         "scripts": [],
         "tags": []
       }
@@ -184,8 +274,10 @@
   "notes": {
     "children": [
       {
-        "text": "Lol, idk, I just needed something to test the JSON formatting with",
         "title": "Something"
+      },
+      {
+        "title": "Session Notes"
       }
     ],
     "title": "root"

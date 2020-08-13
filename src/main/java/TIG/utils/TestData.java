@@ -1,5 +1,6 @@
 package TIG.utils;
 
+import java.util.Date;
 import java.util.UUID;
 
 import TIG.characterSheet.CharacterSheet;
@@ -88,9 +89,10 @@ public class TestData {
 		// NOTES
 		Notes notes = new Notes();
 		NoteTree sessionNotes = new NoteTree("Session Notes");
-		sessionNotes.addNote(new Note("Session 1", "It twas a long and grueling session, but I think I will prevail!"));
-		sessionNotes.addNote(new Note("Session 2", "It twas a long and grueling session, but I think I will prevail!"));
-		notes.addNote(new Note("Something", "Lol, idk, I just needed something to test the JSON formatting with"));
+		sessionNotes.addNote(new Note("Session 1", "It t'was a long and grueling session, but I think I will prevail!", new Date()));
+		sessionNotes.addNote(new Note("Session 2", "It t'was a long and grueling session, but I think I will prevail!", new Date()));
+		notes.addNote(new Note("Something", "Lol, idk, I just needed something to test the JSON formatting with", new Date()));
+		notes.addFolder(sessionNotes);
 		
 		testCharacter = new CharacterSheet(characterInfo, feats, inventory, notes);
 	}

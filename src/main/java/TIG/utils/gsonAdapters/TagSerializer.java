@@ -19,10 +19,8 @@ public class TagSerializer implements JsonSerializer<Tag>, JsonDeserializer<Tag>
 	}
 
 	@Override
-	public Tag deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-			throws JsonParseException {
-		// TODO Auto-generated method stub
-		return null;
+	public Tag deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+		return new Tag(context.deserialize(json, String.class));
 	}
 
 }

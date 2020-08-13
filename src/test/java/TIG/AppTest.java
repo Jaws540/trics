@@ -3,11 +3,30 @@
  */
 package TIG;
 
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
+import TIG.characterSheet.CharacterSheet;
+import TIG.utils.TestData;
+import TIG.utils.Utils;
+
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        //App classUnderTest = new App();
-        //assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+	
+	private final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
+	private final String characterSavePath = testSavePath + "testSave2.json";
+	
+    @Test public void testCharacterSaveToJson() {
+    	boolean output = Utils.saveJSON(TestData.testCharacter, characterSavePath);
+    	assertTrue(output);
+    }
+    
+    @Test public void testCharacterLoadFromJson() {
+    	try {
+    		CharacterSheet character = Utils.loadCharacter(characterSavePath);
+    		assertNotNull(character);
+    	}catch(Exception e) {
+    		assertFalse(true);
+    	}
     }
 }

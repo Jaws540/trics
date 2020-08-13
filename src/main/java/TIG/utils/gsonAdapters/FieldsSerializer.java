@@ -1,11 +1,13 @@
 package TIG.utils.gsonAdapters;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
@@ -17,18 +19,20 @@ public class FieldsSerializer implements JsonSerializer<Fields>, JsonDeserialize
 
 	@Override
 	public JsonElement serialize(Fields src, Type typeOfSrc, JsonSerializationContext context) {
-		JsonObject fields = new JsonObject();
-		for(Field<?> f : src.getFields()) {
-			fields.add(f.getIdentifier(), context.serialize(f.getValue()));
-		}
-		return fields;
+		return context.serialize(src.getFields());
 	}
 
 	@Override
-	public Fields deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-			throws JsonParseException {
-		// TODO Auto-generated method stub
-		return null;
+	public Fields deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+		JsonArray jsonArr = json.getAsJsonArray();
+		
+		List<Field<?>> fields = new ArrayList<>();
+		for(JsonElement j : jsonArr) {
+			Field<?> field = context.deserialize(j, Field.class);
+			fields.add(field);
+		}
+		
+		return new Fields(fields.toArray(new Field<?>[fields.size()]));
 	}
 
 }

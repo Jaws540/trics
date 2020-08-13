@@ -1,12 +1,16 @@
 package TIG.notes;
 
+import java.util.Date;
+
 public class Note extends NoteElement {
 	
 	private String text;
+	private final Date date;
 	
-	public Note(String title, String text) {
+	public Note(String title, String text, Date date) {
 		super(title);
 		this.setText(text);
+		this.date = date;
 	}
 
 	public String getText() {
@@ -15,6 +19,10 @@ public class Note extends NoteElement {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public Date getDate() {
+		return date;
 	}
 
 }
