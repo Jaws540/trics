@@ -9,12 +9,12 @@ public class Tag {
 	 * @param text - non-null, non-empty string text for the tag
 	 * @throws NullPointerException
 	 */
-	public Tag(String text) throws NullPointerException {
+	public Tag(String text) throws Exception {
 		if(text != null && !text.isEmpty()) {
 			text = text.substring(0, 1).toUpperCase() + text.substring(1);
 			this.tag = text;
 		}else {
-			throw new NullPointerException("A Tag must be a non-empty string!");
+			throw new Exception("Invalid tag text.");
 		}
 	}
 	

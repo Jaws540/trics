@@ -1,5 +1,7 @@
 package TIG.features;
 
+import java.util.regex.Pattern;
+
 /**
  * Base unit of information
  * @author Jacob
@@ -10,13 +12,20 @@ public class Field<T> {
 	private T value;
 	private final String name;
 	
+	private final String idRegex = "^[A-Za-z_][A-Za-z0-9_]*$";
+	private final Pattern idPatt = Pattern.compile(idRegex);
+	
 	/**
 	 * Create a Field that contains a single piece of information
 	 * @param id - Name of the field
 	 * @param value - Value the field will contain
 	 */
-	public Field(String id, T value) {
-		this.name = id;
+	public Field(String id, T value) throws Exception {
+		if(idPatt.matcher(id).matches()) {
+			this.name = id;
+		}else {
+			throw new Exception("Invalid field ID.");
+		}
 		this.value = value;
 	}
 	

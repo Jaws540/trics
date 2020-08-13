@@ -5,19 +5,39 @@
     "otherData": [
       {
         "value": 6,
-        "name": "Level"
+        "name": "Level",
+        "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+        "idPatt": {
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "flags": 0
+        }
       },
       {
         "value": 25000,
-        "name": "EXP"
+        "name": "EXP",
+        "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+        "idPatt": {
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "flags": 0
+        }
       },
       {
         "value": "Dragonborn",
-        "name": "Race"
+        "name": "Race",
+        "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+        "idPatt": {
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "flags": 0
+        }
       },
       {
         "value": "Fighter",
-        "name": "Classes"
+        "name": "Classes",
+        "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+        "idPatt": {
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "flags": 0
+        }
       }
     ]
   },
@@ -28,11 +48,21 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         }
       ],
       "scripts": [],
@@ -47,11 +77,21 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         }
       ],
       "scripts": [],
@@ -66,11 +106,21 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         }
       ],
       "scripts": [],
@@ -85,11 +135,21 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         }
       ],
       "scripts": [],
@@ -104,11 +164,21 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         }
       ],
       "scripts": [],
@@ -123,11 +193,21 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "idPatt": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "flags": 0
+          }
         }
       ],
       "scripts": [],
@@ -140,7 +220,7 @@
   "inventory": {
     "items": [
       {
-        "uuid": "9358a812-a5b4-4681-a262-104d1bec5132",
+        "uuid": "d3dcf87d-3932-41dc-9013-a1c102af1a43",
         "name": "Dagger",
         "description": "Stab with it lol",
         "feats": [
@@ -150,15 +230,30 @@
             "fields": [
               {
                 "value": 1.0,
-                "name": "weight"
+                "name": "weight",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               },
               {
                 "value": 1.0,
-                "name": "value"
+                "name": "value",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               },
               {
                 "value": false,
-                "name": "stackable"
+                "name": "stackable",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               }
             ],
             "scripts": [],
@@ -168,7 +263,7 @@
         "tags": []
       },
       {
-        "uuid": "b0b549a7-307b-4c27-9240-5d7e33586d5f",
+        "uuid": "c7c40b0d-1d9b-460a-889e-c14b3fa91cae",
         "name": "Sword",
         "description": "Stab with it from farther away lol",
         "feats": [
@@ -178,15 +273,30 @@
             "fields": [
               {
                 "value": 15.0,
-                "name": "weight"
+                "name": "weight",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               },
               {
                 "value": 10.0,
-                "name": "value"
+                "name": "value",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               },
               {
                 "value": false,
-                "name": "stackable"
+                "name": "stackable",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               }
             ],
             "scripts": [],
@@ -196,7 +306,7 @@
         "tags": []
       },
       {
-        "uuid": "19b87589-35f8-423b-aad3-008e289facaa",
+        "uuid": "e25018ec-90eb-41e7-a60f-f5d67f5750b3",
         "name": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
@@ -206,15 +316,30 @@
             "fields": [
               {
                 "value": 0.5,
-                "name": "weight"
+                "name": "weight",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               },
               {
                 "value": 20.0,
-                "name": "value"
+                "name": "value",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               },
               {
                 "value": true,
-                "name": "stackable"
+                "name": "stackable",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               }
             ],
             "scripts": [],
@@ -224,7 +349,7 @@
         "tags": []
       },
       {
-        "uuid": "ae724006-f4ed-4003-ad9f-909a5d57e204",
+        "uuid": "7abffe55-f968-4146-96be-e30499690601",
         "name": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
@@ -234,15 +359,30 @@
             "fields": [
               {
                 "value": 0.5,
-                "name": "weight"
+                "name": "weight",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               },
               {
                 "value": 20.0,
-                "name": "value"
+                "name": "value",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               },
               {
                 "value": true,
-                "name": "stackable"
+                "name": "stackable",
+                "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "idPatt": {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "flags": 0
+                }
               }
             ],
             "scripts": [],
@@ -259,11 +399,21 @@
         "fields": [
           {
             "value": 250,
-            "name": "Carry Weight"
+            "name": "Carry_Weight",
+            "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "idPatt": {
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+              "flags": 0
+            }
           },
           {
             "value": 0,
-            "name": "Current Weight"
+            "name": "Current_Weight",
+            "idRegex": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "idPatt": {
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+              "flags": 0
+            }
           }
         ],
         "scripts": [],
@@ -274,9 +424,23 @@
   "notes": {
     "children": [
       {
+        "text": "Lol, idk, I just needed something to test the JSON formatting with",
+        "date": "Aug 13, 2020 10:05:51 AM",
         "title": "Something"
       },
       {
+        "children": [
+          {
+            "text": "It t'was a long and grueling session, but I think I will prevail!",
+            "date": "Aug 13, 2020 10:05:51 AM",
+            "title": "Session 1"
+          },
+          {
+            "text": "It t'was a long and grueling session, but I think I will prevail!",
+            "date": "Aug 13, 2020 10:05:51 AM",
+            "title": "Session 2"
+          }
+        ],
         "title": "Session Notes"
       }
     ],

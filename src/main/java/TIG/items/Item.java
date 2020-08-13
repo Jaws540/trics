@@ -1,6 +1,8 @@
 package TIG.items;
 
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import TIG.features.Feature;
 import TIG.features.Features;
@@ -112,12 +114,20 @@ public class Item extends Taggable {
 	}
 	
 	private void addBaseFeature(double weight, double value, boolean stackable) {
-		Field<?>[] tmp = {
-				new Field<Double>("weight", weight), 
-				new Field<Double>("value", value),
-				new Field<Boolean>("stackable", stackable)
+		Field<?>[] baseFieldList = null;
+		try {
+			Field<?>[] tmp = {
+					new Field<Double>("weight", weight), 
+					new Field<Double>("value", value),
+					new Field<Boolean>("stackable", stackable)
+				  };
+			baseFieldList = tmp;
+		} catch(Exception e) {
+			// TODO: Change to a log
+			System.err.println("Failed to initialize std::item Feature.  UUID: " + this.uuid.toString());
+			return;
 		};
-		Fields baseFields = new Fields(tmp);
+		Fields baseFields = new Fields(baseFieldList);
 		Feature base = new Feature("std::item", "Basic attributes for all items", baseFields, null, null);
 		this.feats.addFeature(base);
 	}

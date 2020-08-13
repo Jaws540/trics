@@ -20,7 +20,11 @@ public class TagSerializer implements JsonSerializer<Tag>, JsonDeserializer<Tag>
 
 	@Override
 	public Tag deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-		return new Tag(context.deserialize(json, String.class));
+		try {
+			return new Tag(context.deserialize(json, String.class));
+		} catch (Exception e) {
+			throw new JsonParseException("Failed to parse a valid Tag text.");
+		}
 	}
 
 }

@@ -30,11 +30,9 @@ public abstract class Taggable {
 		return false;
 	}
 	
-	public boolean tag(String text) {
-		Tag newTag = new Tag(text);
-		
+	public boolean tag(Tag newTag) {
 		// Ensure the tag is not already added
-		if(!this.isTagged(text)) {
+		if(!this.isTagged(newTag.getText())) {
 			// Add tag and return true
 			this.tags.add(newTag);
 			return true;

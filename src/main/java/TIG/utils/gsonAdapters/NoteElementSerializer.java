@@ -7,12 +7,19 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import TIG.notes.Note;
 import TIG.notes.NoteElement;
 import TIG.notes.NoteTree;
 
-public class NoteElementSerializer implements JsonDeserializer<NoteElement> {
+public class NoteElementSerializer implements JsonSerializer<NoteElement>, JsonDeserializer<NoteElement> {
+
+	@Override
+	public JsonElement serialize(NoteElement src, Type typeOfSrc, JsonSerializationContext context) {
+		return context.serialize(src);
+	}
 
 	@Override
 	public NoteElement deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
