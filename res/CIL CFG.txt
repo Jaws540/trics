@@ -1,0 +1,75 @@
+
+S -> SCRIPT <block>
+
+<empty> ->
+
+// Blocks
+<block> -> {<block statements>}
+<block statements> -> <block statement> | <block statement> <block statements> | <empty>
+<block statement> -> <local variable declaration> | <statement>
+
+// Variables
+<local variable declaration> -> <type> <variable assignment>
+<variable assignment> -> <variable assignment id> = <expression>
+
+// Types
+<type> -> 'int' | 'double' | 'boolean' | 'string'
+
+// Statements
+<statement> -> <regular statement> | <if then statement> | <if then else statement> | <while statement>
+<regular statement> -> <block> | <empty statement> | <expression statement>
+<empty statement> -> ';'
+<expression statement> -> <statement expression> ';'
+<statement expression> -> <assignment> | <display> | <run> | <exit>
+
+// If statements
+<if then statement> -> 'if' '(' <expression> ')' <statement>
+<if then else statement> -> 'if' '(' <expression> ')' <statement> 'else' <statement>
+
+// While loop
+<while statement> -> 'while' '(' <expression> ')' <statement>
+
+// User Interaction
+<display> -> 'display' '(' <expression> ')'
+<input> -> 'input' '.' <input display type>
+<input display type> -> <text input> | <combo input> | <button input>
+<text input> -> 'text' '(' <string literal> ')'
+<combo input> -> 'combo' '(' <string literal> <options> ')'
+<button input> -> 'button' '(' <string literal> <options> ')'
+<options> -> <string literal> ',' <options> | <string literal>
+
+// Run Scripts
+<run> -> 'run' '(' <preloaded script identifier> ')'
+// <preloaded script identifier> should be an identifier to run a script
+// The identifier consists of a path relative to the base path to the script storage path and the name of the file without an extension
+
+// Exit
+<exit> -> 'exit' '(' <integer literal> ')'
+
+// Expressions
+<expression> -> <conditional OR expression>
+<assignment> -> <identifier> <assignemnt operator> <expression>
+<assignment operator> -> '=' | '+=' | '-=' | '*=' | '/=' | '%='
+<conditional OR expression> -> <conditional AND expression> | <conditional AND expression> '||' <conditional OR expression>
+<conditional AND expression> -> <equality expression> | <equality expression> '&&' <conditional AND expression>
+<equality expression> -> <realtional expression> | <relational expression> '==' <equality expression> | <equality expression> '!=' <realtional expression>
+<relational expression> -> <additive expression> | <relational expression> '<' <additive expression> | <relational expression> '>' <additive expression> | <relational expression> '<=' <additive expression> | <relational expression> '>=' <additive expression>
+<additive expression> -> <multiplicative expression> | <additive expression> '+' <multiplicative expression> | <additive expression> '-' <multiplicative expression>
+<multiplicative expression> -> <unary expression> | <multiplicative expression> '*' <unary expression> | <multiplicative expression> '/' <unary expression> | <multiplicative expression> '%' <unary expression>
+<unary expression> -> '+' <unary expression> | '-' <unary expression> | <unary expression not plus minus>
+<unary expression not plus minus> -> <postfix expression> | '!' <unary expression>
+<postfix expression> -> <primary> | <identifier> '?' | <input>
+<primary> -> <literal> | <parentesis expression> | <roll>
+<parenthesis expression> -> '(' <expression> ')' | '(' <type> ')' <expression>
+
+// Literals
+<literal> -> <integer literal> | <double literal> | <boolean literal> | <string literal>
+<integer literal> -> '0' | <non zero digit> <digits>?
+<digits> -> <digit> | <digits> <digit>
+<digit> -> '0' | <non zero digit>
+<non zero digit> -> '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+<double literal> -> <digits> '.' <digits>
+<boolean literal> -> 'true' | 'false'
+<string literal> -> '"' <string characters>? '"'
+<string characters> -> <character> | <character> <string characters>
+<string or null> -> <string literal> | 'null'

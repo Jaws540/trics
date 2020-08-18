@@ -8,7 +8,7 @@ public class NoteTree extends NoteElement {
 	
 	private final List<NoteElement> children;
 	
-	public NoteTree(String title) {
+	public NoteTree(String title) throws Exception {
 		super(title);
 		this.children = new ArrayList<NoteElement>();
 	}
@@ -19,8 +19,9 @@ public class NoteTree extends NoteElement {
 	 * Note: This class should NOT be used as the root node for a Note tree.  Instead use the Notes class.
 	 * @param title - Folder title
 	 * @param children - Branches of this node
+	 * @throws Exception 
 	 */
-	public NoteTree(String title, NoteTree[] children) {
+	public NoteTree(String title, NoteTree[] children) throws Exception {
 		super(title);
 		
 		if(children != null)

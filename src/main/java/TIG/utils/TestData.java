@@ -2,8 +2,6 @@ package TIG.utils;
 
 import java.util.Date;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import TIG.characterSheet.CharacterSheet;
 import TIG.characterSheet.Info;
@@ -24,11 +22,12 @@ public class TestData {
 	static {
 		try {
 			// INFO
+			String[] classList = {"Fighter", "Wizard"};
 			Field<?>[] otherInfo = {
 				new Field<Integer>("Level", 6),
 				new Field<Integer>("EXP", 25000),
 				new Field<String>("Race", "Dragonborn"),
-				new Field<String>("Classes", "Fighter"),
+				new Field<String[]>("Classes", classList),
 			};
 			Info characterInfo = new Info("Illra", "Jacob", new Fields(otherInfo));
 			
@@ -101,7 +100,7 @@ public class TestData {
 			
 			testCharacter = new CharacterSheet(characterInfo, feats, inventory, notes);
 		} catch(Exception e) {
-			System.err.println("Something is very wrong...  This shouldn't ever get reached.  This likely means you messed up wither the Tag or Field id/text values!");
+			Log.fatal("Could not initialize test data!  Check field names/tag texts for invalid strings.");
 		}
 	}
 

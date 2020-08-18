@@ -1,8 +1,6 @@
 package TIG.items;
 
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import TIG.features.Feature;
 import TIG.features.Features;
@@ -10,6 +8,7 @@ import TIG.features.Field;
 import TIG.features.Fields;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
+import TIG.utils.Log;
 
 public class Item extends Taggable {
 	
@@ -123,8 +122,7 @@ public class Item extends Taggable {
 				  };
 			baseFieldList = tmp;
 		} catch(Exception e) {
-			// TODO: Change to a log
-			System.err.println("Failed to initialize std::item Feature.  UUID: " + this.uuid.toString());
+			Log.warn("Failed to initialize std::item Feature.  UUID: " + this.uuid.toString());
 			return;
 		};
 		Fields baseFields = new Fields(baseFieldList);

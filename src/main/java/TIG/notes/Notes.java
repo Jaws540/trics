@@ -2,7 +2,7 @@ package TIG.notes;
 
 public class Notes extends NoteTree {
 	
-	public Notes() {
+	public Notes() throws Exception {
 		super("root");
 	}
 	
@@ -11,8 +11,9 @@ public class Notes extends NoteTree {
 	 * 
 	 * This class should be used as the root node for the Notes tree instead of a NoteTree node.
 	 * @param notes
+	 * @throws Exception 
 	 */
-	public Notes(NoteTree[] notes) {
+	public Notes(NoteTree[] notes) throws Exception {
 		super("root", notes);
 	}
 

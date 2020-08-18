@@ -1,0 +1,5 @@
+Logging: Aug-13-2020
+[DEBUG - 08/13/2020 @ 17:08:08]: Test
+[DEBUG - 08/13/2020 @ 17:08:50]: Test
+[FATAL - 08/13/2020 @ 17:29:11]: Could not initialize test data!  Check field names/tag texts for invalid strings.
+[FATAL - 08/13/2020 @ 17:29:25]: Could not initialize test data!  Check field names/tag texts for invalid strings.

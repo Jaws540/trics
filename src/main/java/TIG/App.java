@@ -3,12 +3,15 @@
  */
 package TIG;
 
+import TIG.utils.Log;
+
 public class App {
 	
 	private static final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
 	private static final String characterSavePath = testSavePath + "testSave2.json";
 
-    public static void main(String[] args) {
-    	
+    @SuppressWarnings("unused")
+	public static void main(String[] args) {
+    	Log.debug("Test");
     }
 }

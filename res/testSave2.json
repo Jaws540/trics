@@ -16,7 +16,10 @@
         "name": "Race"
       },
       {
-        "value": "Fighter",
+        "value": [
+          "Fighter",
+          "Wizard"
+        ],
         "name": "Classes"
       }
     ]
@@ -140,7 +143,7 @@
   "inventory": {
     "items": [
       {
-        "uuid": "81eddca1-a011-4bb4-addc-50d6bee7202f",
+        "uuid": "c2ee2d7e-7786-4d43-8130-5461aff8493e",
         "name": "Dagger",
         "description": "Stab with it lol",
         "feats": [
@@ -168,7 +171,7 @@
         "tags": []
       },
       {
-        "uuid": "775b641a-eb50-411b-b9c8-1f0844605cea",
+        "uuid": "36ebca41-043c-44ae-8b97-d10c24af4095",
         "name": "Sword",
         "description": "Stab with it from farther away lol",
         "feats": [
@@ -196,7 +199,7 @@
         "tags": []
       },
       {
-        "uuid": "7f6a535d-eaf7-4560-b62c-b79d6c127447",
+        "uuid": "4e714181-e5a9-4398-ac2f-1e59602ba262",
         "name": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
@@ -224,7 +227,7 @@
         "tags": []
       },
       {
-        "uuid": "28819664-3a17-4a0b-9c3c-323a50766401",
+        "uuid": "f41d1f6e-a874-4398-99e8-ed841f50a9ac",
         "name": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
@@ -275,19 +278,19 @@
     "children": [
       {
         "text": "Lol, idk, I just needed something to test the JSON formatting with",
-        "date": "Aug 13, 2020 10:09:47 AM",
+        "date": "Aug 13, 2020 5:30:09 PM",
         "title": "Something"
       },
       {
         "children": [
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Aug 13, 2020 10:09:47 AM",
+            "date": "Aug 13, 2020 5:30:09 PM",
             "title": "Session 1"
           },
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Aug 13, 2020 10:09:47 AM",
+            "date": "Aug 13, 2020 5:30:09 PM",
             "title": "Session 2"
           }
         ],

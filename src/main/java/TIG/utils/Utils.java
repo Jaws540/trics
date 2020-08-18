@@ -54,8 +54,7 @@ public class Utils {
 			
 			return true;
 		} catch (IOException e) {
-			// TODO: Log errors
-			e.printStackTrace();
+			Log.error("Failed to save data to file!  " + e.getMessage());
 			return false;
 		}
 	}
@@ -65,8 +64,7 @@ public class Utils {
 		try {
 			return Files.readAllBytes(saveFile.toPath());
 		} catch (IOException e) {
-			// TODO: Log errors
-			e.printStackTrace();
+			Log.error("Failed to read data from file!  " + e.getMessage());
 			return null;
 		}
 	}
