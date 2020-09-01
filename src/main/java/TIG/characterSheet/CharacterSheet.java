@@ -2,13 +2,20 @@ package TIG.characterSheet;
 
 import TIG.features.Features;
 import TIG.notes.Notes;
+import TIG.scripts.Def;
+import TIG.scripts.Entry;
+import TIG.scripts.Environment;
+import TIG.scripts.compiler.exceptions.ExistenceException;
+import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.TypeException;
+import TIG.utils.Log;
 
 /**
  * Interface for interaction with character sheets
  * @author Jacob
  *
  */
-public class CharacterSheet {
+public class CharacterSheet implements Environment {
 	
 	private final Info info;
 	private final Features features;
@@ -36,6 +43,27 @@ public class CharacterSheet {
 
 	public Notes getNotes() {
 		return notes;
+	}
+
+	@Override
+	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+		switch(identifier) {
+			case Def.INFO:
+				return new Entry(Entry.Type.ENV, info);
+			case Def.FEATURES:
+				return new Entry(Entry.Type.ENV, features);
+			case Def.INVENTORY:
+				return new Entry(Entry.Type.ENV, inventory);
+			default:
+				Log.error("Unknown character environment.");
+				throw new ExistenceException();
+		}
+	}
+
+	@Override
+	public boolean envPut(String identifier, Entry obj) {
+		// No one should be able to edit an environment
+		return false;
 	}
 
 }

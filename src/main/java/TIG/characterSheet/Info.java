@@ -1,13 +1,16 @@
 package TIG.characterSheet;
 
 import TIG.features.Fields;
+import TIG.scripts.Entry;
+import TIG.scripts.Environment;
+import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
 
 /**
  * Basic information needed for a character
  * @author Jacob
  *
  */
-public class Info {
+public class Info implements Environment {
 	
 	private final String playerName;
 	private final String characterName;
@@ -36,6 +39,16 @@ public class Info {
 
 	public Fields getOtherData() {
 		return otherData;
+	}
+
+	@Override
+	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+		return otherData.envGet(identifier);
+	}
+
+	@Override
+	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+		return otherData.envPut(identifier, obj);
 	}
 
 }

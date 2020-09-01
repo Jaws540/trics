@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Fields {
+import TIG.scripts.Entry;
+import TIG.scripts.Environment;
+import TIG.scripts.compiler.exceptions.ExistenceException;
+import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.TypeException;
+import TIG.utils.Log;
+
+public class Fields implements Environment {
 	
 	private final List<Field<?>> fields;
 	
@@ -46,6 +53,65 @@ public class Fields {
 
 	public Field<?>[] getFields() {
 		return this.fields.toArray(new Field<?>[this.fields.size()]);
+	}
+
+	@Override
+	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+		Field<?> f = getField(identifier);
+		if(f != null) {
+			switch(f.getType()) {
+				case BOOL:
+					return new Entry(Entry.Type.BOOL, (Boolean) f.getValue());
+				case DOUBLE:
+					return new Entry(Entry.Type.DOUBLE, (Double) f.getValue());
+				case INT:
+					return new Entry(Entry.Type.INT, (Integer) f.getValue());
+				case STRING:
+					return new Entry(Entry.Type.STRING, (String) f.getValue());
+				default:
+					// Unknown type
+					Log.error("Unknown field data type.");
+					throw new TypeException();
+			}
+		}
+		
+		// If no field exists by the given identifier
+		throw new ExistenceException();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+		// If it exists, get the field identified
+		Field<?> f = getField(identifier);
+		if(f != null) {
+			// If the type of the field matches the type of the assignment entry
+			if(f.getType().isEntryType(obj.type)) {
+				// Set
+				switch(f.getType()) {
+					case BOOL:
+						((Field<Boolean>) f).setValue((Boolean) obj.obj);
+						return true;
+					case DOUBLE:
+						((Field<Double>) f).setValue((Double) obj.obj);
+						return true;
+					case INT:
+						((Field<Integer>) f).setValue((Integer) obj.obj);
+						return true;
+					case STRING:
+						((Field<String>) f).setValue((String) obj.obj);
+						return true;
+					default:
+						Log.error("Unknown type!");
+						throw new TypeException();
+				}
+			}else {
+				throw new TypeException();
+			}
+		}
+		
+		// If the field doesn't exist
+		throw new ExistenceException();
 	}
 
 }

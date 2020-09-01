@@ -5,22 +5,26 @@
     "otherData": [
       {
         "value": 6,
-        "name": "Level"
+        "name": "Level",
+        "type": "INT"
       },
       {
         "value": 25000,
-        "name": "EXP"
+        "name": "EXP",
+        "type": "INT"
       },
       {
         "value": "Dragonborn",
-        "name": "Race"
+        "name": "Race",
+        "type": "STRING"
       },
       {
         "value": [
           "Fighter",
           "Wizard"
         ],
-        "name": "Classes"
+        "name": "Classes",
+        "type": "INT"
       }
     ]
   },
@@ -31,11 +35,13 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "type": "INT"
         }
       ],
       "scripts": [],
@@ -50,11 +56,13 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "type": "INT"
         }
       ],
       "scripts": [],
@@ -69,11 +77,13 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "type": "INT"
         }
       ],
       "scripts": [],
@@ -88,11 +98,13 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "type": "INT"
         }
       ],
       "scripts": [],
@@ -107,11 +119,13 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "type": "INT"
         }
       ],
       "scripts": [],
@@ -126,11 +140,13 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value"
+          "name": "Value",
+          "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier"
+          "name": "Modifier",
+          "type": "INT"
         }
       ],
       "scripts": [],
@@ -143,7 +159,7 @@
   "inventory": {
     "items": [
       {
-        "uuid": "c2ee2d7e-7786-4d43-8130-5461aff8493e",
+        "uuid": "09e97a7b-29e1-4305-aa2b-3cf0142c768c",
         "name": "Dagger",
         "description": "Stab with it lol",
         "feats": [
@@ -153,15 +169,18 @@
             "fields": [
               {
                 "value": 1.0,
-                "name": "weight"
+                "name": "weight",
+                "type": "DOUBLE"
               },
               {
                 "value": 1.0,
-                "name": "value"
+                "name": "value",
+                "type": "DOUBLE"
               },
               {
                 "value": false,
-                "name": "stackable"
+                "name": "stackable",
+                "type": "BOOL"
               }
             ],
             "scripts": [],
@@ -171,7 +190,7 @@
         "tags": []
       },
       {
-        "uuid": "36ebca41-043c-44ae-8b97-d10c24af4095",
+        "uuid": "c1221310-0fb9-40a8-b802-ef798d0d714f",
         "name": "Sword",
         "description": "Stab with it from farther away lol",
         "feats": [
@@ -181,15 +200,18 @@
             "fields": [
               {
                 "value": 15.0,
-                "name": "weight"
+                "name": "weight",
+                "type": "DOUBLE"
               },
               {
                 "value": 10.0,
-                "name": "value"
+                "name": "value",
+                "type": "DOUBLE"
               },
               {
                 "value": false,
-                "name": "stackable"
+                "name": "stackable",
+                "type": "BOOL"
               }
             ],
             "scripts": [],
@@ -199,7 +221,7 @@
         "tags": []
       },
       {
-        "uuid": "4e714181-e5a9-4398-ac2f-1e59602ba262",
+        "uuid": "04f33f93-39eb-47a6-83cd-3fde33d81c3d",
         "name": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
@@ -209,15 +231,18 @@
             "fields": [
               {
                 "value": 0.5,
-                "name": "weight"
+                "name": "weight",
+                "type": "DOUBLE"
               },
               {
                 "value": 20.0,
-                "name": "value"
+                "name": "value",
+                "type": "DOUBLE"
               },
               {
                 "value": true,
-                "name": "stackable"
+                "name": "stackable",
+                "type": "BOOL"
               }
             ],
             "scripts": [],
@@ -227,7 +252,7 @@
         "tags": []
       },
       {
-        "uuid": "f41d1f6e-a874-4398-99e8-ed841f50a9ac",
+        "uuid": "6dadb6a2-ee2b-4c68-97df-66399e9e69a4",
         "name": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
@@ -237,15 +262,49 @@
             "fields": [
               {
                 "value": 0.5,
-                "name": "weight"
+                "name": "weight",
+                "type": "DOUBLE"
               },
               {
                 "value": 20.0,
-                "name": "value"
+                "name": "value",
+                "type": "DOUBLE"
               },
               {
                 "value": true,
-                "name": "stackable"
+                "name": "stackable",
+                "type": "BOOL"
+              }
+            ],
+            "scripts": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      {
+        "uuid": "1069ed78-4302-4fc8-a1d7-e7e33c914d4e",
+        "name": "Potion of Healing",
+        "description": "Get them life points back",
+        "feats": [
+          {
+            "name": "std::item",
+            "description": "Basic attributes for all items",
+            "fields": [
+              {
+                "value": 0.5,
+                "name": "weight",
+                "type": "DOUBLE"
+              },
+              {
+                "value": 20.0,
+                "name": "value",
+                "type": "DOUBLE"
+              },
+              {
+                "value": true,
+                "name": "stackable",
+                "type": "BOOL"
               }
             ],
             "scripts": [],
@@ -262,11 +321,13 @@
         "fields": [
           {
             "value": 250,
-            "name": "Carry_Weight"
+            "name": "Carry_Weight",
+            "type": "INT"
           },
           {
             "value": 0,
-            "name": "Current_Weight"
+            "name": "Current_Weight",
+            "type": "INT"
           }
         ],
         "scripts": [],
@@ -278,19 +339,19 @@
     "children": [
       {
         "text": "Lol, idk, I just needed something to test the JSON formatting with",
-        "date": "Aug 13, 2020 5:30:09 PM",
+        "date": "Sep 1, 2020 6:01:35 PM",
         "title": "Something"
       },
       {
         "children": [
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Aug 13, 2020 5:30:09 PM",
+            "date": "Sep 1, 2020 6:01:35 PM",
             "title": "Session 1"
           },
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Aug 13, 2020 5:30:09 PM",
+            "date": "Sep 1, 2020 6:01:35 PM",
             "title": "Session 2"
           }
         ],

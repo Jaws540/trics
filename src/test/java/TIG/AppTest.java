@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import TIG.characterSheet.CharacterSheet;
+import TIG.scripts.compiler.Interpreter;
 import TIG.utils.TestData;
 import TIG.utils.Utils;
 
@@ -28,7 +29,15 @@ public class AppTest {
     		CharacterSheet character = Utils.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
+    		e.printStackTrace();
     		assertFalse(true);
     	}
+    }
+    
+    // TODO: Add more specific lexer and parser tests
+    
+    @Test public void testInterpreterCompile() {
+    	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.txt", null);
+    	assertTrue(interp.compile());
     }
 }

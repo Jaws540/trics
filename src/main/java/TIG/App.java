@@ -3,15 +3,13 @@
  */
 package TIG;
 
-import TIG.utils.Log;
+import TIG.scripts.compiler.Interpreter;
 
 public class App {
-	
-	private static final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
-	private static final String characterSavePath = testSavePath + "testSave2.json";
 
-    @SuppressWarnings("unused")
-	public static void main(String[] args) {
-    	Log.debug("Test");
+    public static void main(String[] args) {
+    	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.txt", null);
+    	interp.compile();
+    	interp.interpret();
     }
 }

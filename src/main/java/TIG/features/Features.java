@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Features {
+import TIG.scripts.Entry;
+import TIG.scripts.Environment;
+import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+
+public class Features implements Environment {
 	
 	private final List<Feature> features;
 	
@@ -64,6 +68,16 @@ public class Features {
 	
 	public boolean removeFeature(Feature feature) {
 		return this.features.remove(feature);
+	}
+
+	@Override
+	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+		return null;
+	}
+
+	@Override
+	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+		return false;
 	}
 
 }

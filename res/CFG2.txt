@@ -1,0 +1,97 @@
+S -> 'script' <block>
+
+<empty> -> 
+
+<block> -> '{' <block statements> '}'
+<block statements> -> <block statement> <block statements> 
+                    | <empty>
+<block statement> -> <local variable declaration> 
+                   | <statement>
+
+<local variable declaration> -> <type> <identifier> = <expression> ';'
+
+<type> -> 'int' 
+        | 'double' 
+        | 'bool' 
+        | 'string'
+
+<statement> -> <block> 
+             | <if statement> 
+             | <while statement> 
+             | <line statement>
+
+<if statement> -> <if> 
+                | <if else>
+<if> -> 'if' '(' <expression> ')' <statement>
+<if else> -> <if> 'else' <statement>
+
+<while statement> -> 'while' '(' <expression> ')' <statement>
+
+<line statement> -> <line> ';'
+<line> -> <assignment> 
+        | <call>
+
+<assignment> -> <identifier> <assingment operator> <expression>
+<assignment operator> -> '=' 
+                       | '+=' 
+                       | '-=' 
+                       | '*=' 
+                       | '/=' 
+                       | '%='
+
+<call> -> <id> '(' <parameters> ')'
+<parameters> -> <expression>
+              | <expression> ',' <parameters>
+              | <empty>
+
+<expression> -> <or expr>
+<or expr> -> <and expr> 
+           | <and expr> 'or' <or expr>
+<and expr> -> <equality expr> 
+            | <equality expr> 'and' <and expr>
+<equality expr> -> <relation expr> 
+                 | <relation expr> '==' <equality expr> 
+                 | <relation expr> '!=' <equality expr>
+<relation expr> -> <add expr> 
+                 | <add expr> '<' <relation expr> 
+                 | <add expr> '>' <relation expr> 
+                 | <add expr> '<=' <relation expr>
+                 | <add expr> '>=' <relation expr>
+<add expr> -> <mul expr>
+            | <mul expr> '+' <add expr>
+            | <mul expr> '-' <add expr>
+<mul expr> -> <unary expr>
+            | <unary expr> '*' <mul expr>
+            | <unary expr> '/' <mul expr>
+            | <unary expr> '%' <mul expr>
+<unary expr> -> <postfix expr>
+              | 'not' <unary expr>
+<postfix expr> -> <primary> 
+                | <identifier> 
+                | <call>
+                | <input>                       // TODO: not implemented!
+<primary> -> <literal>
+           | '(' <expression> ')'
+           | <roll>
+
+<identifier> -> <id>
+              | <id> '.' <identifier>
+<id> -> reg('[a-zA-Z_][a-zA-Z0-9_]*')
+
+<input> -> 
+
+<literal> -> <int literal>
+           | <double literal>
+           | <bool literal>
+           | <string literal>
+           | 'null'
+<int literal> -> reg('\-?[0-9]*')
+<double literal> -> reg('\-?[0-9]+\.[0-9]+')
+<bool literal> -> reg('true|false')
+<string literal> -> reg('"[^"]*"')
+
+<roll> -> <simple roll>
+        | <modified roll>
+<simple roll> -> <int literal> 'd' <int literal>
+<modified roll> -> <simple roll> '+' <expression>
+                 | <simple roll> '-' <expression>

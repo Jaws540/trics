@@ -5,22 +5,26 @@
 	  "otherData": [
 		{
 		  "value": 6,
-		  "name": "Level"
+		  "name": "Level",
+		  "type": "INT"
 		},
 		{
 		  "value": 25000,
-		  "name": "EXP"
+		  "name": "EXP",
+		  "type": "INT"
 		},
 		{
 		  "value": "Dragonborn",
-		  "name": "Race"
+		  "name": "Race",
+		  "type": "STRING"
 		},
 		{
 		  "value": [
 			"Fighter",
 			"Wizard"
 		  ],
-		  "name": "Classes"
+		  "name": "Classes",
+		  "type": "INT"
 		}
 	  ]
 	},
@@ -31,11 +35,13 @@
 		"fields": [
 		  {
 			"value": 18,
-			"name": "Value"
+			"name": "Value",
+			"type": "INT"
 		  },
 		  {
 			"value": 4,
-			"name": "Modifier"
+			"name": "Modifier",
+			"type": "INT"
 		  }
 		],
 		"scripts": [],
@@ -50,11 +56,13 @@
 		"fields": [
 		  {
 			"value": 18,
-			"name": "Value"
+			"name": "Value",
+			"type": "INT"
 		  },
 		  {
 			"value": 4,
-			"name": "Modifier"
+			"name": "Modifier",
+			"type": "INT"
 		  }
 		],
 		"scripts": [],
@@ -69,11 +77,13 @@
 		"fields": [
 		  {
 			"value": 18,
-			"name": "Value"
+			"name": "Value",
+			"type": "INT"
 		  },
 		  {
 			"value": 4,
-			"name": "Modifier"
+			"name": "Modifier",
+			"type": "INT"
 		  }
 		],
 		"scripts": [],
@@ -88,11 +98,13 @@
 		"fields": [
 		  {
 			"value": 18,
-			"name": "Value"
+			"name": "Value",
+			"type": "INT"
 		  },
 		  {
 			"value": 4,
-			"name": "Modifier"
+			"name": "Modifier",
+			"type": "INT"
 		  }
 		],
 		"scripts": [],
@@ -107,11 +119,13 @@
 		"fields": [
 		  {
 			"value": 18,
-			"name": "Value"
+			"name": "Value",
+			"type": "INT"
 		  },
 		  {
 			"value": 4,
-			"name": "Modifier"
+			"name": "Modifier",
+			"type": "INT"
 		  }
 		],
 		"scripts": [],
@@ -126,11 +140,13 @@
 		"fields": [
 		  {
 			"value": 18,
-			"name": "Value"
+			"name": "Value",
+			"type": "INT"
 		  },
 		  {
 			"value": 4,
-			"name": "Modifier"
+			"name": "Modifier",
+			"type": "INT"
 		  }
 		],
 		"scripts": [],
@@ -138,31 +154,12 @@
 		  "Ability score",
 		  "Modifier"
 		]
-	  },
-	  {
-		  "name": "Spell Casting",
-		  "description": "The player is allowed to cast spells",
-		  "fields": [
-			  {
-				  "name": "first_level_spell_slots",
-				  "value": [1, 4]
-			  },
-			  {
-				"name": "second_level_spell_slots",
-				"value": [2, 2]
-			  }
-		  ],
-		  "scripts": [],
-		  "tags": []
-	  },
-	  {
-		  ""
 	  }
 	],
 	"inventory": {
 	  "items": [
 		{
-		  "uuid": "c2ee2d7e-7786-4d43-8130-5461aff8493e",
+		  "uuid": "c66729fa-8f09-4bf1-bf55-bd3cd1bce778",
 		  "name": "Dagger",
 		  "description": "Stab with it lol",
 		  "feats": [
@@ -172,15 +169,18 @@
 			  "fields": [
 				{
 				  "value": 1.0,
-				  "name": "weight"
+				  "name": "weight",
+				  "type": "DOUBLE"
 				},
 				{
 				  "value": 1.0,
-				  "name": "value"
+				  "name": "value",
+				  "type": "DOUBLE"
 				},
 				{
 				  "value": false,
-				  "name": "stackable"
+				  "name": "stackable",
+				  "type": "BOOL"
 				}
 			  ],
 			  "scripts": [],
@@ -190,7 +190,7 @@
 		  "tags": []
 		},
 		{
-		  "uuid": "36ebca41-043c-44ae-8b97-d10c24af4095",
+		  "uuid": "bf490d25-a8fd-4cce-9eee-971b8f048e04",
 		  "name": "Sword",
 		  "description": "Stab with it from farther away lol",
 		  "feats": [
@@ -200,15 +200,18 @@
 			  "fields": [
 				{
 				  "value": 15.0,
-				  "name": "weight"
+				  "name": "weight",
+				  "type": "DOUBLE"
 				},
 				{
 				  "value": 10.0,
-				  "name": "value"
+				  "name": "value",
+				  "type": "DOUBLE"
 				},
 				{
 				  "value": false,
-				  "name": "stackable"
+				  "name": "stackable",
+				  "type": "BOOL"
 				}
 			  ],
 			  "scripts": [],
@@ -218,7 +221,7 @@
 		  "tags": []
 		},
 		{
-		  "uuid": "4e714181-e5a9-4398-ac2f-1e59602ba262",
+		  "uuid": "7bfedd8d-6a2f-4d63-9f79-10f088b5ec53",
 		  "name": "Potion of Healing",
 		  "description": "Get them life points back",
 		  "feats": [
@@ -228,15 +231,18 @@
 			  "fields": [
 				{
 				  "value": 0.5,
-				  "name": "weight"
+				  "name": "weight",
+				  "type": "DOUBLE"
 				},
 				{
 				  "value": 20.0,
-				  "name": "value"
+				  "name": "value",
+				  "type": "DOUBLE"
 				},
 				{
 				  "value": true,
-				  "name": "stackable"
+				  "name": "stackable",
+				  "type": "BOOL"
 				}
 			  ],
 			  "scripts": [],
@@ -246,7 +252,7 @@
 		  "tags": []
 		},
 		{
-		  "uuid": "f41d1f6e-a874-4398-99e8-ed841f50a9ac",
+		  "uuid": "eda9bffb-5689-4d48-8638-e4474fd00483",
 		  "name": "Potion of Healing",
 		  "description": "Get them life points back",
 		  "feats": [
@@ -256,15 +262,49 @@
 			  "fields": [
 				{
 				  "value": 0.5,
-				  "name": "weight"
+				  "name": "weight",
+				  "type": "DOUBLE"
 				},
 				{
 				  "value": 20.0,
-				  "name": "value"
+				  "name": "value",
+				  "type": "DOUBLE"
 				},
 				{
 				  "value": true,
-				  "name": "stackable"
+				  "name": "stackable",
+				  "type": "BOOL"
+				}
+			  ],
+			  "scripts": [],
+			  "tags": []
+			}
+		  ],
+		  "tags": []
+		},
+		{
+		  "uuid": "a0f75e96-b00f-455a-9471-eff2c98e909c",
+		  "name": "Potion of Healing",
+		  "description": "Get them life points back",
+		  "feats": [
+			{
+			  "name": "std::item",
+			  "description": "Basic attributes for all items",
+			  "fields": [
+				{
+				  "value": 0.5,
+				  "name": "weight",
+				  "type": "DOUBLE"
+				},
+				{
+				  "value": 20.0,
+				  "name": "value",
+				  "type": "DOUBLE"
+				},
+				{
+				  "value": true,
+				  "name": "stackable",
+				  "type": "BOOL"
 				}
 			  ],
 			  "scripts": [],
@@ -281,11 +321,13 @@
 		  "fields": [
 			{
 			  "value": 250,
-			  "name": "Carry_Weight"
+			  "name": "Carry_Weight",
+			  "type": "INT"
 			},
 			{
 			  "value": 0,
-			  "name": "Current_Weight"
+			  "name": "Current_Weight",
+			  "type": "INT"
 			}
 		  ],
 		  "scripts": [],
@@ -297,19 +339,19 @@
 	  "children": [
 		{
 		  "text": "Lol, idk, I just needed something to test the JSON formatting with",
-		  "date": "Aug 13, 2020 5:30:09 PM",
+		  "date": "Sep 1, 2020 5:43:52 PM",
 		  "title": "Something"
 		},
 		{
 		  "children": [
 			{
 			  "text": "It t'was a long and grueling session, but I think I will prevail!",
-			  "date": "Aug 13, 2020 5:30:09 PM",
+			  "date": "Sep 1, 2020 5:43:52 PM",
 			  "title": "Session 1"
 			},
 			{
 			  "text": "It t'was a long and grueling session, but I think I will prevail!",
-			  "date": "Aug 13, 2020 5:30:09 PM",
+			  "date": "Sep 1, 2020 5:43:52 PM",
 			  "title": "Session 2"
 			}
 		  ],

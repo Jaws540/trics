@@ -42,7 +42,7 @@ public class Script {
 	 * @param env
 	 */
 	public void run(Environment env) {
-		System.out.println("TODO: Run scripts within an environment");
+		// TODO
 	}
 
 	public String getDescription() {

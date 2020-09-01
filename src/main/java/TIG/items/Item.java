@@ -62,7 +62,6 @@ public class Item extends Taggable {
 		
 		addBaseFeature(weight, value, false);
 	}
-	
 
 	/**
 	 * Creates an Item
@@ -116,9 +115,9 @@ public class Item extends Taggable {
 		Field<?>[] baseFieldList = null;
 		try {
 			Field<?>[] tmp = {
-					new Field<Double>("weight", weight), 
-					new Field<Double>("value", value),
-					new Field<Boolean>("stackable", stackable)
+					new Field<Double>("weight", weight, Field.Type.DOUBLE), 
+					new Field<Double>("value", value, Field.Type.DOUBLE),
+					new Field<Boolean>("stackable", stackable, Field.Type.BOOL)
 				  };
 			baseFieldList = tmp;
 		} catch(Exception e) {
@@ -136,6 +135,10 @@ public class Item extends Taggable {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public String getSName() {
+		return name.replaceAll("[^\\w]", "_");
 	}
 	
 	public String getDescription() {

@@ -13,12 +13,14 @@ import com.google.gson.JsonSyntaxException;
 import TIG.characterSheet.CharacterSheet;
 import TIG.features.Features;
 import TIG.features.Fields;
+import TIG.items.Items;
 import TIG.notes.NoteElement;
 import TIG.scripts.Scripts;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
 import TIG.utils.gsonAdapters.FeaturesSerializer;
 import TIG.utils.gsonAdapters.FieldsSerializer;
+import TIG.utils.gsonAdapters.ItemsSerializer;
 import TIG.utils.gsonAdapters.NoteElementSerializer;
 import TIG.utils.gsonAdapters.ScriptsSerializer;
 import TIG.utils.gsonAdapters.TagSerializer;
@@ -34,6 +36,7 @@ public class Utils {
 		builder.registerTypeAdapter(Taggable.class, new TaggableSerializer());
 		builder.registerTypeAdapter(Tag.class, new TagSerializer());
 		builder.registerTypeAdapter(Fields.class, new FieldsSerializer());
+		builder.registerTypeAdapter(Items.class, new ItemsSerializer());
 		builder.registerTypeAdapter(NoteElement.class, new NoteElementSerializer());
 		builder.setPrettyPrinting();
 		builder.disableHtmlEscaping();
@@ -64,14 +67,14 @@ public class Utils {
 		try {
 			return Files.readAllBytes(saveFile.toPath());
 		} catch (IOException e) {
-			Log.error("Failed to read data from file!  " + e.getMessage());
+			Log.error("Failed to read data from file!  Path: '" + path + "'.  " + e.getMessage());
 			return null;
 		}
 	}
 	
 	public static CharacterSheet loadCharacter(String filePath) throws JsonSyntaxException {
 		byte[] raw = loadBytes(filePath);
-		if(raw == null )
+		if(raw == null)
 			return null;
 		
 		String rawJSON = new String(raw);
@@ -81,6 +84,14 @@ public class Utils {
 	
 	public static boolean saveJSON(Object obj, String path) {
 		return saveBytes(Utils.gson.toJson(obj).getBytes(), path);
+	}
+	
+	public static String loadScript(String src_path) {
+		byte[] raw = loadBytes(src_path);
+		if(raw == null)
+			return null;
+		
+		return new String(raw);
 	}
 
 }

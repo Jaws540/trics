@@ -1,0 +1,3 @@
+script {
+    Inventory.Items.test_Item.std::item = 1;
+}

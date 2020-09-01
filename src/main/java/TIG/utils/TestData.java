@@ -11,6 +11,7 @@ import TIG.features.Features;
 import TIG.features.Field;
 import TIG.features.Fields;
 import TIG.items.Item;
+import TIG.items.Items;
 import TIG.notes.Note;
 import TIG.notes.NoteTree;
 import TIG.notes.Notes;
@@ -24,10 +25,10 @@ public class TestData {
 			// INFO
 			String[] classList = {"Fighter", "Wizard"};
 			Field<?>[] otherInfo = {
-				new Field<Integer>("Level", 6),
-				new Field<Integer>("EXP", 25000),
-				new Field<String>("Race", "Dragonborn"),
-				new Field<String[]>("Classes", classList),
+				new Field<Integer>("Level", 6, Field.Type.INT),
+				new Field<Integer>("EXP", 25000, Field.Type.INT),
+				new Field<String>("Race", "Dragonborn", Field.Type.STRING),
+				new Field<String[]>("Classes", classList, Field.Type.INT),
 			};
 			Info characterInfo = new Info("Illra", "Jacob", new Fields(otherInfo));
 			
@@ -38,28 +39,28 @@ public class TestData {
 			};
 			
 			Field<?>[] strFields = {
-				new Field<Integer>("Value", 18),
-				new Field<Integer>("Modifier", 4)
+				new Field<Integer>("Value", 18, Field.Type.INT),
+				new Field<Integer>("Modifier", 4, Field.Type.INT)
 			};
 			Field<?>[] dexFields = {
-				new Field<Integer>("Value", 18),
-				new Field<Integer>("Modifier", 4)
+				new Field<Integer>("Value", 18, Field.Type.INT),
+				new Field<Integer>("Modifier", 4, Field.Type.INT)
 			};
 			Field<?>[] conFields = {
-				new Field<Integer>("Value", 18),
-				new Field<Integer>("Modifier", 4)
+				new Field<Integer>("Value", 18, Field.Type.INT),
+				new Field<Integer>("Modifier", 4, Field.Type.INT)
 			};
 			Field<?>[] intFields = {
-				new Field<Integer>("Value", 18),
-				new Field<Integer>("Modifier", 4)
+				new Field<Integer>("Value", 18, Field.Type.INT),
+				new Field<Integer>("Modifier", 4, Field.Type.INT)
 			};
 			Field<?>[] wisFields = {
-				new Field<Integer>("Value", 18),
-				new Field<Integer>("Modifier", 4)
+				new Field<Integer>("Value", 18, Field.Type.INT),
+				new Field<Integer>("Modifier", 4, Field.Type.INT)
 			};
 			Field<?>[] chaFields = {
-				new Field<Integer>("Value", 18),
-				new Field<Integer>("Modifier", 4)
+				new Field<Integer>("Value", 18, Field.Type.INT),
+				new Field<Integer>("Modifier", 4, Field.Type.INT)
 			};
 			Feature[] featsList = {
 				new Feature("Strength", "Strength Ability", new Fields(strFields), null, abilityTags),
@@ -72,19 +73,21 @@ public class TestData {
 			Features feats = new Features(featsList);
 			
 			// INVENTORY
-			Item[] items = {
+			Item[] itemList = {
 				new Item(UUID.randomUUID(), "Dagger", "Stab with it lol", 1, 1, null),
 				new Item(UUID.randomUUID(), "Sword", "Stab with it from farther away lol", 15, 10, null),
 				new Item(UUID.randomUUID(), "Potion of Healing", "Get them life points back", 0.5, 20, null, true),
 				new Item(UUID.randomUUID(), "Potion of Healing", "Get them life points back", 0.5, 20, null, true),
+				new Item(UUID.randomUUID(), "Potion of Healing", "Get them life points back", 0.5, 20, null, true),
 			};
 			Field<?>[] inventoryBaseFields = {
-				new Field<Integer>("Carry_Weight", 250),
-				new Field<Integer>("Current_Weight", 0)
+				new Field<Integer>("Carry_Weight", 250, Field.Type.INT),
+				new Field<Integer>("Current_Weight", 0, Field.Type.INT)
 			};
 			Feature[] inventoryFeatList = {
 				new Feature("Base", "Basic inventory feature.", new Fields(inventoryBaseFields), null, null)
 			};
+			Items items = new Items(itemList);
 			Features inventoryFeats = new Features(inventoryFeatList);
 			Inventory inventory = new Inventory(items, inventoryFeats);
 			
