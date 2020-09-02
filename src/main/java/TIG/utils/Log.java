@@ -40,7 +40,7 @@ public class Log {
 	
 	private static Level currentLevel = Level.DEBUG;
 	
-	private static final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy @ HH:mm:ss");
+	private static final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy | HH:mm:ss");
 	
 	// Create the log file based on the current day
 	// Log files are separated by the day the program was run on.  So all logs from
@@ -58,8 +58,6 @@ public class Log {
 			File logDir = new File(LOG_PATH);
 			if(!logDir.exists())
 				logDir.mkdirs();
-			
-			System.out.println(logDir.getAbsolutePath());
 			
 			// Find the latest log file
 			for(File f : logDir.listFiles()) {
@@ -111,10 +109,9 @@ public class Log {
 			// Write to the log
 			PrintWriter pw = new PrintWriter(new FileWriter(Log.LOG_FILE, true), true);
 			
-			pw.print("[");
-			pw.print(level);
-			pw.print(" - ");
 			pw.print(dateFormat.format(new Date()));
+			pw.print(" [");
+			pw.print(level);
 			pw.print("]: ");
 			pw.println(msg);
 			

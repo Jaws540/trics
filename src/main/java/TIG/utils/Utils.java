@@ -16,6 +16,7 @@ import TIG.features.Fields;
 import TIG.items.Items;
 import TIG.notes.NoteElement;
 import TIG.scripts.Scripts;
+import TIG.scripts.compiler.Token;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
 import TIG.utils.gsonAdapters.FeaturesSerializer;
@@ -57,7 +58,7 @@ public class Utils {
 			
 			return true;
 		} catch (IOException e) {
-			Log.error("Failed to save data to file!  " + e.getMessage());
+			Log.error("Failed to save data to file!");
 			return false;
 		}
 	}
@@ -67,7 +68,7 @@ public class Utils {
 		try {
 			return Files.readAllBytes(saveFile.toPath());
 		} catch (IOException e) {
-			Log.error("Failed to read data from file!  Path: '" + path + "'.  " + e.getMessage());
+			Log.error("Failed to read data from file!  Path: '" + path + "'.");
 			return null;
 		}
 	}
@@ -92,6 +93,14 @@ public class Utils {
 			return null;
 		
 		return new String(raw);
+	}
+	
+	public static String getSName(String name) {
+		return name.replaceAll("[^\\w]", "_");
+	}
+	
+	public static boolean validID(String id) {
+		return Token.ID.matches(id) > 0;
 	}
 
 }

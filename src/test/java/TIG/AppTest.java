@@ -37,7 +37,7 @@ public class AppTest {
     // TODO: Add more specific lexer and parser tests
     
     @Test public void testInterpreterCompile() {
-    	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.txt", null);
+    	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.cis", null);
     	assertTrue(interp.compile());
     }
 }

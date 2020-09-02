@@ -1,7 +1,6 @@
 package TIG.utils;
 
 import java.util.Date;
-import java.util.UUID;
 
 import TIG.characterSheet.CharacterSheet;
 import TIG.characterSheet.Info;
@@ -63,29 +62,27 @@ public class TestData {
 				new Field<Integer>("Modifier", 4, Field.Type.INT)
 			};
 			Feature[] featsList = {
-				new Feature("Strength", "Strength Ability", new Fields(strFields), null, abilityTags),
-				new Feature("Dexterity", "Dexterity Ability", new Fields(dexFields), null, abilityTags),
-				new Feature("Constitution", "Constitution Ability", new Fields(conFields), null, abilityTags),
-				new Feature("Intelligence", "Intelligence Ability", new Fields(intFields), null, abilityTags),
-				new Feature("Wisdom", "Wisdom Ability", new Fields(wisFields), null, abilityTags),
-				new Feature("Charisma", "Charisma Ability", new Fields(chaFields), null, abilityTags),
+				new Feature("Strength", "Strength", "Strength Ability", new Fields(strFields), null, abilityTags),
+				new Feature("Dexterity", "Dexterity", "Dexterity Ability", new Fields(dexFields), null, abilityTags),
+				new Feature("Constitution", "Constitution", "Constitution Ability", new Fields(conFields), null, abilityTags),
+				new Feature("Intelligence", "Intelligence", "Intelligence Ability", new Fields(intFields), null, abilityTags),
+				new Feature("Wisdom", "Wisdom", "Wisdom Ability", new Fields(wisFields), null, abilityTags),
+				new Feature("Charisma", "Charisma", "Charisma Ability", new Fields(chaFields), null, abilityTags),
 			};
 			Features feats = new Features(featsList);
 			
 			// INVENTORY
 			Item[] itemList = {
-				new Item(UUID.randomUUID(), "Dagger", "Stab with it lol", 1, 1, null),
-				new Item(UUID.randomUUID(), "Sword", "Stab with it from farther away lol", 15, 10, null),
-				new Item(UUID.randomUUID(), "Potion of Healing", "Get them life points back", 0.5, 20, null, true),
-				new Item(UUID.randomUUID(), "Potion of Healing", "Get them life points back", 0.5, 20, null, true),
-				new Item(UUID.randomUUID(), "Potion of Healing", "Get them life points back", 0.5, 20, null, true),
+				new Item("dagger", "Dagger", "Stab with it lol", 1, 1, 1, null),
+				new Item("sword", "Sword", "Stab with it from farther away lol", 15, 10, 1, null),
+				new Item("potion_of_healing", "Potion of Healing", "Get them life points back", 0.5, 20, 3, null),
 			};
 			Field<?>[] inventoryBaseFields = {
 				new Field<Integer>("Carry_Weight", 250, Field.Type.INT),
-				new Field<Integer>("Current_Weight", 0, Field.Type.INT)
+				new Field<Integer>("Current_Weight", 0, Field.Type.INT),
 			};
 			Feature[] inventoryFeatList = {
-				new Feature("Base", "Basic inventory feature.", new Fields(inventoryBaseFields), null, null)
+				new Feature("Base_Inventory", "Base", "Basic inventory feature.", new Fields(inventoryBaseFields), null, null),
 			};
 			Items items = new Items(itemList);
 			Features inventoryFeats = new Features(inventoryFeatList);

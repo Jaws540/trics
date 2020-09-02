@@ -30,7 +30,8 @@
   },
   "features": [
     {
-      "name": "Strength",
+      "id": "Strength",
+      "displayName": "Strength",
       "description": "Strength Ability",
       "fields": [
         {
@@ -51,7 +52,8 @@
       ]
     },
     {
-      "name": "Dexterity",
+      "id": "Dexterity",
+      "displayName": "Dexterity",
       "description": "Dexterity Ability",
       "fields": [
         {
@@ -72,7 +74,8 @@
       ]
     },
     {
-      "name": "Constitution",
+      "id": "Constitution",
+      "displayName": "Constitution",
       "description": "Constitution Ability",
       "fields": [
         {
@@ -93,7 +96,8 @@
       ]
     },
     {
-      "name": "Intelligence",
+      "id": "Intelligence",
+      "displayName": "Intelligence",
       "description": "Intelligence Ability",
       "fields": [
         {
@@ -114,7 +118,8 @@
       ]
     },
     {
-      "name": "Wisdom",
+      "id": "Wisdom",
+      "displayName": "Wisdom",
       "description": "Wisdom Ability",
       "fields": [
         {
@@ -135,7 +140,8 @@
       ]
     },
     {
-      "name": "Charisma",
+      "id": "Charisma",
+      "displayName": "Charisma",
       "description": "Charisma Ability",
       "fields": [
         {
@@ -159,12 +165,13 @@
   "inventory": {
     "items": [
       {
-        "uuid": "09e97a7b-29e1-4305-aa2b-3cf0142c768c",
-        "name": "Dagger",
+        "id": "dagger",
+        "displayName": "Dagger",
         "description": "Stab with it lol",
         "feats": [
           {
-            "name": "std::item",
+            "id": "std::item",
+            "displayName": "Item",
             "description": "Basic attributes for all items",
             "fields": [
               {
@@ -178,9 +185,9 @@
                 "type": "DOUBLE"
               },
               {
-                "value": false,
-                "name": "stackable",
-                "type": "BOOL"
+                "value": 1,
+                "name": "count",
+                "type": "INT"
               }
             ],
             "scripts": [],
@@ -190,12 +197,13 @@
         "tags": []
       },
       {
-        "uuid": "c1221310-0fb9-40a8-b802-ef798d0d714f",
-        "name": "Sword",
+        "id": "sword",
+        "displayName": "Sword",
         "description": "Stab with it from farther away lol",
         "feats": [
           {
-            "name": "std::item",
+            "id": "std::item",
+            "displayName": "Item",
             "description": "Basic attributes for all items",
             "fields": [
               {
@@ -209,9 +217,9 @@
                 "type": "DOUBLE"
               },
               {
-                "value": false,
-                "name": "stackable",
-                "type": "BOOL"
+                "value": 1,
+                "name": "count",
+                "type": "INT"
               }
             ],
             "scripts": [],
@@ -221,12 +229,13 @@
         "tags": []
       },
       {
-        "uuid": "04f33f93-39eb-47a6-83cd-3fde33d81c3d",
-        "name": "Potion of Healing",
+        "id": "potion_of_healing",
+        "displayName": "Potion of Healing",
         "description": "Get them life points back",
         "feats": [
           {
-            "name": "std::item",
+            "id": "std::item",
+            "displayName": "Item",
             "description": "Basic attributes for all items",
             "fields": [
               {
@@ -240,71 +249,9 @@
                 "type": "DOUBLE"
               },
               {
-                "value": true,
-                "name": "stackable",
-                "type": "BOOL"
-              }
-            ],
-            "scripts": [],
-            "tags": []
-          }
-        ],
-        "tags": []
-      },
-      {
-        "uuid": "6dadb6a2-ee2b-4c68-97df-66399e9e69a4",
-        "name": "Potion of Healing",
-        "description": "Get them life points back",
-        "feats": [
-          {
-            "name": "std::item",
-            "description": "Basic attributes for all items",
-            "fields": [
-              {
-                "value": 0.5,
-                "name": "weight",
-                "type": "DOUBLE"
-              },
-              {
-                "value": 20.0,
-                "name": "value",
-                "type": "DOUBLE"
-              },
-              {
-                "value": true,
-                "name": "stackable",
-                "type": "BOOL"
-              }
-            ],
-            "scripts": [],
-            "tags": []
-          }
-        ],
-        "tags": []
-      },
-      {
-        "uuid": "1069ed78-4302-4fc8-a1d7-e7e33c914d4e",
-        "name": "Potion of Healing",
-        "description": "Get them life points back",
-        "feats": [
-          {
-            "name": "std::item",
-            "description": "Basic attributes for all items",
-            "fields": [
-              {
-                "value": 0.5,
-                "name": "weight",
-                "type": "DOUBLE"
-              },
-              {
-                "value": 20.0,
-                "name": "value",
-                "type": "DOUBLE"
-              },
-              {
-                "value": true,
-                "name": "stackable",
-                "type": "BOOL"
+                "value": 3,
+                "name": "count",
+                "type": "INT"
               }
             ],
             "scripts": [],
@@ -316,7 +263,8 @@
     ],
     "features": [
       {
-        "name": "Base",
+        "id": "Base_Inventory",
+        "displayName": "Base",
         "description": "Basic inventory feature.",
         "fields": [
           {
@@ -339,19 +287,19 @@
     "children": [
       {
         "text": "Lol, idk, I just needed something to test the JSON formatting with",
-        "date": "Sep 1, 2020 6:01:35 PM",
+        "date": "Sep 1, 2020 8:34:02 PM",
         "title": "Something"
       },
       {
         "children": [
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Sep 1, 2020 6:01:35 PM",
+            "date": "Sep 1, 2020 8:34:02 PM",
             "title": "Session 1"
           },
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Sep 1, 2020 6:01:35 PM",
+            "date": "Sep 1, 2020 8:34:02 PM",
             "title": "Session 2"
           }
         ],

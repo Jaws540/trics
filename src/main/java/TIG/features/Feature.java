@@ -11,16 +11,18 @@ import TIG.tags.Taggable;
  */
 public class Feature extends Taggable {
 	
-	private final String name;
+	private final String id;
+	private final String displayName;
 	private final String description;
 	
 	private final Fields fields;
 	
 	private final Scripts scripts;
 	
-	public Feature(String name, String desc, Fields fields, Scripts scripts) {
+	public Feature(String id, String displayName, String desc, Fields fields, Scripts scripts) {
 		super();
-		this.name = name;
+		this.id = id;
+		this.displayName = displayName;
 		this.description = desc;
 		
 		if(fields != null)
@@ -36,15 +38,16 @@ public class Feature extends Taggable {
 	
 	/**
 	 * Creates a new feature
-	 * @param id - A randomly generated UUID specific to this feature (not this instance!)
-	 * @param name - Name of the feature
+	 * @param id - Name of the feature
+	 * @param displayName - Name of this feature to show to the user
 	 * @param desc - Description of the feature and what it does
 	 * @param fields - Information specific to this feature.  Ex: Ki Points
 	 * @param scripts - Actions that can be done wither by a trigger or manually by the user
 	 */
-	public Feature(String name, String desc, Fields fields, Scripts scripts, Tag[] tags) {
+	public Feature(String id, String displayName, String desc, Fields fields, Scripts scripts, Tag[] tags) {
 		super(tags);
-		this.name = name;
+		this.id = id;
+		this.displayName = displayName;
 		this.description = desc;
 		
 		if(fields != null)
@@ -59,10 +62,19 @@ public class Feature extends Taggable {
 	}
 	
 	/**
-	 * @return The name of the feature
+	 * This must be a valid identifier
+	 * @return The ID of the feature, for internal/script use only.
 	 */
-	public String getName() {
-		return this.name;
+	public String getID() {
+		return this.id;
+	}
+	
+	/**
+	 * The name used to display to the end user, not for internal use
+	 * @return
+	 */
+	public String getDisplayName() {
+		return displayName;
 	}
 	
 	/**

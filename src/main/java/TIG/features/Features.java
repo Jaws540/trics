@@ -7,6 +7,7 @@ import java.util.List;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.utils.Utils;
 
 public class Features implements Environment {
 	
@@ -31,9 +32,9 @@ public class Features implements Environment {
 		return this.features.toArray(new Feature[this.features.size()]);
 	}
 	
-	public boolean hasFeature(String featureName) {
+	public boolean hasFeature(String id) {
 		for(Feature f : this.features) {
-			if(f.getName().equalsIgnoreCase(featureName)) {
+			if(f.getID().equalsIgnoreCase(id)) {
 				return true;
 			}
 		}
@@ -42,26 +43,26 @@ public class Features implements Environment {
 	}
 	
 	public String[] getFeatureNames() {
-		List<String> names = new ArrayList<String>();
+		List<String> ids = new ArrayList<String>();
 		for(Feature f : this.features) {
-			names.add(f.getName());
+			ids.add(f.getID());
 		}
-		return (String[]) names.toArray();
+		return (String[]) ids.toArray();
 	}
 	
-	public Feature getFeature(String featureName) {
+	public Feature getFeature(String id) {
 		for(Feature f : this.features) {
-			if(f.getName().equalsIgnoreCase(featureName)) {
+			if(f.getID().equalsIgnoreCase(id)) {
 				return f;
 			}
 		}
 		
 		return null;
 	}
+	
 	public boolean addFeature(Feature feature) {
-		if(!this.hasFeature(feature.getName())) {
+		if(!this.hasFeature(feature.getID()))
 			return this.features.add(feature);
-		}
 		
 		return false;
 	}
@@ -72,6 +73,7 @@ public class Features implements Environment {
 
 	@Override
 	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+		Feature f = getFeature(identifier);
 		return null;
 	}
 

@@ -28,9 +28,9 @@ public class Items implements Environment {
 	 * @param itemUUID - The UUID of the item being looked for
 	 * @return Returns true if there is at least one instance of an item with the same item UUID in the list of items
 	 */
-	public boolean hasItem(UUID itemUUID) {
+	public boolean hasItem(String id) {
 		for(Item i : this.items) {
-			if(i.getUUID().equals(itemUUID)) {
+			if(i.getID().equals(id)) {
 				return true;
 			}
 		}
@@ -39,7 +39,10 @@ public class Items implements Environment {
 	}
 	
 	public boolean addItem(Item item) {
-		return items.add(item);
+		if(!hasItem(item.getID()))
+			return items.add(item);
+		
+		return false;
 	}
 	
 	public boolean removeItem(Item item) {
