@@ -6,8 +6,9 @@ import java.util.List;
 
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
+import TIG.scripts.compiler.exceptions.ExistenceException;
+import TIG.scripts.compiler.exceptions.ImmutableException;
 import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
-import TIG.utils.Utils;
 
 public class Features implements Environment {
 	
@@ -74,12 +75,16 @@ public class Features implements Environment {
 	@Override
 	public Entry envGet(String identifier) throws InterpreterRuntimeException {
 		Feature f = getFeature(identifier);
-		return null;
+		if(f != null) {
+			return new Entry(Entry.Type.ENV, f);
+		}
+		
+		throw new ExistenceException();
 	}
 
 	@Override
 	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
-		return false;
+		throw new ImmutableException();
 	}
 
 }

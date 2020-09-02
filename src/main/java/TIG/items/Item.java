@@ -4,11 +4,17 @@ import TIG.features.Feature;
 import TIG.features.Features;
 import TIG.features.Field;
 import TIG.features.Fields;
+import TIG.scripts.Def;
+import TIG.scripts.Entry;
+import TIG.scripts.Environment;
+import TIG.scripts.compiler.exceptions.ImmutableException;
+import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
 import TIG.utils.Log;
+import TIG.utils.Utils;
 
-public class Item extends Taggable {
+public class Item extends Taggable implements Environment {
 	
 	/*
 	 * std::item Feature Fields:
@@ -47,7 +53,7 @@ public class Item extends Taggable {
 	
 	public Item(String id, String displayName, String desc, double weight, double value, int count, Features feats) {
 		super();
-		this.id = id;
+		this.id = Utils.validateID(id);
 		this.displayName = displayName;
 		this.description = desc;
 		
@@ -70,7 +76,7 @@ public class Item extends Taggable {
 	 */
 	public Item(String id, String displayName, String desc, double weight, double value, int count, Features feats, Tag[] tags) {
 		super(tags);
-		this.id = id;
+		this.id = Utils.validateID(id);
 		this.displayName = displayName;
 		this.description = desc;
 		
@@ -114,6 +120,29 @@ public class Item extends Taggable {
 	
 	public Features getFeatures() {
 		return feats;
+	}
+
+	@Override
+	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+		switch(identifier) {
+			case Def.DISPLAY_NAME:
+				return new Entry(Entry.Type.STRING, displayName);
+			case Def.DESCRIPTION:
+				return new Entry(Entry.Type.STRING, description);
+			default:
+				return feats.envGet(identifier);
+		}
+	}
+
+	@Override
+	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+		switch(identifier) {
+		case Def.DISPLAY_NAME:
+		case Def.DESCRIPTION:
+			throw new ImmutableException();
+		default:
+			return feats.envPut(identifier, obj);
+		}
 	}
 
 }

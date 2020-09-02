@@ -3,10 +3,12 @@ package TIG.items;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
+import TIG.scripts.compiler.exceptions.ExistenceException;
+import TIG.scripts.compiler.exceptions.ImmutableException;
+import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
 
 public class Items implements Environment {
 	
@@ -52,15 +54,29 @@ public class Items implements Environment {
 	public Item[] getItems() {
 		return (Item[]) this.items.toArray();
 	}
-
-	@Override
-	public Entry envGet(String identifier) {
+	
+	public Item getItem(String id) {
+		for(Item i : this.items) {
+			if(i.getID().equalsIgnoreCase(id)) {
+				return i;
+			}
+		}
+		
 		return null;
 	}
 
 	@Override
-	public boolean envPut(String identifier, Entry obj) {
-		return false;
+	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+		Item item = getItem(identifier);
+		if(item != null)
+			return new Entry(Entry.Type.ENV, item);
+		
+		throw new ExistenceException();
+	}
+
+	@Override
+	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+		throw new ImmutableException();
 	}
 
 }

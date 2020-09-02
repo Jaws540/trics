@@ -6,8 +6,8 @@ import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.compiler.exceptions.ExistenceException;
+import TIG.scripts.compiler.exceptions.ImmutableException;
 import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
-import TIG.scripts.compiler.exceptions.TypeException;
 import TIG.utils.Log;
 
 /**
@@ -61,9 +61,8 @@ public class CharacterSheet implements Environment {
 	}
 
 	@Override
-	public boolean envPut(String identifier, Entry obj) {
-		// No one should be able to edit an environment
-		return false;
+	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+		throw new ImmutableException();
 	}
 
 }

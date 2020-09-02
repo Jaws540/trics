@@ -8,8 +8,6 @@ public class Entry {
 		BOOL,
 		STRING,
 		ENV,
-		FEAT,
-		FIELD,
 	}
 	
 	public final Type type;

@@ -3,8 +3,10 @@ package TIG.scripts.compiler;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import TIG.scripts.Def;
+
 public enum Token {
-	// Regex characters needing to be escaped: .[]^-&$?*+,{}|():=!<>
+	// Regex characters needing to be escaped: .[]^-&$?*+,{}|():=!<>s
 	
 	// Control
 	ENTRY("script"),
@@ -63,7 +65,7 @@ public enum Token {
 	STRING_LITERAL("\"[^\"]*\"", "string literal"), // A sequence of characters that are not the " character surrounded by "s
 
 	// IDs
-	ID("[a-zA-Z_][a-zA-Z0-9_:]*", "identifier"),
+	ID(Def.ID_REGEX, "identifier"),
 	
 	// Whitespace
 	WHITESPACE("\\s+", "whitespace");

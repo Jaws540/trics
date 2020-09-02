@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,8 +16,8 @@ import TIG.features.Features;
 import TIG.features.Fields;
 import TIG.items.Items;
 import TIG.notes.NoteElement;
+import TIG.scripts.Def;
 import TIG.scripts.Scripts;
-import TIG.scripts.compiler.Token;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
 import TIG.utils.gsonAdapters.FeaturesSerializer;
@@ -45,6 +46,12 @@ public class Utils {
 		Utils.gson = builder.create();
 	}
 	
+	/**
+	 * Saves a byte array to the specified path
+	 * @param bytes - Data to save
+	 * @param path - Absolute path to save file
+	 * @return true on success, false otherwise
+	 */
 	private static boolean saveBytes(byte[] bytes, String path) {
 		File saveFile = new File(path);
 		try {
@@ -63,6 +70,11 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * Loads a byte array from the specified path
+	 * @param path - Absolute path to the saved file
+	 * @return A byte array on success, null otherwise
+	 */
 	private static byte[] loadBytes(String path) {
 		File saveFile = new File(path);
 		try {
@@ -73,6 +85,12 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * Loads a character sheet from the given path to a character save file
+	 * @param filePath - Absolute path to character sheet save file
+	 * @return CharacterSheet on success, null otherwise
+	 * @throws JsonSyntaxException - Indicates a malformed save file
+	 */
 	public static CharacterSheet loadCharacter(String filePath) throws JsonSyntaxException {
 		byte[] raw = loadBytes(filePath);
 		if(raw == null)
@@ -83,10 +101,21 @@ public class Utils {
 		return output;
 	}
 	
+	/**
+	 * Saves an object to the specified path
+	 * @param obj - Object to serialize to JSON format
+	 * @param path - Absolute path to the save file
+	 * @return true on success, false otherwise
+	 */
 	public static boolean saveJSON(Object obj, String path) {
 		return saveBytes(Utils.gson.toJson(obj).getBytes(), path);
 	}
 	
+	/**
+	 * Loads a script from the path
+	 * @param src_path - Absolute path to the script file
+	 * @return The raw source string of the script on success, null otherwise
+	 */
 	public static String loadScript(String src_path) {
 		byte[] raw = loadBytes(src_path);
 		if(raw == null)
@@ -95,12 +124,23 @@ public class Utils {
 		return new String(raw);
 	}
 	
-	public static String getSName(String name) {
-		return name.replaceAll("[^\\w]", "_");
-	}
-	
-	public static boolean validID(String id) {
-		return Token.ID.matches(id) > 0;
+	/**
+	 * Validates an ID for use as a valid identifier in the program and for recognizability in scripts
+	 * @param id - ID to test for validity
+	 * @return A valid identifier.  If the id given is already a valid identifier, it will simply be returned.  If 
+	 * an invalid identifier is given, this will return a valid identifier based on the given id.
+	 */
+	public static String validateID(String id) {
+		String regex = "^" + Def.ID_REGEX + "$";
+		if(Pattern.matches(regex, id)) {
+			return id;
+		}else {
+			String out = id.replaceAll("[^a-zA-Z0-9_:]", "");
+			if(!Pattern.matches(regex, out))
+				out = "__" + out;
+			Log.warn("Invalid identifier.  '" + id + "' is not a valid ID.  Modified replacement '" + out + "'.");
+			return out;
+		}
 	}
 
 }

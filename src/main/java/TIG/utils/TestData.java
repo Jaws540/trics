@@ -82,7 +82,7 @@ public class TestData {
 				new Field<Integer>("Current_Weight", 0, Field.Type.INT),
 			};
 			Feature[] inventoryFeatList = {
-				new Feature("Base_Inventory", "Base", "Basic inventory feature.", new Fields(inventoryBaseFields), null, null),
+				new Feature("dnd::inventory", "Base", "Basic inventory feature.", new Fields(inventoryBaseFields), null, null),
 			};
 			Items items = new Items(itemList);
 			Features inventoryFeats = new Features(inventoryFeatList);

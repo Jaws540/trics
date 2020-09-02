@@ -1,15 +1,21 @@
 package TIG.features;
 
+import TIG.scripts.Def;
+import TIG.scripts.Entry;
+import TIG.scripts.Environment;
 import TIG.scripts.Scripts;
+import TIG.scripts.compiler.exceptions.ImmutableException;
+import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
+import TIG.utils.Utils;
 
 /**
  * The main unit for values a character has
  * @author Jacob
  *
  */
-public class Feature extends Taggable {
+public class Feature extends Taggable implements Environment {
 	
 	private final String id;
 	private final String displayName;
@@ -21,7 +27,7 @@ public class Feature extends Taggable {
 	
 	public Feature(String id, String displayName, String desc, Fields fields, Scripts scripts) {
 		super();
-		this.id = id;
+		this.id = Utils.validateID(id);
 		this.displayName = displayName;
 		this.description = desc;
 		
@@ -46,7 +52,7 @@ public class Feature extends Taggable {
 	 */
 	public Feature(String id, String displayName, String desc, Fields fields, Scripts scripts, Tag[] tags) {
 		super(tags);
-		this.id = id;
+		this.id = Utils.validateID(id);
 		this.displayName = displayName;
 		this.description = desc;
 		
@@ -90,6 +96,32 @@ public class Feature extends Taggable {
 	
 	public Scripts getScripts() {
 		return this.scripts;
+	}
+
+	@Override
+	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+		switch(identifier) {
+			case Def.DISPLAY_NAME:
+				return new Entry(Entry.Type.STRING, displayName);
+			case Def.DESCRIPTION:
+				return new Entry(Entry.Type.STRING, description);
+			case Def.SCRIPTS:
+				return new Entry(Entry.Type.ENV, scripts);
+			default:
+				return fields.envGet(identifier);
+		}
+	}
+
+	@Override
+	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+		switch(identifier) {
+			case Def.DISPLAY_NAME:
+			case Def.DESCRIPTION:
+			case Def.SCRIPTS:
+				throw new ImmutableException();
+			default:
+				return fields.envPut(identifier, obj);
+		}
 	}
 
 }

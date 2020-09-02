@@ -5,17 +5,17 @@
     "otherData": [
       {
         "value": 6,
-        "name": "Level",
+        "id": "Level",
         "type": "INT"
       },
       {
         "value": 25000,
-        "name": "EXP",
+        "id": "EXP",
         "type": "INT"
       },
       {
         "value": "Dragonborn",
-        "name": "Race",
+        "id": "Race",
         "type": "STRING"
       },
       {
@@ -23,7 +23,7 @@
           "Fighter",
           "Wizard"
         ],
-        "name": "Classes",
+        "id": "Classes",
         "type": "INT"
       }
     ]
@@ -36,12 +36,12 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value",
+          "id": "Value",
           "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier",
+          "id": "Modifier",
           "type": "INT"
         }
       ],
@@ -58,12 +58,12 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value",
+          "id": "Value",
           "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier",
+          "id": "Modifier",
           "type": "INT"
         }
       ],
@@ -80,12 +80,12 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value",
+          "id": "Value",
           "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier",
+          "id": "Modifier",
           "type": "INT"
         }
       ],
@@ -102,12 +102,12 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value",
+          "id": "Value",
           "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier",
+          "id": "Modifier",
           "type": "INT"
         }
       ],
@@ -124,12 +124,12 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value",
+          "id": "Value",
           "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier",
+          "id": "Modifier",
           "type": "INT"
         }
       ],
@@ -146,12 +146,12 @@
       "fields": [
         {
           "value": 18,
-          "name": "Value",
+          "id": "Value",
           "type": "INT"
         },
         {
           "value": 4,
-          "name": "Modifier",
+          "id": "Modifier",
           "type": "INT"
         }
       ],
@@ -176,17 +176,17 @@
             "fields": [
               {
                 "value": 1.0,
-                "name": "weight",
+                "id": "weight",
                 "type": "DOUBLE"
               },
               {
                 "value": 1.0,
-                "name": "value",
+                "id": "value",
                 "type": "DOUBLE"
               },
               {
                 "value": 1,
-                "name": "count",
+                "id": "count",
                 "type": "INT"
               }
             ],
@@ -208,17 +208,17 @@
             "fields": [
               {
                 "value": 15.0,
-                "name": "weight",
+                "id": "weight",
                 "type": "DOUBLE"
               },
               {
                 "value": 10.0,
-                "name": "value",
+                "id": "value",
                 "type": "DOUBLE"
               },
               {
                 "value": 1,
-                "name": "count",
+                "id": "count",
                 "type": "INT"
               }
             ],
@@ -240,17 +240,17 @@
             "fields": [
               {
                 "value": 0.5,
-                "name": "weight",
+                "id": "weight",
                 "type": "DOUBLE"
               },
               {
                 "value": 20.0,
-                "name": "value",
+                "id": "value",
                 "type": "DOUBLE"
               },
               {
                 "value": 3,
-                "name": "count",
+                "id": "count",
                 "type": "INT"
               }
             ],
@@ -269,12 +269,12 @@
         "fields": [
           {
             "value": 250,
-            "name": "Carry_Weight",
+            "id": "Carry_Weight",
             "type": "INT"
           },
           {
             "value": 0,
-            "name": "Current_Weight",
+            "id": "Current_Weight",
             "type": "INT"
           }
         ],
@@ -287,19 +287,19 @@
     "children": [
       {
         "text": "Lol, idk, I just needed something to test the JSON formatting with",
-        "date": "Sep 1, 2020 8:34:02 PM",
+        "date": "Sep 1, 2020 9:12:12 PM",
         "title": "Something"
       },
       {
         "children": [
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Sep 1, 2020 8:34:02 PM",
+            "date": "Sep 1, 2020 9:12:12 PM",
             "title": "Session 1"
           },
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Sep 1, 2020 8:34:02 PM",
+            "date": "Sep 1, 2020 9:12:12 PM",
             "title": "Session 2"
           }
         ],
