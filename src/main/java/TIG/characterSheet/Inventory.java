@@ -5,10 +5,8 @@ import TIG.items.Items;
 import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.ExistenceException;
 import TIG.scripts.compiler.exceptions.ImmutableException;
 import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
-import TIG.utils.Log;
 
 public class Inventory implements Environment {
 	
