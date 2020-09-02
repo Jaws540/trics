@@ -14,7 +14,7 @@ public class Log {
 	public enum Level {
 		DEBUG(0),
 		INFO(1),
-		WARN(2),
+		WARNING(2),
 		ERROR(3),
 		FATAL(4);
 		
@@ -137,8 +137,8 @@ public class Log {
 	}
 	
 	public static void warn(String message) {
-		if(shouldLog(Level.WARN))
-			write(Level.WARN, message);
+		if(shouldLog(Level.WARNING))
+			write(Level.WARNING, message);
 	}
 	
 	public static void error(String message) {

@@ -65,7 +65,7 @@ public class Fields implements Environment {
 				case DOUBLE:
 					return new Entry(Entry.Type.DOUBLE, (Double) f.getValue());
 				case INT:
-					return new Entry(Entry.Type.INT, (Integer) f.getValue());
+					return new Entry(Entry.Type.INT, ((Double) f.getValue()).intValue());
 				case STRING:
 					return new Entry(Entry.Type.STRING, (String) f.getValue());
 				default:
@@ -90,16 +90,16 @@ public class Fields implements Environment {
 				// Set
 				switch(f.getType()) {
 					case BOOL:
-						((Field<Boolean>) f).setValue((Boolean) obj.obj);
+						((Field<Boolean>) f).setValue((Boolean) obj.val);
 						return true;
 					case DOUBLE:
-						((Field<Double>) f).setValue((Double) obj.obj);
+						((Field<Double>) f).setValue((Double) obj.val);
 						return true;
 					case INT:
-						((Field<Integer>) f).setValue((Integer) obj.obj);
+						((Field<Integer>) f).setValue((Integer) obj.val);
 						return true;
 					case STRING:
-						((Field<String>) f).setValue((String) obj.obj);
+						((Field<String>) f).setValue((String) obj.val);
 						return true;
 					default:
 						Log.error("Unknown type!");

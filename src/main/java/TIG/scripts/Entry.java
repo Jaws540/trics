@@ -11,11 +11,11 @@ public class Entry {
 	}
 	
 	public final Type type;
-	public final Object obj;
+	public final Object val;
 	
-	public Entry(Type type, Object obj) {
+	public Entry(Type type, Object val) {
 		this.type = type;
-		this.obj = obj;
+		this.val = val;
 	}
 
 }

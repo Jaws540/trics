@@ -22,14 +22,14 @@ public class TestData {
 	static {
 		try {
 			// INFO
-			String[] classList = {"Fighter", "Wizard"};
 			Field<?>[] otherInfo = {
 				new Field<Integer>("Level", 6, Field.Type.INT),
 				new Field<Integer>("EXP", 25000, Field.Type.INT),
 				new Field<String>("Race", "Dragonborn", Field.Type.STRING),
-				new Field<String[]>("Classes", classList, Field.Type.INT),
+				new Field<String>("Class1", "Fighter", Field.Type.STRING),
+				new Field<String>("Class2", "Wizard", Field.Type.STRING),
 			};
-			Info characterInfo = new Info("Illra", "Jacob", new Fields(otherInfo));
+			Info characterInfo = new Info("Jacob", "Illra", new Fields(otherInfo));
 			
 			// FEATURES
 			Tag[] abilityTags = {
@@ -78,8 +78,8 @@ public class TestData {
 				new Item("potion_of_healing", "Potion of Healing", "Get them life points back", 0.5, 20, 3, null),
 			};
 			Field<?>[] inventoryBaseFields = {
-				new Field<Integer>("Carry_Weight", 250, Field.Type.INT),
-				new Field<Integer>("Current_Weight", 0, Field.Type.INT),
+				new Field<Double>("Carry_Weight", 250.0, Field.Type.DOUBLE),
+				new Field<Double>("Current_Weight", 0.0, Field.Type.DOUBLE),
 			};
 			Feature[] inventoryFeatList = {
 				new Feature("dnd::inventory", "Base", "Basic inventory feature.", new Fields(inventoryBaseFields), null, null),

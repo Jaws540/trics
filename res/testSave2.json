@@ -1,7 +1,7 @@
 {
   "info": {
-    "playerName": "Illra",
-    "characterName": "Jacob",
+    "playerName": "Jacob",
+    "characterName": "Illra",
     "otherData": [
       {
         "value": 6,
@@ -19,12 +19,14 @@
         "type": "STRING"
       },
       {
-        "value": [
-          "Fighter",
-          "Wizard"
-        ],
-        "id": "Classes",
-        "type": "INT"
+        "value": "Fighter",
+        "id": "Class1",
+        "type": "STRING"
+      },
+      {
+        "value": "Wizard",
+        "id": "Class2",
+        "type": "STRING"
       }
     ]
   },
@@ -263,19 +265,19 @@
     ],
     "features": [
       {
-        "id": "Base_Inventory",
+        "id": "dnd::inventory",
         "displayName": "Base",
         "description": "Basic inventory feature.",
         "fields": [
           {
-            "value": 250,
+            "value": 250.0,
             "id": "Carry_Weight",
-            "type": "INT"
+            "type": "DOUBLE"
           },
           {
-            "value": 0,
+            "value": 0.0,
             "id": "Current_Weight",
-            "type": "INT"
+            "type": "DOUBLE"
           }
         ],
         "scripts": [],
@@ -287,19 +289,19 @@
     "children": [
       {
         "text": "Lol, idk, I just needed something to test the JSON formatting with",
-        "date": "Sep 1, 2020 9:12:12 PM",
+        "date": "Sep 1, 2020 10:39:22 PM",
         "title": "Something"
       },
       {
         "children": [
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Sep 1, 2020 9:12:12 PM",
+            "date": "Sep 1, 2020 10:39:22 PM",
             "title": "Session 1"
           },
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Sep 1, 2020 9:12:12 PM",
+            "date": "Sep 1, 2020 10:39:22 PM",
             "title": "Session 2"
           }
         ],

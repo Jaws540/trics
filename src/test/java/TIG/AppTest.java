@@ -10,7 +10,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import TIG.characterSheet.CharacterSheet;
+import TIG.scripts.Entry;
+import TIG.scripts.Environment;
 import TIG.scripts.compiler.Interpreter;
+import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
 import TIG.utils.TestData;
 import TIG.utils.Utils;
 
@@ -32,6 +35,114 @@ public class AppTest {
     		e.printStackTrace();
     		assertFalse(true);
     	}
+    }
+    
+    @Test public void testCharacterInfoEnvironment() {
+    	CharacterSheet character = null;
+    	try {
+    		character = Utils.loadCharacter(characterSavePath);
+    		assertNotNull(character);
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		assertFalse(true);
+    	}
+    	
+    	try {
+			Entry info = character.envGet("Info");
+			Environment infoEnv = (Environment) info.val;
+			
+			Entry playerName = infoEnv.envGet("playerName");
+			assertTrue(((String) playerName.val).equals("Jacob"));
+			
+			Entry characterName = infoEnv.envGet("characterName");
+			assertTrue(((String) characterName.val).equals("Illra"));
+			
+			Entry level = infoEnv.envGet("Level");
+			assertTrue((Integer) level.val == 6);
+			
+			Entry race = infoEnv.envGet("Race");
+			assertTrue(((String) race.val).equals("Dragonborn"));
+			
+		} catch (InterpreterRuntimeException e) {
+			e.printStackTrace();
+			assertFalse(true);
+		}
+    }
+    
+    @Test public void testCharacterFeaturesEnvironment() {
+    	CharacterSheet character = null;
+    	try {
+    		character = Utils.loadCharacter(characterSavePath);
+    		assertNotNull(character);
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		assertFalse(true);
+    	}
+    	
+    	try {
+			Entry feats = character.envGet("Features");
+			Environment featsEnv = (Environment) feats.val;
+			
+			Entry str = featsEnv.envGet("Strength");
+			Environment strEnv = (Environment) str.val;
+			
+			Entry strDisplayName = strEnv.envGet("displayName");
+			assertTrue(((String) strDisplayName.val).equals("Strength"));
+			
+			Entry strDescription = strEnv.envGet("description");
+			assertTrue(((String) strDescription.val).equals("Strength Ability"));
+			
+			Entry strVal = strEnv.envGet("Value");
+			assertTrue(((Integer) strVal.val) == 18);
+			
+		} catch (InterpreterRuntimeException e) {
+			e.printStackTrace();
+			assertFalse(true);
+		}
+    }
+    
+    @Test public void testCharacterInventoryEnvironment() {
+    	CharacterSheet character = null;
+    	try {
+    		character = Utils.loadCharacter(characterSavePath);
+    		assertNotNull(character);
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		assertFalse(true);
+    	}
+    	
+    	try {
+			Entry inv = character.envGet("Inventory");
+			Environment invEnv = (Environment) inv.val;
+			
+			Entry feats = invEnv.envGet("Features");
+			Environment featsEnv = (Environment) feats.val;
+			
+			Entry dndInv = featsEnv.envGet("dnd::inventory");
+			Environment dndInvEnv = (Environment) dndInv.val;
+			
+			Entry carryWeight = dndInvEnv.envGet("Carry_Weight");
+			assertTrue((Double) carryWeight.val == 250.0);
+			
+			Entry dagger = invEnv.envGet("dagger");
+			Environment daggerEnv = (Environment) dagger.val;
+			
+			Entry daggerDisplayName = daggerEnv.envGet("displayName");
+			assertTrue(((String) daggerDisplayName.val).equals("Dagger"));
+			
+			Entry daggerDescription = daggerEnv.envGet("description");
+			assertTrue(((String) daggerDescription.val).equals("Stab with it lol"));
+			
+			Entry daggerStdItem = daggerEnv.envGet("std::item");
+			Environment daggerStdItemEnv = (Environment) daggerStdItem.val;
+			
+			Entry daggerWeight = daggerStdItemEnv.envGet("weight");
+			assertTrue((Double) daggerWeight.val == 1.0);
+			
+		} catch (InterpreterRuntimeException e) {
+			e.printStackTrace();
+			assertFalse(true);
+		}
     }
     
     // TODO: Add more specific lexer and parser tests

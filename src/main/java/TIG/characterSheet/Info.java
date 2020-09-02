@@ -1,8 +1,10 @@
 package TIG.characterSheet;
 
 import TIG.features.Fields;
+import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
+import TIG.scripts.compiler.exceptions.ImmutableException;
 import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
 
 /**
@@ -43,12 +45,25 @@ public class Info implements Environment {
 
 	@Override
 	public Entry envGet(String identifier) throws InterpreterRuntimeException {
-		return otherData.envGet(identifier);
+		switch(identifier) {
+			case Def.PLAYER_NAME:
+				return new Entry(Entry.Type.STRING, playerName);
+			case Def.CHARACTER_NAME:
+				return new Entry(Entry.Type.STRING, characterName);
+			default:
+				return otherData.envGet(identifier);
+		}
 	}
 
 	@Override
 	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
-		return otherData.envPut(identifier, obj);
+		switch(identifier) {
+		case Def.PLAYER_NAME:
+		case Def.CHARACTER_NAME:
+			throw new ImmutableException();
+		default:
+			return otherData.envPut(identifier, obj);
+	}
 	}
 
 }

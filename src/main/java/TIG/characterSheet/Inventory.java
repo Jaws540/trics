@@ -52,14 +52,10 @@ public class Inventory implements Environment {
 	@Override
 	public Entry envGet(String identifier) throws InterpreterRuntimeException {
 		switch(identifier) {
-			case Def.ITEMS:
-				return new Entry(Entry.Type.ENV, items);
 			case Def.FEATURES:
 				return new Entry(Entry.Type.ENV, features);
 			default:
-				// Unknown environment
-				Log.error("Unknown Inventory environment.");
-				throw new ExistenceException();
+				return items.envGet(identifier);
 		}
 	}
 
