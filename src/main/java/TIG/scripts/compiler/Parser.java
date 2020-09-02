@@ -395,25 +395,27 @@ public class Parser {
 	}
 	
 	private Tree parseRoll() throws SyntaxException {
-		Tree simpleRoll = parseSimpleRoll();
-		if(lookahead() == Token.PLUS) {
-			MToken add = matchToken(Token.PLUS);
-			Tree expr = parseExpression();
-			return new Tree(TreeType.ADD_EXPR, simpleRoll, expr, add);
-		}else if(lookahead() == Token.MINUS) {
-			MToken sub = matchToken(Token.MINUS);
-			Tree expr = parseExpression();
-			return new Tree(TreeType.ADD_EXPR, simpleRoll, expr, sub);
-		}
-		
-		return simpleRoll;
-	}
-	
-	private Tree parseSimpleRoll() throws SyntaxException {
-		Tree numDie = new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
-		matchToken(Token.DIE);
+		Tree numDie = new
+		Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL)); matchToken(Token.DIE);
 		Tree numFaces = new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
 		return new Tree(TreeType.ROLL, numDie, numFaces);
 	}
+	
+	/*
+	 * private Tree parseRoll() throws SyntaxException { Tree simpleRoll =
+	 * parseSimpleRoll(); if(lookahead() == Token.PLUS) { MToken add =
+	 * matchToken(Token.PLUS); Tree expr = parseExpression(); return new
+	 * Tree(TreeType.ADD_EXPR, simpleRoll, expr, add); }else if(lookahead() ==
+	 * Token.MINUS) { MToken sub = matchToken(Token.MINUS); Tree expr =
+	 * parseExpression(); return new Tree(TreeType.ADD_EXPR, simpleRoll, expr, sub);
+	 * }
+	 * 
+	 * return simpleRoll; }
+	 * 
+	 * private Tree parseSimpleRoll() throws SyntaxException { Tree numDie = new
+	 * Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL)); matchToken(Token.DIE);
+	 * Tree numFaces = new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
+	 * return new Tree(TreeType.ROLL, numDie, numFaces); }
+	 */
 	
 }

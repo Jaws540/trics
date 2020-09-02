@@ -10,6 +10,6 @@ public class App {
     public static void main(String[] args) {
     	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.cis", null);
     	interp.compile();
-    	interp.run();
+    	//interp.run();
     }
 }
