@@ -395,8 +395,8 @@ public class Parser {
 	}
 	
 	private Tree parseRoll() throws SyntaxException {
-		Tree numDie = new
-		Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL)); matchToken(Token.DIE);
+		Tree numDie = new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
+		matchToken(Token.DIE);
 		Tree numFaces = new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
 		return new Tree(TreeType.ROLL, numDie, numFaces);
 	}

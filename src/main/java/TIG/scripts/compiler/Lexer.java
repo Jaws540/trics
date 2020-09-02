@@ -38,7 +38,10 @@ public class Lexer {
 					// Select this token if it is not whitespace and is the longest match
 					if(len > longestCount) {
 						if(t != Token.WHITESPACE)
-							longestMatch = new MToken(t, sub.substring(0, len), pos, len);
+							if(t == Token.STRING_LITERAL)
+								longestMatch = new MToken(t, sub.substring(1, len - 1), pos, len);
+							else
+								longestMatch = new MToken(t, sub.substring(0, len), pos, len);
 						else
 							whitespace = true;
 						longestCount = len;

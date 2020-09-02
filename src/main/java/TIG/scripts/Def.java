@@ -14,5 +14,8 @@ public class Def {
 	public static final String DISPLAY_NAME = "displayName";
 	public static final String DESCRIPTION = "description";
 	public static final String SCRIPTS = "scripts";
+	
+	// Standard Library Functions
+	public static final String DISPLAY = "Display";
 
 }

@@ -1,15 +1,21 @@
 package TIG.scripts.compiler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.compiler.exceptions.CompileException;
 import TIG.scripts.compiler.exceptions.ExceptionList;
+import TIG.scripts.compiler.exceptions.ExistenceException;
 import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.InvalidArgumentsException;
 import TIG.scripts.compiler.exceptions.InvalidOperationException;
 import TIG.scripts.compiler.exceptions.TypeException;
+import TIG.scripts.compiler.exceptions.UndefinedFunctionException;
 import TIG.scripts.compiler.parse_tree.Tree;
 import TIG.scripts.compiler.parse_tree.TreeType;
 import TIG.utils.Utils;
@@ -23,6 +29,8 @@ public class Interpreter {
 	
 	private final String src;
 	private final Environment env;
+	
+	private HashMap<String, Entry> memory = null;
 	
 	private Tree ast;
 	
@@ -47,7 +55,6 @@ public class Interpreter {
 			try {
 				List<MToken> tokens = Lexer.lex(src);
 				this.ast = new Parser(tokens).parse();
-				System.out.println(ast);
 				return true;
 			} catch (ExceptionList e) {
 				ErrorHandler.handleExceptionList(e, src);
@@ -62,6 +69,7 @@ public class Interpreter {
 	public boolean run() {
 		if(ast != null) {
 			try {
+				memory = new HashMap<>();
 				interpret(ast);
 				return true;
 			} catch (InterpreterRuntimeException e) {
@@ -76,20 +84,27 @@ public class Interpreter {
 		switch(tree.type) {
 			case SEQ:
 				interpretSequence(tree);
+				break;
 			case DECLARE:
 				interpretDeclare(tree);
+				break;
 			case IF:
 				interpretIf(tree);
+				break;
 			case WHILE:
 				interpretWhile(tree);
+				break;
 			case CALL:
 				interpretCall(tree);
+				break;
 			case ASSIGN:
 				interpretAssign(tree);
+				break;
 			case EMPTY:
 				interpretEmpty(tree);
-			default:
 				break;
+			default:
+				throw new InvalidOperationException();
 		}
 	}
 
@@ -98,24 +113,94 @@ public class Interpreter {
 		interpret(tree.right);
 	}
 	
-	private Entry interpretDeclare(Tree tree) throws InterpreterRuntimeException {
-		return null;
+	private void interpretDeclare(Tree tree) throws InterpreterRuntimeException {
+		
 	}
 	
-	private Entry interpretIf(Tree tree) throws InterpreterRuntimeException {
-		return null;
+	private void interpretIf(Tree tree) throws InterpreterRuntimeException {
+		Entry exprResult = interpretExpression(tree.left);
+		if(exprResult.type == Entry.Type.BOOL) {
+			boolean result = ((Boolean) exprResult.val).booleanValue();
+			if(tree.right.type == TreeType.ELSE) {
+				if(result)
+					interpret(tree.right.left);
+				else
+					interpret(tree.right.right);
+			}else if(result) {
+				interpret(tree.right);
+			}
+		}else {
+			throw new TypeException();
+		}
 	}
 	
-	private Entry interpretWhile(Tree tree) throws InterpreterRuntimeException {
-		return null;
+	private void interpretWhile(Tree tree) throws InterpreterRuntimeException {
+		boolean result = false;
+		do {
+			Entry exprResult = interpretExpression(tree.left);
+			if(exprResult.type == Entry.Type.BOOL) {
+				result = ((Boolean) exprResult.val).booleanValue();
+				if(result) {
+					interpret(tree.right);
+				}
+			}else {
+				throw new TypeException();
+			}
+		} while(result);
 	}
 	
 	private Entry interpretCall(Tree tree) throws InterpreterRuntimeException {
-		return null;
+		Entry[] args = interpretList(tree.right);
+		switch(tree.left.token.match) {
+			case Def.DISPLAY:
+				if(args.length == 1) {
+					interpretDisplay(args[0]);
+					return new Entry(Entry.Type.BOOL, true);
+				}else {
+					throw new InvalidArgumentsException("Display accepts 1 string argument.");
+				}
+			default:
+				throw new UndefinedFunctionException(tree.left.token.match);
+		}
 	}
 	
-	private Entry interpretAssign(Tree tree) throws InterpreterRuntimeException {
-		return null;
+	private void interpretDisplay(Entry arg) throws InterpreterRuntimeException {
+		String output = "";
+		switch(arg.type) {
+			case INT:
+			case DOUBLE:
+			case BOOL:
+				output = "" + arg.val;
+				break;
+			case STRING:
+				output = (String) arg.val;
+				break;
+			default:
+				throw new TypeException();
+		}
+		
+		System.out.println(output);
+	}
+	
+	private Entry[] interpretList(Tree tree) throws InterpreterRuntimeException {
+		if(tree.type == TreeType.EMPTY) {
+			return new Entry[0];
+		}
+		
+		Entry first = interpretExpression(tree.left);
+		Entry[] rem = interpretList(tree.right);
+		
+		List<Entry> args = new ArrayList<>();
+		args.add(first);
+		for(Entry e : rem) {
+			args.add(e);
+		}
+		
+		return args.toArray(new Entry[args.size()]);
+	}
+	
+	private void interpretAssign(Tree tree) throws InterpreterRuntimeException {
+		
 	}
 	
 	private Entry interpretExpression(Tree tree) throws InterpreterRuntimeException {
@@ -482,29 +567,33 @@ public class Interpreter {
 	}
 	
 	private Entry interpretIDExpressionHelper(Tree tree, Environment env) throws InterpreterRuntimeException {
-		if(tree.type == TreeType.ID) {
-			Entry res = env.envGet(tree.left.token.match);
-			if(res.type == Entry.Type.ENV) {
+		if(env != null) {
+			String id = interpretLeaf(tree.left);
+			Entry res = env.envGet(id);
+			if(res == null) 
+				throw new ExistenceException();
+			
+			if(res.type == Entry.Type.ENV)
 				return interpretIDExpressionHelper(tree.right, (Environment) res.val);
-			}
 			
 			return res;
 		}
 		
-		throw new InvalidOperationException();
+		throw new ExistenceException();
 	}
 	
 	private Entry interpretLiteralExpression(Tree tree) throws InterpreterRuntimeException {
 		if(tree.type == TreeType.LEAF) {
+			String data = interpretLeaf(tree);
 			switch(tree.token.token) {
 				case INT_LITERAL:
-					return new Entry(Entry.Type.INT, Integer.parseInt(tree.token.match));
+					return new Entry(Entry.Type.INT, Integer.parseInt(data));
 				case DOUBLE_LITERAL:
-					return new Entry(Entry.Type.DOUBLE, Double.parseDouble(tree.token.match));
+					return new Entry(Entry.Type.DOUBLE, Double.parseDouble(data));
 				case BOOL_LITERAL:
-					return new Entry(Entry.Type.BOOL, Boolean.parseBoolean(tree.token.match));
+					return new Entry(Entry.Type.BOOL, Boolean.parseBoolean(data));
 				case STRING_LITERAL:
-					return new Entry(Entry.Type.STRING, tree.token.match);
+					return new Entry(Entry.Type.STRING, data);
 				default:
 					throw new TypeException();
 			}
@@ -529,6 +618,10 @@ public class Interpreter {
 		}
 		
 		throw new TypeException();
+	}
+	
+	private String interpretLeaf(Tree tree) throws InterpreterRuntimeException {
+		return tree.token.match;
 	}
 	
 	private void interpretEmpty(Tree tree) {}

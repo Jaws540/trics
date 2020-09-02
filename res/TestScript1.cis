@@ -1,3 +1,5 @@
 script {
-    string name = Info.playerName;
+    Display(Features.Strength.Value);
+    Display(Features.Strength.Modifier);
+    Display(Inventory.potion_of_healing.count);
 }
