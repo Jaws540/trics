@@ -4,8 +4,8 @@ import TIG.features.Fields;
 import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 /**
  * Basic information needed for a character
@@ -44,25 +44,25 @@ public class Info implements Environment {
 	}
 
 	@Override
-	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.PLAYER_NAME:
 				return new Entry(Entry.Type.STRING, playerName);
 			case Def.CHARACTER_NAME:
 				return new Entry(Entry.Type.STRING, characterName);
 			default:
-				return otherData.envGet(identifier);
+				return otherData.envGet(identifier, pos);
 		}
 	}
 
 	@Override
-	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 		case Def.PLAYER_NAME:
 		case Def.CHARACTER_NAME:
-			throw new ImmutableException();
+			throw new ImmutableException(pos);
 		default:
-			return otherData.envPut(identifier, obj);
+			return otherData.envPut(identifier, obj, pos);
 	}
 	}
 

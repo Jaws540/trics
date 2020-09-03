@@ -7,8 +7,8 @@ import TIG.features.Fields;
 import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
 import TIG.utils.Log;
@@ -123,25 +123,25 @@ public class Item extends Taggable implements Environment {
 	}
 
 	@Override
-	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.DISPLAY_NAME:
 				return new Entry(Entry.Type.STRING, displayName);
 			case Def.DESCRIPTION:
 				return new Entry(Entry.Type.STRING, description);
 			default:
-				return feats.envGet(identifier);
+				return feats.envGet(identifier, pos);
 		}
 	}
 
 	@Override
-	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 		case Def.DISPLAY_NAME:
 		case Def.DESCRIPTION:
-			throw new ImmutableException();
+			throw new ImmutableException(pos);
 		default:
-			return feats.envPut(identifier, obj);
+			return feats.envPut(identifier, obj, pos);
 		}
 	}
 

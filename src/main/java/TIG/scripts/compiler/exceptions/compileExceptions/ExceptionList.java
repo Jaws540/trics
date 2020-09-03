@@ -1,8 +1,10 @@
-package TIG.scripts.compiler.exceptions;
+package TIG.scripts.compiler.exceptions.compileExceptions;
 
 import java.util.List;
 
 public class ExceptionList extends Throwable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	public List<? extends CompileException> list;
 	

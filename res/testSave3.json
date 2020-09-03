@@ -4,12 +4,12 @@
     "characterName": "Illra",
     "otherData": [
       {
-        "value": 6,
+        "value": 6.0,
         "id": "Level",
         "type": "INT"
       },
       {
-        "value": 25000,
+        "value": 25000.0,
         "id": "EXP",
         "type": "INT"
       },
@@ -37,12 +37,12 @@
       "description": "Strength Ability",
       "fields": [
         {
-          "value": 18,
+          "value": 18.0,
           "id": "Value",
           "type": "INT"
         },
         {
-          "value": 4,
+          "value": 4.0,
           "id": "Modifier",
           "type": "INT"
         }
@@ -59,12 +59,12 @@
       "description": "Dexterity Ability",
       "fields": [
         {
-          "value": 18,
+          "value": 18.0,
           "id": "Value",
           "type": "INT"
         },
         {
-          "value": 4,
+          "value": 4.0,
           "id": "Modifier",
           "type": "INT"
         }
@@ -81,12 +81,12 @@
       "description": "Constitution Ability",
       "fields": [
         {
-          "value": 18,
+          "value": 18.0,
           "id": "Value",
           "type": "INT"
         },
         {
-          "value": 4,
+          "value": 4.0,
           "id": "Modifier",
           "type": "INT"
         }
@@ -103,12 +103,12 @@
       "description": "Intelligence Ability",
       "fields": [
         {
-          "value": 18,
+          "value": 18.0,
           "id": "Value",
           "type": "INT"
         },
         {
-          "value": 4,
+          "value": 4.0,
           "id": "Modifier",
           "type": "INT"
         }
@@ -125,12 +125,12 @@
       "description": "Wisdom Ability",
       "fields": [
         {
-          "value": 18,
+          "value": 18.0,
           "id": "Value",
           "type": "INT"
         },
         {
-          "value": 4,
+          "value": 4.0,
           "id": "Modifier",
           "type": "INT"
         }
@@ -147,12 +147,12 @@
       "description": "Charisma Ability",
       "fields": [
         {
-          "value": 18,
+          "value": 18.0,
           "id": "Value",
           "type": "INT"
         },
         {
-          "value": 4,
+          "value": 4.0,
           "id": "Modifier",
           "type": "INT"
         }
@@ -187,7 +187,7 @@
                 "type": "DOUBLE"
               },
               {
-                "value": 1,
+                "value": 1.0,
                 "id": "count",
                 "type": "INT"
               }
@@ -219,7 +219,7 @@
                 "type": "DOUBLE"
               },
               {
-                "value": 1,
+                "value": 1.0,
                 "id": "count",
                 "type": "INT"
               }
@@ -251,7 +251,7 @@
                 "type": "DOUBLE"
               },
               {
-                "value": 3,
+                "value": 3.0,
                 "id": "count",
                 "type": "INT"
               }

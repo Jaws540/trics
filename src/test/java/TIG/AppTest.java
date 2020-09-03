@@ -13,7 +13,7 @@ import TIG.characterSheet.CharacterSheet;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.compiler.Interpreter;
-import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 import TIG.utils.TestData;
 import TIG.utils.Utils;
 
@@ -48,19 +48,19 @@ public class AppTest {
     	}
     	
     	try {
-			Entry info = character.envGet("Info");
+			Entry info = character.envGet("Info", 0);
 			Environment infoEnv = (Environment) info.val;
 			
-			Entry playerName = infoEnv.envGet("playerName");
+			Entry playerName = infoEnv.envGet("playerName", 0);
 			assertTrue(((String) playerName.val).equals("Jacob"));
 			
-			Entry characterName = infoEnv.envGet("characterName");
+			Entry characterName = infoEnv.envGet("characterName", 0);
 			assertTrue(((String) characterName.val).equals("Illra"));
 			
-			Entry level = infoEnv.envGet("Level");
+			Entry level = infoEnv.envGet("Level", 0);
 			assertTrue((Integer) level.val == 6);
 			
-			Entry race = infoEnv.envGet("Race");
+			Entry race = infoEnv.envGet("Race", 0);
 			assertTrue(((String) race.val).equals("Dragonborn"));
 			
 		} catch (InterpreterRuntimeException e) {
@@ -80,19 +80,19 @@ public class AppTest {
     	}
     	
     	try {
-			Entry feats = character.envGet("Features");
+			Entry feats = character.envGet("Features", 0);
 			Environment featsEnv = (Environment) feats.val;
 			
-			Entry str = featsEnv.envGet("Strength");
+			Entry str = featsEnv.envGet("Strength", 0);
 			Environment strEnv = (Environment) str.val;
 			
-			Entry strDisplayName = strEnv.envGet("displayName");
+			Entry strDisplayName = strEnv.envGet("displayName", 0);
 			assertTrue(((String) strDisplayName.val).equals("Strength"));
 			
-			Entry strDescription = strEnv.envGet("description");
+			Entry strDescription = strEnv.envGet("description", 0);
 			assertTrue(((String) strDescription.val).equals("Strength Ability"));
 			
-			Entry strVal = strEnv.envGet("Value");
+			Entry strVal = strEnv.envGet("Value", 0);
 			assertTrue(((Integer) strVal.val) == 18);
 			
 		} catch (InterpreterRuntimeException e) {
@@ -112,31 +112,31 @@ public class AppTest {
     	}
     	
     	try {
-			Entry inv = character.envGet("Inventory");
+			Entry inv = character.envGet("Inventory", 0);
 			Environment invEnv = (Environment) inv.val;
 			
-			Entry feats = invEnv.envGet("Features");
+			Entry feats = invEnv.envGet("Features", 0);
 			Environment featsEnv = (Environment) feats.val;
 			
-			Entry dndInv = featsEnv.envGet("dnd::inventory");
+			Entry dndInv = featsEnv.envGet("dnd::inventory", 0);
 			Environment dndInvEnv = (Environment) dndInv.val;
 			
-			Entry carryWeight = dndInvEnv.envGet("Carry_Weight");
+			Entry carryWeight = dndInvEnv.envGet("Carry_Weight", 0);
 			assertTrue((Double) carryWeight.val == 250.0);
 			
-			Entry dagger = invEnv.envGet("dagger");
+			Entry dagger = invEnv.envGet("dagger", 0);
 			Environment daggerEnv = (Environment) dagger.val;
 			
-			Entry daggerDisplayName = daggerEnv.envGet("displayName");
+			Entry daggerDisplayName = daggerEnv.envGet("displayName", 0);
 			assertTrue(((String) daggerDisplayName.val).equals("Dagger"));
 			
-			Entry daggerDescription = daggerEnv.envGet("description");
+			Entry daggerDescription = daggerEnv.envGet("description", 0);
 			assertTrue(((String) daggerDescription.val).equals("Stab with it lol"));
 			
-			Entry daggerStdItem = daggerEnv.envGet("std::item");
+			Entry daggerStdItem = daggerEnv.envGet("std::item", 0);
 			Environment daggerStdItemEnv = (Environment) daggerStdItem.val;
 			
-			Entry daggerWeight = daggerStdItemEnv.envGet("weight");
+			Entry daggerWeight = daggerStdItemEnv.envGet("weight", 0);
 			assertTrue((Double) daggerWeight.val == 1.0);
 			
 		} catch (InterpreterRuntimeException e) {

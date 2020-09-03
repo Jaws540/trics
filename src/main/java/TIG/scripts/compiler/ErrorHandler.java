@@ -1,7 +1,9 @@
 package TIG.scripts.compiler;
 
-import TIG.scripts.compiler.exceptions.CompileException;
-import TIG.scripts.compiler.exceptions.ExceptionList;
+import TIG.scripts.compiler.exceptions.PositionalException;
+import TIG.scripts.compiler.exceptions.compileExceptions.CompileException;
+import TIG.scripts.compiler.exceptions.compileExceptions.ExceptionList;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class ErrorHandler {
 	
@@ -9,7 +11,7 @@ public class ErrorHandler {
 	    return String.format("%1$"+length+ "s", string);
 	}
 	
-	private static void handleException(CompileException e, String src) {
+	private static void handleException(PositionalException e, String src) {
 		String[] lines = src.split("\n");
 		String test = src.substring(0, e.position);
 		
@@ -37,6 +39,11 @@ public class ErrorHandler {
 		int numSpaces = prefix.length() + errorOffset;
 		
 		// Print error messages
+		System.err.println("-------------------------------------");
+		if(e instanceof CompileException)
+			System.err.print("Syntax ");
+		else if(e instanceof InterpreterRuntimeException)
+			System.err.print("Runtime ");
 		System.err.println("Error on line " + (i + 1));
 		System.err.println(prefix + line);
 		System.err.println(fixedLengthString(" ", numSpaces) + "^");
@@ -55,6 +62,15 @@ public class ErrorHandler {
 				System.err.println();
 			}
 		}
+	}
+
+	public static void handleInterpreterException(InterpreterRuntimeException e, String src) {
+		handleException(e, src);
+	}
+
+	public static void handleUnknown(int pos, String src) {
+		PositionalException e = new PositionalException("Unknown error.", pos);
+		handleException(e, src);
 	}
 
 }

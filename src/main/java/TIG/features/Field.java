@@ -1,5 +1,6 @@
 package TIG.features;
 
+import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.utils.Utils;
 
@@ -11,10 +12,16 @@ import TIG.utils.Utils;
 public class Field<T> {
 	
 	public enum Type {
-		INT,
-		DOUBLE,
-		BOOL,
-		STRING;
+		INT(Def.INT),
+		DOUBLE(Def.DOUBLE),
+		BOOL(Def.BOOL),
+		STRING(Def.STRING);
+		
+		public final String name;
+		
+		private Type(String name) {
+			this.name = name;
+		}
 		
 		public boolean isEntryType(Entry.Type type) {
 			switch(type) {

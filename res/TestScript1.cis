@@ -1,7 +1,19 @@
 script {
-    Inventory.Items.test_Item.std::item = 1;
-
+    # This is a comment
+    x = 1;
+    Display("x = " + x);
     if(true) {
-
+        i = 0;
+        Display(i);
+        x += 1;
     }
+    Display("x = " + x);
+
+    {
+        j = 5;
+        Display(j);
+    }
+    Display(j); # Error, j is out of scope
+
+    Display(i); # Error, i is out of scope
 }

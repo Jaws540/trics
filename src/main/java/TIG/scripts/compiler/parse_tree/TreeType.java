@@ -2,6 +2,7 @@ package TIG.scripts.compiler.parse_tree;
 
 public enum TreeType {
 	
+	BLOCK,
 	SEQ,
 	DECLARE,
 	DATA,

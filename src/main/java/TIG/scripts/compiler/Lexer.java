@@ -3,8 +3,8 @@ package TIG.scripts.compiler;
 import java.util.ArrayList;
 import java.util.List;
 
-import TIG.scripts.compiler.exceptions.ExceptionList;
-import TIG.scripts.compiler.exceptions.LexerException;
+import TIG.scripts.compiler.exceptions.compileExceptions.ExceptionList;
+import TIG.scripts.compiler.exceptions.compileExceptions.LexerException;
 
 public class Lexer {
 	
@@ -37,10 +37,15 @@ public class Lexer {
 				if(len > 0) {
 					// Select this token if it is not whitespace and is the longest match
 					if(len > longestCount) {
-						if(t != Token.WHITESPACE)
-							longestMatch = new MToken(t, sub.substring(0, len), pos, len);
-						else
+						if(t != Token.WHITESPACE && t != Token.COMMENT) {
+							if(t == Token.STRING_LITERAL) {
+								longestMatch = new MToken(t, sub.substring(1, len - 1), pos, len);
+							}else {
+								longestMatch = new MToken(t, sub.substring(0, len), pos, len);
+							}
+						}else {
 							whitespace = true;
+						}
 						longestCount = len;
 					}
 				}
