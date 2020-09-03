@@ -1,4 +1,4 @@
-package TIG.scripts.compiler.exceptions;
+package TIG.scripts.compiler.exceptions.compileExceptions;
 
 import java.util.List;
 
