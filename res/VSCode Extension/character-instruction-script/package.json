@@ -1,0 +1,25 @@
+{
+    "name": "character-instruction-script",
+    "displayName": "Character Instruction Script",
+    "description": "Syntax highlighting for CIS in VS Code",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.48.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "cis",
+            "aliases": ["Character Instruction Script", "cis"],
+            "extensions": [".cis"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "cis",
+            "scopeName": "source.cis",
+            "path": "./syntaxes/cis.tmLanguage.json"
+        }]
+    }
+}
