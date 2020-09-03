@@ -6,10 +6,9 @@ import java.util.List;
 
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.ExistenceException;
-import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
-import TIG.scripts.compiler.exceptions.TypeException;
-import TIG.utils.Log;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.ExistenceException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.TypeException;
 
 public class Fields implements Environment {
 	
@@ -56,7 +55,7 @@ public class Fields implements Environment {
 	}
 
 	@Override
-	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		Field<?> f = getField(identifier);
 		if(f != null) {
 			switch(f.getType()) {
@@ -69,19 +68,17 @@ public class Fields implements Environment {
 				case STRING:
 					return new Entry(Entry.Type.STRING, (String) f.getValue());
 				default:
-					// Unknown type
-					Log.error("Unknown field data type.");
-					throw new TypeException();
+					throw new TypeException(pos, "Unknown type.");
 			}
 		}
 		
 		// If no field exists by the given identifier
-		throw new ExistenceException();
+		throw new ExistenceException(pos);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
 		// If it exists, get the field identified
 		Field<?> f = getField(identifier);
 		if(f != null) {
@@ -102,16 +99,15 @@ public class Fields implements Environment {
 						((Field<String>) f).setValue((String) obj.val);
 						return true;
 					default:
-						Log.error("Unknown type!");
-						throw new TypeException();
+						throw new TypeException(pos, "Unknown type.");
 				}
 			}else {
-				throw new TypeException();
+				throw new TypeException(pos, "Expected " + f.getType().name);
 			}
 		}
 		
 		// If the field doesn't exist
-		throw new ExistenceException();
+		throw new ExistenceException(pos);
 	}
 
 }

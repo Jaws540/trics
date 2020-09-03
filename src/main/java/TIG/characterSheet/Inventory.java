@@ -5,8 +5,8 @@ import TIG.items.Items;
 import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class Inventory implements Environment {
 	
@@ -48,18 +48,18 @@ public class Inventory implements Environment {
 	}
 
 	@Override
-	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.FEATURES:
 				return new Entry(Entry.Type.ENV, features);
 			default:
-				return items.envGet(identifier);
+				return items.envGet(identifier, pos);
 		}
 	}
 
 	@Override
-	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
-		throw new ImmutableException();
+	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
+		throw new ImmutableException(pos);
 	}
 
 }

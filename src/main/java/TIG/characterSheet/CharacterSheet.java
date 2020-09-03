@@ -5,10 +5,9 @@ import TIG.notes.Notes;
 import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.ExistenceException;
-import TIG.scripts.compiler.exceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
-import TIG.utils.Log;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.ExistenceException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 /**
  * Interface for interaction with character sheets
@@ -46,7 +45,7 @@ public class CharacterSheet implements Environment {
 	}
 
 	@Override
-	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.INFO:
 				return new Entry(Entry.Type.ENV, info);
@@ -55,14 +54,13 @@ public class CharacterSheet implements Environment {
 			case Def.INVENTORY:
 				return new Entry(Entry.Type.ENV, inventory);
 			default:
-				Log.error("Unknown character environment.");
-				throw new ExistenceException();
+				throw new ExistenceException(pos);
 		}
 	}
 
 	@Override
-	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
-		throw new ImmutableException();
+	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
+		throw new ImmutableException(pos);
 	}
 
 }

@@ -23,5 +23,7 @@ public class App {
     	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.cis", character);
     	interp.compile();
     	interp.run();
+    	
+    	Utils.saveJSON(character, testSavePath + "testSave3.json");
     }
 }

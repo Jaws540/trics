@@ -8,14 +8,15 @@ import java.util.Random;
 import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.CompileException;
-import TIG.scripts.compiler.exceptions.ExceptionList;
-import TIG.scripts.compiler.exceptions.ExistenceException;
-import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
-import TIG.scripts.compiler.exceptions.InvalidArgumentsException;
-import TIG.scripts.compiler.exceptions.InvalidOperationException;
-import TIG.scripts.compiler.exceptions.TypeException;
-import TIG.scripts.compiler.exceptions.UndefinedFunctionException;
+import TIG.scripts.compiler.exceptions.compileExceptions.CompileException;
+import TIG.scripts.compiler.exceptions.compileExceptions.ExceptionList;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.ExistenceException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InvalidArgumentsException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InvalidOperationException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.TypeException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.UndefinedFunctionException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.UnretrievableException;
 import TIG.scripts.compiler.parse_tree.Tree;
 import TIG.scripts.compiler.parse_tree.TreeType;
 import TIG.utils.Utils;
@@ -33,6 +34,7 @@ public class Interpreter {
 	private HashMap<String, Entry> memory = null;
 	
 	private Tree ast;
+	private int pos = 0;
 	
 	/**
 	 * Create a new Interpreter.
@@ -69,11 +71,14 @@ public class Interpreter {
 	public boolean run() {
 		if(ast != null) {
 			try {
-				memory = new HashMap<>();
+				pos = 0;
+				memory = new HashMap<String, Entry>();
 				interpret(ast);
 				return true;
 			} catch (InterpreterRuntimeException e) {
-				e.printStackTrace();
+				ErrorHandler.handleInterpreterException(e, src);
+			} catch (Exception e) {
+				ErrorHandler.handleUnknown(pos, src);
 			}
 		}
 		
@@ -104,7 +109,7 @@ public class Interpreter {
 				interpretEmpty(tree);
 				break;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 
@@ -114,6 +119,7 @@ public class Interpreter {
 	}
 	
 	private void interpretDeclare(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		
 	}
 	
@@ -130,7 +136,7 @@ public class Interpreter {
 				interpret(tree.right);
 			}
 		}else {
-			throw new TypeException();
+			throw new TypeException(pos, "Expected bool.");
 		}
 	}
 	
@@ -144,12 +150,13 @@ public class Interpreter {
 					interpret(tree.right);
 				}
 			}else {
-				throw new TypeException();
+				throw new TypeException(pos, "Expected bool.");
 			}
 		} while(result);
 	}
 	
 	private Entry interpretCall(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.left.token.offset;
 		Entry[] args = interpretList(tree.right);
 		switch(tree.left.token.match) {
 			case Def.DISPLAY:
@@ -157,10 +164,10 @@ public class Interpreter {
 					interpretDisplay(args[0]);
 					return new Entry(Entry.Type.BOOL, true);
 				}else {
-					throw new InvalidArgumentsException("Display accepts 1 string argument.");
+					throw new InvalidArgumentsException("Display has one string parameter.", pos);
 				}
 			default:
-				throw new UndefinedFunctionException(tree.left.token.match);
+				throw new UndefinedFunctionException(tree.left.token.match, pos);
 		}
 	}
 	
@@ -176,7 +183,7 @@ public class Interpreter {
 				output = (String) arg.val;
 				break;
 			default:
-				throw new TypeException();
+				throw new TypeException(pos, "Unknown type given.");
 		}
 		
 		System.out.println(output);
@@ -200,7 +207,66 @@ public class Interpreter {
 	}
 	
 	private void interpretAssign(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		
+		Entry id = interpretIDExpression(tree.left);
+		Entry value = interpretExpression(tree.right);
+		if(id == null && tree.token.token == Token.ASSIGN) {
+			memory.put(interpretLeaf(tree.left.left), value);
+		}else if(id == null && tree.token.token != Token.ASSIGN) {
+			throw new InvalidOperationException(pos);
+		}else if(id.type == value.type) {
+			switch(tree.token.token) {
+				case PLUS_ASSIGN:
+					if(id.type == Entry.Type.BOOL)
+						throw new TypeException(pos, "Undefined for type bool.");
+					
+					value = interpretExpression(refactorMathAssign(TreeType.ADD_EXPR, tree.left, tree.right, Token.PLUS, tree.token));
+					break;
+				case MINUS_ASSIGN:
+					if(id.type == Entry.Type.BOOL)
+						throw new TypeException(pos, "Undefined for type bool.");
+					if(id.type == Entry.Type.STRING)
+						throw new TypeException(pos, "Non-addition math is undefined for type string.");
+					
+					value = interpretExpression(refactorMathAssign(TreeType.ADD_EXPR, tree.left, tree.right, Token.MINUS, tree.token));
+					break;
+				case MULT_ASSIGN:
+					if(id.type == Entry.Type.BOOL)
+						throw new TypeException(pos, "Undefined for type bool.");
+					if(id.type == Entry.Type.STRING)
+						throw new TypeException(pos, "Non-addition math is undefined for type string.");
+					
+					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.MULT, tree.token));
+					break;
+				case DIV_ASSIGN:
+					if(id.type == Entry.Type.BOOL)
+						throw new TypeException(pos, "Undefined for type bool.");
+					if(id.type == Entry.Type.STRING)
+						throw new TypeException(pos, "Non-addition math is undefined for type string.");
+					
+					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.DIV, tree.token));
+					break;
+				case MOD_ASSIGN:
+					if(id.type == Entry.Type.BOOL)
+						throw new TypeException(pos, "Undefined for type bool.");
+					if(id.type == Entry.Type.STRING)
+						throw new TypeException(pos, "Non-addition math is undefined for type string.");
+					
+					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.MOD, tree.token));
+					break;
+				default:
+					break;
+			}
+			
+			id.val = value.val;
+		}else {
+			throw new TypeException(pos, "Expected type " + id.type.name + ".");
+		}
+	}
+	
+	private Tree refactorMathAssign(TreeType type, Tree left, Tree right, Token op, MToken copy) {
+		return new Tree(type, left, right, new MToken(op, copy.match, copy.offset, copy.length));
 	}
 	
 	private Entry interpretExpression(Tree tree) throws InterpreterRuntimeException {
@@ -225,26 +291,29 @@ public class Interpreter {
 	}
 	
 	private Entry interpretOrExpression(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left);
 		Entry right = interpretExpression(tree.right);
 		if(left.type == Entry.Type.BOOL && right.type == Entry.Type.BOOL) {
 			return new Entry(Entry.Type.BOOL, ((Boolean) left.val) || ((Boolean) right.val));
 		}
 		
-		throw new TypeException();
+		throw new TypeException(pos, "Expected bool.");
 	}
 	
 	private Entry interpretAndExpression(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left);
 		Entry right = interpretExpression(tree.right);
 		if(left.type == Entry.Type.BOOL && right.type == Entry.Type.BOOL) {
 			return new Entry(Entry.Type.BOOL, ((Boolean) left.val) && ((Boolean) right.val));
 		}
 		
-		throw new TypeException();
+		throw new TypeException(pos, "Expected bool.");
 	}
 	
 	private Entry interpretEqualityExpression(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left);
 		Entry right = interpretExpression(tree.right);
 		if(left.type == right.type) {
@@ -258,14 +327,15 @@ public class Interpreter {
 				case STRING:
 					return new Entry(Entry.Type.BOOL, ((String) left.val).equals((String) right.val));
 				default:
-					throw new InvalidOperationException();
+					throw new InvalidOperationException(pos);
 			}
 		}
 		
-		throw new TypeException();
+		throw new TypeException(pos, "Expected " + left.type.name + ".");
 	}
 	
 	private Entry interpretRelationalExpression(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left);
 		Entry right = interpretExpression(tree.right);
 		Token op = tree.token.token;
@@ -277,11 +347,11 @@ public class Interpreter {
 				case DOUBLE:
 					return new Entry(Entry.Type.BOOL, interpretRelation((Double) left.val, (Double) right.val, op));
 				case BOOL:
-					throw new TypeException();
+					throw new TypeException(pos, "Relational expressions are undefined for type bool.");
 				case STRING:
 					return new Entry(Entry.Type.BOOL, interpretRelation((String) left.val, (String) right.val, op));
 				default:
-					throw new InvalidOperationException();
+					throw new InvalidOperationException(pos);
 			}
 			
 		// Also defined for comparissons between numerical types (i.e. integers and doubles are comparable)
@@ -291,7 +361,7 @@ public class Interpreter {
 			return new Entry(Entry.Type.BOOL, interpretRelation((Double) left.val, (Integer) right.val, op));
 		}
 		
-		throw new TypeException();
+		throw new TypeException(pos, "Undefined relation for " + left.type.name + " and " + right.type.name + ".");
 	}
 	
 	private boolean interpretRelation(Integer left, Integer right, Token op) throws InterpreterRuntimeException {
@@ -305,7 +375,7 @@ public class Interpreter {
 			case GREATER_EQUAL:
 				return left >= right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -320,7 +390,7 @@ public class Interpreter {
 			case GREATER_EQUAL:
 				return left >= right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -335,7 +405,7 @@ public class Interpreter {
 			case GREATER_EQUAL:
 				return left >= right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -350,7 +420,7 @@ public class Interpreter {
 			case GREATER_EQUAL:
 				return left >= right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -366,11 +436,12 @@ public class Interpreter {
 			case GREATER_EQUAL:
 				return out >= 0;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
 	private Entry interpretAddExpression(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left);
 		Entry right = interpretExpression(tree.right);
 		Token op = tree.token.token;
@@ -381,14 +452,14 @@ public class Interpreter {
 				case DOUBLE:
 					return new Entry(Entry.Type.DOUBLE, interpretAdd((Double) left.val, (Double) right.val, op));
 				case BOOL:
-					throw new TypeException();
+					throw new TypeException(pos, "Math is undefined for type bool.");
 				case STRING:
 					if(op == Token.PLUS)
 						return new Entry(Entry.Type.STRING, ((String) left.val) + ((String) right.val));
 					else
-						throw new InvalidOperationException();
+						throw new TypeException(pos, "Non-addition math is undefined for type string.");
 				default:
-					throw new InvalidOperationException();
+					throw new InvalidOperationException(pos);
 			}
 		}else if(left.type == Entry.Type.INT && right.type == Entry.Type.DOUBLE) {
 			return new Entry(Entry.Type.DOUBLE, interpretAdd((Integer) left.val, (Double) right.val, op));
@@ -401,11 +472,11 @@ public class Interpreter {
 				case BOOL:
 					return new Entry(Entry.Type.STRING, ((String) left.val) + ((String) right.val));
 				default:
-					throw new InvalidOperationException();
+					throw new InvalidOperationException(pos);
 			}
 		}
 		
-		throw new TypeException();
+		throw new TypeException(pos, "Addition is undefined for " + left.type.name + " and " + right.type.name + ".");
 	}
 	
 	private int interpretAdd(Integer left, Integer right, Token op) throws InterpreterRuntimeException {
@@ -415,7 +486,7 @@ public class Interpreter {
 			case MINUS:
 				return left - right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -426,7 +497,7 @@ public class Interpreter {
 			case MINUS:
 				return left - right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -437,7 +508,7 @@ public class Interpreter {
 			case MINUS:
 				return left.doubleValue() - right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -448,11 +519,12 @@ public class Interpreter {
 			case MINUS:
 				return left - right.doubleValue();
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
 	private Entry interpretMultiplyExpression(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left);
 		Entry right = interpretExpression(tree.right);
 		Token op = tree.token.token;
@@ -463,11 +535,11 @@ public class Interpreter {
 			case DOUBLE:
 				return new Entry(Entry.Type.DOUBLE, interpretMultiply((Double) left.val, (Double) right.val, op));
 			case BOOL:
-				throw new TypeException();
+				throw new TypeException(pos, "Math is undefined for type bool.");
 			case STRING:
-				throw new TypeException();
+				throw new TypeException(pos, "Non-addition math is undefined for type string.");
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 			}
 		}else if(left.type == Entry.Type.INT && right.type == Entry.Type.DOUBLE) {
 			return new Entry(Entry.Type.DOUBLE, interpretMultiply((Integer) left.val, (Double) right.val, op));
@@ -481,7 +553,7 @@ public class Interpreter {
 			return new Entry(Entry.Type.STRING, out);
 		}
 		
-		throw new TypeException();
+		throw new TypeException(pos, "Addition is undefined for " + left.type.name + " and " + right.type.name + ".");
 	}
 	
 	private int interpretMultiply(Integer left, Integer right, Token op) throws InterpreterRuntimeException {
@@ -493,7 +565,7 @@ public class Interpreter {
 			case MOD:
 				return left % right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -506,7 +578,7 @@ public class Interpreter {
 			case MOD:
 				return left % right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -519,7 +591,7 @@ public class Interpreter {
 			case MOD:
 				return left.doubleValue() % right;
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
@@ -532,21 +604,22 @@ public class Interpreter {
 			case MOD:
 				return left % right.doubleValue();
 			default:
-				throw new InvalidOperationException();
+				throw new InvalidOperationException(pos);
 		}
 	}
 	
 	private Entry interpretUnaryExpression(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		if(tree.left.type == TreeType.LEAF && tree.left.token.token == Token.NOT) {
 			Entry right = interpretExpression(tree.right);
 			if(right.type == Entry.Type.BOOL) {
 				return new Entry(Entry.Type.BOOL, !((Boolean) right.val));
 			}
 			
-			throw new TypeException();
+			throw new TypeException(pos, "Expected bool.");
 		}
 		
-		throw new InvalidOperationException();
+		throw new InvalidOperationException(pos);
 	}
 	
 	private Entry interpretPostfixExpression(Tree tree) throws InterpreterRuntimeException {
@@ -554,7 +627,11 @@ public class Interpreter {
 		case CALL:
 			return interpretCall(tree);
 		case ID:
-			return interpretIDExpression(tree);
+			// This needs to catch null IDs so they don't try to be resolved to a value
+			Entry id = interpretIDExpression(tree);
+			if(id == null)
+				throw new ExistenceException(pos);
+			return id;
 		case ROLL:
 			return interpretRollExpression(tree);
 		default:
@@ -563,26 +640,38 @@ public class Interpreter {
 	}
 	
 	private Entry interpretIDExpression(Tree tree) throws InterpreterRuntimeException {
-		return interpretIDExpressionHelper(tree, this.env);
+		// Has to be able to fail without throwing an existance exception to get to the local variable lookup
+		Entry id = interpretIDExpressionHelper(tree, this.env);
+		if(id != null && id.type != Entry.Type.ENV)
+			return id;
+		
+		// Local variable
+		Entry var = memory.get(interpretLeaf(tree.left));
+		return var;
 	}
 	
 	private Entry interpretIDExpressionHelper(Tree tree, Environment env) throws InterpreterRuntimeException {
+		if(tree.type == TreeType.EMPTY)
+			throw new UnretrievableException(pos);
+		
 		if(env != null) {
 			String id = interpretLeaf(tree.left);
-			Entry res = env.envGet(id);
-			if(res == null) 
-				throw new ExistenceException();
+			Entry res = null;
+			try {
+				res = env.envGet(id, pos);
 			
-			if(res.type == Entry.Type.ENV)
-				return interpretIDExpressionHelper(tree.right, (Environment) res.val);
+				if(res.type == Entry.Type.ENV)
+					return interpretIDExpressionHelper(tree.right, (Environment) res.val);
+			}catch(ExistenceException e) {}
 			
 			return res;
 		}
 		
-		throw new ExistenceException();
+		return null;
 	}
 	
 	private Entry interpretLiteralExpression(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		if(tree.type == TreeType.LEAF) {
 			String data = interpretLeaf(tree);
 			switch(tree.token.token) {
@@ -595,11 +684,11 @@ public class Interpreter {
 				case STRING_LITERAL:
 					return new Entry(Entry.Type.STRING, data);
 				default:
-					throw new TypeException();
+					throw new TypeException(pos, "Unknown literal type.");
 			}
 		}
 		
-		throw new InvalidOperationException();
+		throw new InvalidOperationException(pos);
 	}
 	
 	// TODO: Implement custom dice rolling.  Probably through a 'standard library' call to roll()?
@@ -617,10 +706,11 @@ public class Interpreter {
 			return new Entry(Entry.Type.INT, sum);
 		}
 		
-		throw new TypeException();
+		throw new TypeException(pos, "Expected <int>d<int>.");
 	}
 	
 	private String interpretLeaf(Tree tree) throws InterpreterRuntimeException {
+		pos = tree.token.offset;
 		return tree.token.match;
 	}
 	

@@ -23,12 +23,6 @@ public enum Token {
 	EOL(";"),
 	COMMA("\\,", ","),
 	
-	// Types
-	INT("int"),
-	DOUBLE("double"),
-	BOOL("bool"),
-	STRING("string"),
-	
 	// Logic
 	OR("or"),
 	AND("and"),

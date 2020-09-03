@@ -1,0 +1,313 @@
+{
+  "info": {
+    "playerName": "Jacob",
+    "characterName": "Illra",
+    "otherData": [
+      {
+        "value": 6.0,
+        "id": "Level",
+        "type": "INT"
+      },
+      {
+        "value": 25000.0,
+        "id": "EXP",
+        "type": "INT"
+      },
+      {
+        "value": "Dragonborn",
+        "id": "Race",
+        "type": "STRING"
+      },
+      {
+        "value": "Fighter",
+        "id": "Class1",
+        "type": "STRING"
+      },
+      {
+        "value": "Wizard",
+        "id": "Class2",
+        "type": "STRING"
+      }
+    ]
+  },
+  "features": [
+    {
+      "id": "Strength",
+      "displayName": "Strength",
+      "description": "Strength Ability",
+      "fields": [
+        {
+          "value": 18.0,
+          "id": "Value",
+          "type": "INT"
+        },
+        {
+          "value": 4.0,
+          "id": "Modifier",
+          "type": "INT"
+        }
+      ],
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "id": "Dexterity",
+      "displayName": "Dexterity",
+      "description": "Dexterity Ability",
+      "fields": [
+        {
+          "value": 18.0,
+          "id": "Value",
+          "type": "INT"
+        },
+        {
+          "value": 4.0,
+          "id": "Modifier",
+          "type": "INT"
+        }
+      ],
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "id": "Constitution",
+      "displayName": "Constitution",
+      "description": "Constitution Ability",
+      "fields": [
+        {
+          "value": 18.0,
+          "id": "Value",
+          "type": "INT"
+        },
+        {
+          "value": 4.0,
+          "id": "Modifier",
+          "type": "INT"
+        }
+      ],
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "id": "Intelligence",
+      "displayName": "Intelligence",
+      "description": "Intelligence Ability",
+      "fields": [
+        {
+          "value": 18.0,
+          "id": "Value",
+          "type": "INT"
+        },
+        {
+          "value": 4.0,
+          "id": "Modifier",
+          "type": "INT"
+        }
+      ],
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "id": "Wisdom",
+      "displayName": "Wisdom",
+      "description": "Wisdom Ability",
+      "fields": [
+        {
+          "value": 18.0,
+          "id": "Value",
+          "type": "INT"
+        },
+        {
+          "value": 4.0,
+          "id": "Modifier",
+          "type": "INT"
+        }
+      ],
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    },
+    {
+      "id": "Charisma",
+      "displayName": "Charisma",
+      "description": "Charisma Ability",
+      "fields": [
+        {
+          "value": 18.0,
+          "id": "Value",
+          "type": "INT"
+        },
+        {
+          "value": 4.0,
+          "id": "Modifier",
+          "type": "INT"
+        }
+      ],
+      "scripts": [],
+      "tags": [
+        "Ability score",
+        "Modifier"
+      ]
+    }
+  ],
+  "inventory": {
+    "items": [
+      {
+        "id": "dagger",
+        "displayName": "Dagger",
+        "description": "Stab with it lol",
+        "feats": [
+          {
+            "id": "std::item",
+            "displayName": "Item",
+            "description": "Basic attributes for all items",
+            "fields": [
+              {
+                "value": 1.0,
+                "id": "weight",
+                "type": "DOUBLE"
+              },
+              {
+                "value": 1.0,
+                "id": "value",
+                "type": "DOUBLE"
+              },
+              {
+                "value": 1.0,
+                "id": "count",
+                "type": "INT"
+              }
+            ],
+            "scripts": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      {
+        "id": "sword",
+        "displayName": "Sword",
+        "description": "Stab with it from farther away lol",
+        "feats": [
+          {
+            "id": "std::item",
+            "displayName": "Item",
+            "description": "Basic attributes for all items",
+            "fields": [
+              {
+                "value": 15.0,
+                "id": "weight",
+                "type": "DOUBLE"
+              },
+              {
+                "value": 10.0,
+                "id": "value",
+                "type": "DOUBLE"
+              },
+              {
+                "value": 1.0,
+                "id": "count",
+                "type": "INT"
+              }
+            ],
+            "scripts": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      {
+        "id": "potion_of_healing",
+        "displayName": "Potion of Healing",
+        "description": "Get them life points back",
+        "feats": [
+          {
+            "id": "std::item",
+            "displayName": "Item",
+            "description": "Basic attributes for all items",
+            "fields": [
+              {
+                "value": 0.5,
+                "id": "weight",
+                "type": "DOUBLE"
+              },
+              {
+                "value": 20.0,
+                "id": "value",
+                "type": "DOUBLE"
+              },
+              {
+                "value": 3.0,
+                "id": "count",
+                "type": "INT"
+              }
+            ],
+            "scripts": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      }
+    ],
+    "features": [
+      {
+        "id": "dnd::inventory",
+        "displayName": "Base",
+        "description": "Basic inventory feature.",
+        "fields": [
+          {
+            "value": 250.0,
+            "id": "Carry_Weight",
+            "type": "DOUBLE"
+          },
+          {
+            "value": 0.0,
+            "id": "Current_Weight",
+            "type": "DOUBLE"
+          }
+        ],
+        "scripts": [],
+        "tags": []
+      }
+    ]
+  },
+  "notes": {
+    "children": [
+      {
+        "text": "Lol, idk, I just needed something to test the JSON formatting with",
+        "date": "Sep 1, 2020 11:10:25 PM",
+        "title": "Something"
+      },
+      {
+        "children": [
+          {
+            "text": "It t'was a long and grueling session, but I think I will prevail!",
+            "date": "Sep 1, 2020 11:10:25 PM",
+            "title": "Session 1"
+          },
+          {
+            "text": "It t'was a long and grueling session, but I think I will prevail!",
+            "date": "Sep 1, 2020 11:10:25 PM",
+            "title": "Session 2"
+          }
+        ],
+        "title": "Session Notes"
+      }
+    ],
+    "title": "root"
+  }
+}

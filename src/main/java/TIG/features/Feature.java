@@ -4,8 +4,8 @@ import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.Scripts;
-import TIG.scripts.compiler.exceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
+import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
 import TIG.utils.Utils;
@@ -99,7 +99,7 @@ public class Feature extends Taggable implements Environment {
 	}
 
 	@Override
-	public Entry envGet(String identifier) throws InterpreterRuntimeException {
+	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.DISPLAY_NAME:
 				return new Entry(Entry.Type.STRING, displayName);
@@ -108,19 +108,19 @@ public class Feature extends Taggable implements Environment {
 			case Def.SCRIPTS:
 				return new Entry(Entry.Type.ENV, scripts);
 			default:
-				return fields.envGet(identifier);
+				return fields.envGet(identifier, pos);
 		}
 	}
 
 	@Override
-	public boolean envPut(String identifier, Entry obj) throws InterpreterRuntimeException {
+	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.DISPLAY_NAME:
 			case Def.DESCRIPTION:
 			case Def.SCRIPTS:
-				throw new ImmutableException();
+				throw new ImmutableException(pos);
 			default:
-				return fields.envPut(identifier, obj);
+				return fields.envPut(identifier, obj, pos);
 		}
 	}
 

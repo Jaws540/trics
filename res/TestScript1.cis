@@ -1,5 +1,11 @@
 script {
-    Display(Features.Strength.Value);
-    Display(Features.Strength.Modifier);
-    Display(Inventory.potion_of_healing.count);
+    if(true) {
+        i = 0;
+    }
+    Display(i);
+
+    if(false) {
+        j = 1;
+    }
+    Display(j);
 }

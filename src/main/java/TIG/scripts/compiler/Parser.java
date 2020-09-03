@@ -2,7 +2,7 @@ package TIG.scripts.compiler;
 
 import java.util.List;
 
-import TIG.scripts.compiler.exceptions.SyntaxException;
+import TIG.scripts.compiler.exceptions.compileExceptions.SyntaxException;
 import TIG.scripts.compiler.parse_tree.Tree;
 import TIG.scripts.compiler.parse_tree.TreeType;
 
@@ -57,8 +57,9 @@ public class Parser {
 		throw new SyntaxException("Expected " + t + ", got " + getTokenText() + ".", getTokenOffset());
 	}
 	
+	// TODO: Add functions.
+	
 	public Tree parse() throws SyntaxException {
-		// TODO: Add functions.  They would have to start parsing here
 		matchToken(Token.ENTRY);
 		return parseBlock();
 	}
@@ -75,7 +76,7 @@ public class Parser {
 			return new Tree(TreeType.EMPTY);
 		}
 		
-		Tree stmt = parseBlockStatement();
+		Tree stmt = parseStatement();
 		if(lookahead() == Token.RBRACE)
 			// Handle a single statement block without a SEQ tree
 			return stmt;
@@ -86,25 +87,27 @@ public class Parser {
 		return stmt;
 	}
 	
+	/*
+	
 	private Tree parseBlockStatement() throws SyntaxException {
 		switch(lookahead()) {
-		case INT:
-		case DOUBLE:
-		case BOOL:
-		case STRING:
-			return parseLocalVariableDeclaration();
-		default:
-			return parseStatement();
+			case INT:
+			case DOUBLE:
+			case BOOL:
+			case STRING:
+				return parseLocalVariableDeclaration();
+			default:
+				return parseStatement();
 		}
 	}
-	
 	private Tree parseLocalVariableDeclaration() throws SyntaxException {
-		Tree type = new Tree(TreeType.LEAF, parseType());
+		//Tree type = new Tree(TreeType.LEAF, parseType());
 		Tree id = new Tree(TreeType.LEAF, matchToken(Token.ID));
 		matchToken(Token.ASSIGN);
 		Tree expr = parseExpression();
 		matchToken(Token.EOL);
-		return new Tree(TreeType.DECLARE, new Tree(TreeType.DATA, type, id), expr);
+		//return new Tree(TreeType.DECLARE, new Tree(TreeType.DATA, type, id), expr);
+		return new Tree(TreeType.DECLARE, id, expr);
 	}
 	
 	private MToken parseType() throws SyntaxException {
@@ -121,17 +124,18 @@ public class Parser {
 			throw new SyntaxException("Expected a type token, got " + getTokenText() + ".", getTokenOffset());
 		}
 	}
+	*/
 	
 	private Tree parseStatement() throws SyntaxException {
 		switch(lookahead()) {
-		case LBRACE:
-			return parseBlock();
-		case IF:
-			return parseIfStatement();
-		case WHILE:
-			return parseWhileStatement();
-		default:
-			return parseLineStatement();
+			case LBRACE:
+				return parseBlock();
+			case IF:
+				return parseIfStatement();
+			case WHILE:
+				return parseWhileStatement();
+			default:
+				return parseLineStatement();
 		}
 	}
 	
@@ -194,20 +198,20 @@ public class Parser {
 	
 	private MToken parseAssignmentOperator() throws SyntaxException {
 		switch(lookahead()) {
-		case ASSIGN:
-			return matchToken(Token.ASSIGN);
-		case PLUS_ASSIGN:
-			return matchToken(Token.PLUS_ASSIGN);
-		case MINUS_ASSIGN:
-			return matchToken(Token.MINUS_ASSIGN);
-		case MULT_ASSIGN:
-			return matchToken(Token.MULT_ASSIGN);
-		case DIV_ASSIGN:
-			return matchToken(Token.DIV_ASSIGN);
-		case MOD_ASSIGN:
-			return matchToken(Token.MOD_ASSIGN);
-		default:
-			throw new SyntaxException("Expected an assignment operator, got " + getTokenText() + ".", getTokenOffset());
+			case ASSIGN:
+				return matchToken(Token.ASSIGN);
+			case PLUS_ASSIGN:
+				return matchToken(Token.PLUS_ASSIGN);
+			case MINUS_ASSIGN:
+				return matchToken(Token.MINUS_ASSIGN);
+			case MULT_ASSIGN:
+				return matchToken(Token.MULT_ASSIGN);
+			case DIV_ASSIGN:
+				return matchToken(Token.DIV_ASSIGN);
+			case MOD_ASSIGN:
+				return matchToken(Token.MOD_ASSIGN);
+			default:
+				throw new SyntaxException("Expected an assignment operator, got " + getTokenText() + ".", getTokenOffset());
 		}
 	}
 	
@@ -264,16 +268,16 @@ public class Parser {
 		Tree relationExpr = parseRelationExpression();
 		Tree equalityExpr;
 		switch(lookahead()) {
-		case EQUAL:
-			MToken eq = matchToken(Token.EQUAL);
-			equalityExpr = parseEqualityExpression();
-			return new Tree(TreeType.EQ_EXPR, relationExpr, equalityExpr, eq);
-		case NOT_EQUAL:
-			MToken neq = matchToken(Token.NOT_EQUAL);
-			equalityExpr = parseEqualityExpression();
-			return new Tree(TreeType.EQ_EXPR, relationExpr, equalityExpr, neq);
-		default:
-			return relationExpr;
+			case EQUAL:
+				MToken eq = matchToken(Token.EQUAL);
+				equalityExpr = parseEqualityExpression();
+				return new Tree(TreeType.EQ_EXPR, relationExpr, equalityExpr, eq);
+			case NOT_EQUAL:
+				MToken neq = matchToken(Token.NOT_EQUAL);
+				equalityExpr = parseEqualityExpression();
+				return new Tree(TreeType.EQ_EXPR, relationExpr, equalityExpr, neq);
+			default:
+				return relationExpr;
 		}
 	}
 	
@@ -281,24 +285,24 @@ public class Parser {
 		Tree addExpr = parseAddExpression();
 		Tree relationExpr;
 		switch(lookahead()) {
-		case LESS:
-			MToken less = matchToken(Token.LESS);
-			relationExpr = parseRelationExpression();
-			return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, less);
-		case GREATER:
-			MToken greater = matchToken(Token.GREATER);
-			relationExpr = parseRelationExpression();
-			return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, greater);
-		case LESS_EQUAL:
-			MToken less_eq = matchToken(Token.LESS_EQUAL);
-			relationExpr = parseRelationExpression();
-			return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, less_eq);
-		case GREATER_EQUAL:
-			MToken greater_eq = matchToken(Token.GREATER_EQUAL);
-			relationExpr = parseRelationExpression();
-			return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, greater_eq);
-		default:
-			return addExpr;
+			case LESS:
+				MToken less = matchToken(Token.LESS);
+				relationExpr = parseRelationExpression();
+				return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, less);
+			case GREATER:
+				MToken greater = matchToken(Token.GREATER);
+				relationExpr = parseRelationExpression();
+				return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, greater);
+			case LESS_EQUAL:
+				MToken less_eq = matchToken(Token.LESS_EQUAL);
+				relationExpr = parseRelationExpression();
+				return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, less_eq);
+			case GREATER_EQUAL:
+				MToken greater_eq = matchToken(Token.GREATER_EQUAL);
+				relationExpr = parseRelationExpression();
+				return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, greater_eq);
+			default:
+				return addExpr;
 		}
 	}
 	
@@ -306,16 +310,16 @@ public class Parser {
 		Tree mulExpr = parseMulExpression();
 		Tree addExpr;
 		switch(lookahead()) {
-		case PLUS:
-			MToken plus = matchToken(Token.PLUS);
-			addExpr = parseAddExpression();
-			return new Tree(TreeType.ADD_EXPR, mulExpr, addExpr, plus);
-		case MINUS:
-			MToken minus = matchToken(Token.MINUS);
-			addExpr = parseAddExpression();
-			return new Tree(TreeType.ADD_EXPR, mulExpr, addExpr, minus);
-		default:
-			return mulExpr;
+			case PLUS:
+				MToken plus = matchToken(Token.PLUS);
+				addExpr = parseAddExpression();
+				return new Tree(TreeType.ADD_EXPR, mulExpr, addExpr, plus);
+			case MINUS:
+				MToken minus = matchToken(Token.MINUS);
+				addExpr = parseAddExpression();
+				return new Tree(TreeType.ADD_EXPR, mulExpr, addExpr, minus);
+			default:
+				return mulExpr;
 		}
 	}
 	
@@ -323,20 +327,20 @@ public class Parser {
 		Tree unaryExpr = parseUnaryExpression();
 		Tree mulExpr;
 		switch(lookahead()) {
-		case MULT:
-			MToken mul = matchToken(Token.MULT);
-			mulExpr = parseMulExpression();
-			return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, mul);
-		case DIV:
-			MToken div = matchToken(Token.DIV);
-			mulExpr = parseMulExpression();
-			return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, div);
-		case MOD:
-			MToken mod = matchToken(Token.MOD);
-			mulExpr = parseMulExpression();
-			return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, mod);
-		default:
-			return unaryExpr;
+			case MULT:
+				MToken mul = matchToken(Token.MULT);
+				mulExpr = parseMulExpression();
+				return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, mul);
+			case DIV:
+				MToken div = matchToken(Token.DIV);
+				mulExpr = parseMulExpression();
+				return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, div);
+			case MOD:
+				MToken mod = matchToken(Token.MOD);
+				mulExpr = parseMulExpression();
+				return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, mod);
+			default:
+				return unaryExpr;
 		}
 	}
 	
@@ -379,18 +383,18 @@ public class Parser {
 	
 	private Tree parseLiteral() throws SyntaxException {
 		switch(lookahead()) {
-		case INT_LITERAL:
-			return new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
-		case DOUBLE_LITERAL:
-			return new Tree(TreeType.LEAF, matchToken(Token.DOUBLE_LITERAL));
-		case BOOL_LITERAL:
-			return new Tree(TreeType.LEAF, matchToken(Token.BOOL_LITERAL));
-		case STRING_LITERAL:
-			return new Tree(TreeType.LEAF, matchToken(Token.STRING_LITERAL));
-		case NULL:
-			return new Tree(TreeType.LEAF, matchToken(Token.NULL));
-		default:
-			throw new SyntaxException("Expected a type literal, got " + getTokenText() + ".", getTokenOffset());
+			case INT_LITERAL:
+				return new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
+			case DOUBLE_LITERAL:
+				return new Tree(TreeType.LEAF, matchToken(Token.DOUBLE_LITERAL));
+			case BOOL_LITERAL:
+				return new Tree(TreeType.LEAF, matchToken(Token.BOOL_LITERAL));
+			case STRING_LITERAL:
+				return new Tree(TreeType.LEAF, matchToken(Token.STRING_LITERAL));
+			case NULL:
+				return new Tree(TreeType.LEAF, matchToken(Token.NULL));
+			default:
+				throw new SyntaxException("Expected a type literal, got " + getTokenText() + ".", getTokenOffset());
 		}
 	}
 	

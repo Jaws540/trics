@@ -2,7 +2,12 @@ package TIG.scripts;
 
 public class Def {
 
-	public static final String ID_REGEX = "[a-zA-Z_&&[^d]][a-zA-Z0-9_:]*";
+	public static final String ID_REGEX = "[a-zA-Z_][a-zA-Z_:]*";
+	
+	public static final String INT = "int";
+	public static final String DOUBLE = "double";
+	public static final String BOOL = "bool";
+	public static final String STRING = "string";
 	
 	public static final String INFO = "Info";
 	public static final String FEATURES = "Features";
