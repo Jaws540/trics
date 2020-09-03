@@ -1,11 +1,19 @@
 script {
+    # This is a comment
+    x = 1;
+    Display("x = " + x);
     if(true) {
         i = 0;
+        Display(i);
+        x += 1;
     }
-    Display(i);
+    Display("x = " + x);
 
-    if(false) {
-        j = 1;
+    {
+        j = 5;
+        Display(j);
     }
-    Display(j);
+    Display(j); # Error, j is out of scope
+
+    Display(i); # Error, i is out of scope
 }

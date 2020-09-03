@@ -68,7 +68,7 @@ public class Parser {
 		matchToken(Token.LBRACE);
 		Tree tree = parseBlockStatements();
 		matchToken(Token.RBRACE);
-		return tree;
+		return new Tree(TreeType.BLOCK, tree, null);
 	}
 	
 	private Tree parseBlockStatements() throws SyntaxException {

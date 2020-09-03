@@ -62,7 +62,10 @@ public enum Token {
 	ID(Def.ID_REGEX, "identifier"),
 	
 	// Whitespace
-	WHITESPACE("\\s+", "whitespace");
+	WHITESPACE("\\s+", "whitespace"),
+	
+	// Comment
+	COMMENT("#[^\\n]*\\n");
 	
 	private Pattern pattern;
 	private String name;
