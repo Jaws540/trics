@@ -1,0 +1,72 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Character Instruction Script",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#raw-types"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#identifiers"
+		},
+		{
+			"include": "#numbers"
+		}
+	],
+	"repository": {
+		"comments": {
+			"name": "comment.line.number-sign",
+			"match": "#.*$"
+		},
+		"keywords": {
+			"name": "keyword.control.cis",
+			"match": "\\b(script|if|else|while|d)\\b"
+		},
+		"operators": {
+			"name": "keyword.cis",
+			"match": "\\b(and|or|not)\\b"
+		},
+		"raw-types": {
+			"name": "constant.language.cis",
+			"match": "\\b(true|false|null)\\b"
+		},
+		"strings": {
+			"name": "string.quoted.double.cis",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.cis",
+					"match": "\\\\."
+				}
+			]
+		},
+		"functions": {
+			"name":"entity.name.function.cis",
+			"match": "\\b[a-zA-Z_][a-zA-Z_:]*\\("
+		},
+		"identifiers": {
+			"name":"variable.other.readwrite.cis",
+			"match": "\\b[a-zA-Z_][a-zA-Z_:]*\\b"
+		},
+		"numbers": {
+			"name": "constant.numeric.cis",
+			"match": "\\b[0-9]+\\b"
+		}
+	},
+	"scopeName": "source.cis"
+}
