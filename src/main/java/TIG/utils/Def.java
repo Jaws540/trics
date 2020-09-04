@@ -2,7 +2,7 @@ package TIG.utils;
 
 public class Def {
 
-	public static final String ID_REGEX = "([a-zA-Z_&&[^d]][a-zA-Z0-9_:]*|d[a-zA-Z_:][a-zA-Z0-9_:]*)";
+	public static final String ID_REGEX = "[a-zA-Z_][a-zA-Z0-9_:]*";
 	
 	// Type names
 	public static final String INT = "integer";

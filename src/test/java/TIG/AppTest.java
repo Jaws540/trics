@@ -28,20 +28,20 @@ public class AppTest {
 	@Test public void testIdentifierRegex() {
 		// Identifiers can contain and [a-zA-Z0-9_:] as long as they
 		//	- dont start with [0-9:]
-		// 	- dont start with d[0-9]
-    	assertFalse(Pattern.matches(Def.ID_REGEX, "d2"));		// false
-    	assertFalse(Pattern.matches(Def.ID_REGEX, "d2ata"));	// false
-    	assertFalse(Pattern.matches(Def.ID_REGEX, ":test"));	// false
-    	assertFalse(Pattern.matches(Def.ID_REGEX, "2day"));		// false
+    	assertFalse(Pattern.matches(Def.ID_REGEX, ":test"));
+    	assertFalse(Pattern.matches(Def.ID_REGEX, "2day"));
     	
-    	assertTrue(Pattern.matches(Def.ID_REGEX, "ad2ata"));	// true
-    	assertTrue(Pattern.matches(Def.ID_REGEX, "display"));	// true
-    	assertTrue(Pattern.matches(Def.ID_REGEX, "i"));			// true
-    	assertTrue(Pattern.matches(Def.ID_REGEX, "test"));		// true
-    	assertTrue(Pattern.matches(Def.ID_REGEX, "std:test"));	// true
-    	assertTrue(Pattern.matches(Def.ID_REGEX, "i2"));		// true
-    	assertTrue(Pattern.matches(Def.ID_REGEX, "test2"));		// true
-    	assertTrue(Pattern.matches(Def.ID_REGEX, "__d2"));		// true
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "d2"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "d2ata"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "ad2ata"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "display"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "i"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "test"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "std:test"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "i2"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "test2"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "__d2"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "__:d2"));
 	}
 	
     @Test public void testCharacterSaveToJson() {

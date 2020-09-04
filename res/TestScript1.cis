@@ -4,4 +4,6 @@ script {
     Info.Level += 1;
     Display(Info.Level);
     Display(Info.Class1);
+
+    Display(1'd'200);
 }

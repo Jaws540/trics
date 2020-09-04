@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import TIG.utils.Def;
 
 public enum Token {
-	// Regex characters needing to be escaped: .[]^-&$?*+,{}|():=!<>s
+	// Regex characters needing to be escaped: .[]^-&$?*+,{}|():=!<>
 	
 	// Control
 	ENTRY("script"),
@@ -50,7 +50,7 @@ public enum Token {
 	MOD("%"),
 	
 	// Die Rolls
-	DIE("d"),
+	DIE("'d'"),
 	
 	// Literals
 	INT_LITERAL("\\-?\\d+", "integer literal"),
