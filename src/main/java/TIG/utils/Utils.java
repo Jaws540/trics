@@ -13,14 +13,15 @@ import com.google.gson.JsonSyntaxException;
 
 import TIG.characterSheet.CharacterSheet;
 import TIG.features.Features;
+import TIG.features.Field;
 import TIG.features.Fields;
 import TIG.items.Items;
 import TIG.notes.NoteElement;
-import TIG.scripts.Def;
 import TIG.scripts.Scripts;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
 import TIG.utils.gsonAdapters.FeaturesSerializer;
+import TIG.utils.gsonAdapters.FieldSerializer;
 import TIG.utils.gsonAdapters.FieldsSerializer;
 import TIG.utils.gsonAdapters.ItemsSerializer;
 import TIG.utils.gsonAdapters.NoteElementSerializer;
@@ -38,6 +39,7 @@ public class Utils {
 		builder.registerTypeAdapter(Taggable.class, new TaggableSerializer());
 		builder.registerTypeAdapter(Tag.class, new TagSerializer());
 		builder.registerTypeAdapter(Fields.class, new FieldsSerializer());
+		builder.registerTypeAdapter(Field.class, new FieldSerializer());
 		builder.registerTypeAdapter(Items.class, new ItemsSerializer());
 		builder.registerTypeAdapter(NoteElement.class, new NoteElementSerializer());
 		builder.setPrettyPrinting();

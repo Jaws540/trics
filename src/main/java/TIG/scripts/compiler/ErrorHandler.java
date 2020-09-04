@@ -1,9 +1,9 @@
 package TIG.scripts.compiler;
 
-import TIG.scripts.compiler.exceptions.PositionalException;
-import TIG.scripts.compiler.exceptions.compileExceptions.CompileException;
-import TIG.scripts.compiler.exceptions.compileExceptions.ExceptionList;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.exceptions.PositionalException;
+import TIG.utils.exceptions.compileExceptions.CompileException;
+import TIG.utils.exceptions.compileExceptions.ExceptionList;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class ErrorHandler {
 	

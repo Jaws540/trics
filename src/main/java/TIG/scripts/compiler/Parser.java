@@ -2,9 +2,9 @@ package TIG.scripts.compiler;
 
 import java.util.List;
 
-import TIG.scripts.compiler.exceptions.compileExceptions.SyntaxException;
 import TIG.scripts.compiler.parse_tree.Tree;
 import TIG.scripts.compiler.parse_tree.TreeType;
+import TIG.utils.exceptions.compileExceptions.SyntaxException;
 
 public class Parser {
 	

@@ -3,7 +3,7 @@ package TIG.scripts.compiler;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import TIG.scripts.Def;
+import TIG.utils.Def;
 
 public enum Token {
 	// Regex characters needing to be escaped: .[]^-&$?*+,{}|():=!<>s

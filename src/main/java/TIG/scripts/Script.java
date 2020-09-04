@@ -1,40 +1,47 @@
 package TIG.scripts;
 
+import TIG.utils.Def;
+import TIG.utils.Utils;
+import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
+
 /**
  * Source code that can be run by the user or system.
  * @author Jacob
  *
  */
-public class Script {
+public class Script implements Environment {
 	/**
-	 * String name of the script
+	 * String unique identifier
 	 */
-	private final String name;
+	private final String id;
 	/**
 	 * File path to the raw source code of the script
 	 */
 	private final String sourcePath;
 	
+	private final String displayName;
 	private final String description;
 	
-	public Script(String name, String sourcePath, String description) {
-		this.name = name;
+	public Script(String id, String sourcePath, String displayName, String description) {
+		this.id = Utils.validateID(id);
 		this.sourcePath = sourcePath;
+		this.displayName = displayName;
 		this.description = description;
 	}
 	
 	/**
-	 * @return the name of the script
+	 * @return the identifier for the script
 	 */
-	public String getName() {
-		return this.name;
+	public String getID() {
+		return id;
 	}
 	
 	/**
 	 * @return the raw source code of the script
 	 */
 	public String getSourcePath() {
-		return this.sourcePath;
+		return sourcePath;
 	}
 	
 	/**
@@ -44,9 +51,25 @@ public class Script {
 	public void run(Environment env) {
 		// TODO
 	}
+	
+	public String getDisplayName() {
+		return displayName;
+	}
 
 	public String getDescription() {
 		return description;
+	}
+
+	@Override
+	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
+		switch(identifier) {
+			case Def.DISPLAY_NAME:
+				return new Entry(Entry.Type.STRING, displayName, false);
+			case Def.DESCRIPTION:
+				return new Entry(Entry.Type.STRING, description, false);
+			default:
+				throw new ExistenceException(pos);
+		}
 	}
 	
 }

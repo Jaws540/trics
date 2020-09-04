@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Scripts {
+import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
+
+public class Scripts implements Environment {
 	
 	private final List<Script> scripts;
 	
@@ -30,7 +33,7 @@ public class Scripts {
 	public String[] getScriptNames() {
 		String[] names = new String[this.scripts.size()];
 		for(int i = 0; i < this.scripts.size(); i++) {
-			names[i] = this.scripts.get(i).getName();
+			names[i] = this.scripts.get(i).getID();
 		}
 		return names;
 	}
@@ -43,10 +46,20 @@ public class Scripts {
 	 */
 	public Script getScript(String identifier) {
 		for(Script s : this.scripts) {
-			if(s.getName().equals(identifier))
+			if(s.getID().equals(identifier))
 				return s;
 		}
 		return null;
+	}
+
+	@Override
+	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
+		Script s = getScript(identifier);
+		if(s != null) {
+			return new Entry(Entry.Type.SCRIPT, s, false);
+		}
+		
+		throw new ExistenceException(pos);
 	}
 
 }

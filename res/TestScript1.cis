@@ -1,19 +1,7 @@
 script {
-    # This is a comment
-    x = 1;
-    Display("x = " + x);
-    if(true) {
-        i = 0;
-        Display(i);
-        x += 1;
-    }
-    Display("x = " + x);
-
-    {
-        j = 5;
-        Display(j);
-    }
-    Display(j); # Error, j is out of scope
-
-    Display(i); # Error, i is out of scope
+    # Directly set a character field
+    Display(Info.Level);
+    Info.Level += 1;
+    Display(Info.Level);
+    Display(Info.Class1);
 }

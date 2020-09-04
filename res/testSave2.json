@@ -4,29 +4,34 @@
     "characterName": "Illra",
     "otherData": [
       {
-        "value": 6,
         "id": "Level",
-        "type": "INT"
+        "type": "integer",
+        "value": 6,
+        "mutable": true
       },
       {
-        "value": 25000,
         "id": "EXP",
-        "type": "INT"
+        "type": "integer",
+        "value": 25000,
+        "mutable": true
       },
       {
-        "value": "Dragonborn",
         "id": "Race",
-        "type": "STRING"
+        "type": "string",
+        "value": "Dragonborn",
+        "mutable": true
       },
       {
-        "value": "Fighter",
         "id": "Class1",
-        "type": "STRING"
+        "type": "string",
+        "value": "Fighter",
+        "mutable": true
       },
       {
-        "value": "Wizard",
         "id": "Class2",
-        "type": "STRING"
+        "type": "string",
+        "value": "Wizard",
+        "mutable": true
       }
     ]
   },
@@ -37,14 +42,16 @@
       "description": "Strength Ability",
       "fields": [
         {
-          "value": 18,
           "id": "Value",
-          "type": "INT"
+          "type": "integer",
+          "value": 18,
+          "mutable": true
         },
         {
-          "value": 4,
           "id": "Modifier",
-          "type": "INT"
+          "type": "integer",
+          "value": 4,
+          "mutable": true
         }
       ],
       "scripts": [],
@@ -59,14 +66,16 @@
       "description": "Dexterity Ability",
       "fields": [
         {
-          "value": 18,
           "id": "Value",
-          "type": "INT"
+          "type": "integer",
+          "value": 18,
+          "mutable": true
         },
         {
-          "value": 4,
           "id": "Modifier",
-          "type": "INT"
+          "type": "integer",
+          "value": 4,
+          "mutable": true
         }
       ],
       "scripts": [],
@@ -81,14 +90,16 @@
       "description": "Constitution Ability",
       "fields": [
         {
-          "value": 18,
           "id": "Value",
-          "type": "INT"
+          "type": "integer",
+          "value": 18,
+          "mutable": true
         },
         {
-          "value": 4,
           "id": "Modifier",
-          "type": "INT"
+          "type": "integer",
+          "value": 4,
+          "mutable": true
         }
       ],
       "scripts": [],
@@ -103,14 +114,16 @@
       "description": "Intelligence Ability",
       "fields": [
         {
-          "value": 18,
           "id": "Value",
-          "type": "INT"
+          "type": "integer",
+          "value": 18,
+          "mutable": true
         },
         {
-          "value": 4,
           "id": "Modifier",
-          "type": "INT"
+          "type": "integer",
+          "value": 4,
+          "mutable": true
         }
       ],
       "scripts": [],
@@ -125,14 +138,16 @@
       "description": "Wisdom Ability",
       "fields": [
         {
-          "value": 18,
           "id": "Value",
-          "type": "INT"
+          "type": "integer",
+          "value": 18,
+          "mutable": true
         },
         {
-          "value": 4,
           "id": "Modifier",
-          "type": "INT"
+          "type": "integer",
+          "value": 4,
+          "mutable": true
         }
       ],
       "scripts": [],
@@ -147,14 +162,16 @@
       "description": "Charisma Ability",
       "fields": [
         {
-          "value": 18,
           "id": "Value",
-          "type": "INT"
+          "type": "integer",
+          "value": 18,
+          "mutable": true
         },
         {
-          "value": 4,
           "id": "Modifier",
-          "type": "INT"
+          "type": "integer",
+          "value": 4,
+          "mutable": true
         }
       ],
       "scripts": [],
@@ -177,19 +194,22 @@
             "description": "Basic attributes for all items",
             "fields": [
               {
-                "value": 1.0,
                 "id": "weight",
-                "type": "DOUBLE"
-              },
-              {
+                "type": "double",
                 "value": 1.0,
-                "id": "value",
-                "type": "DOUBLE"
+                "mutable": false
               },
               {
-                "value": 1,
+                "id": "value",
+                "type": "double",
+                "value": 1.0,
+                "mutable": false
+              },
+              {
                 "id": "count",
-                "type": "INT"
+                "type": "integer",
+                "value": 1,
+                "mutable": true
               }
             ],
             "scripts": [],
@@ -209,19 +229,22 @@
             "description": "Basic attributes for all items",
             "fields": [
               {
-                "value": 15.0,
                 "id": "weight",
-                "type": "DOUBLE"
+                "type": "double",
+                "value": 15.0,
+                "mutable": false
               },
               {
-                "value": 10.0,
                 "id": "value",
-                "type": "DOUBLE"
+                "type": "double",
+                "value": 10.0,
+                "mutable": false
               },
               {
-                "value": 1,
                 "id": "count",
-                "type": "INT"
+                "type": "integer",
+                "value": 1,
+                "mutable": true
               }
             ],
             "scripts": [],
@@ -241,19 +264,22 @@
             "description": "Basic attributes for all items",
             "fields": [
               {
-                "value": 0.5,
                 "id": "weight",
-                "type": "DOUBLE"
+                "type": "double",
+                "value": 0.5,
+                "mutable": false
               },
               {
-                "value": 20.0,
                 "id": "value",
-                "type": "DOUBLE"
+                "type": "double",
+                "value": 20.0,
+                "mutable": false
               },
               {
-                "value": 3,
                 "id": "count",
-                "type": "INT"
+                "type": "integer",
+                "value": 3,
+                "mutable": true
               }
             ],
             "scripts": [],
@@ -270,14 +296,16 @@
         "description": "Basic inventory feature.",
         "fields": [
           {
-            "value": 250.0,
             "id": "Carry_Weight",
-            "type": "DOUBLE"
+            "type": "double",
+            "value": 250.0,
+            "mutable": true
           },
           {
-            "value": 0.0,
             "id": "Current_Weight",
-            "type": "DOUBLE"
+            "type": "double",
+            "value": 0.0,
+            "mutable": true
           }
         ],
         "scripts": [],
@@ -289,19 +317,19 @@
     "children": [
       {
         "text": "Lol, idk, I just needed something to test the JSON formatting with",
-        "date": "Sep 1, 2020 11:10:25 PM",
+        "date": "Sep 4, 2020 5:08:33 PM",
         "title": "Something"
       },
       {
         "children": [
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Sep 1, 2020 11:10:25 PM",
+            "date": "Sep 4, 2020 5:08:33 PM",
             "title": "Session 1"
           },
           {
             "text": "It t'was a long and grueling session, but I think I will prevail!",
-            "date": "Sep 1, 2020 11:10:25 PM",
+            "date": "Sep 4, 2020 5:08:33 PM",
             "title": "Session 2"
           }
         ],

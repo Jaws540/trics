@@ -1,6 +1,6 @@
 package TIG.scripts;
 
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 /**
  * Interface for interacting with environments.
@@ -17,15 +17,5 @@ public interface Environment {
 	 * @throws InterpreterRuntimeException
 	 */
 	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException;
-	
-	/**
-	 * Puts a value into an existing environment entry.  This will not create a new entry!
-	 * @param identifier - Unique string
-	 * @param obj - Data to put into entry
-	 * @param pos - Current offset in the script source string for error reporting.  Set to 0 if not running a script.
-	 * @return <code>true</code> on success
-	 * @throws InterpreterRuntimeException
-	 */
-	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException;
 	
 }

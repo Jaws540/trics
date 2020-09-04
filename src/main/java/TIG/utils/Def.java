@@ -1,19 +1,22 @@
-package TIG.scripts;
+package TIG.utils;
 
 public class Def {
 
-	public static final String ID_REGEX = "[a-zA-Z_][a-zA-Z_:]*";
+	public static final String ID_REGEX = "([a-zA-Z_&&[^d]][a-zA-Z0-9_:]*|d[a-zA-Z_:][a-zA-Z0-9_:]*)";
 	
-	public static final String INT = "int";
+	// Type names
+	public static final String INT = "integer";
 	public static final String DOUBLE = "double";
-	public static final String BOOL = "bool";
+	public static final String BOOL = "boolean";
 	public static final String STRING = "string";
 	
+	// General reserved identifiers
 	public static final String INFO = "Info";
 	public static final String FEATURES = "Features";
 	public static final String INVENTORY = "Inventory";
 	public static final String ITEMS = "Items";
 	
+	// Specific reserved identifiers
 	public static final String PLAYER_NAME = "playerName";
 	public static final String CHARACTER_NAME = "characterName";
 	public static final String DISPLAY_NAME = "displayName";

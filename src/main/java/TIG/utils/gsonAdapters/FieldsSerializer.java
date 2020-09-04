@@ -26,13 +26,13 @@ public class FieldsSerializer implements JsonSerializer<Fields>, JsonDeserialize
 	public Fields deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 		JsonArray jsonArr = json.getAsJsonArray();
 		
-		List<Field<?>> fields = new ArrayList<>();
+		List<Field> fields = new ArrayList<>();
 		for(JsonElement j : jsonArr) {
-			Field<?> field = context.deserialize(j, Field.class);
+			Field field = context.deserialize(j, Field.class);
 			fields.add(field);
 		}
 		
-		return new Fields(fields.toArray(new Field<?>[fields.size()]));
+		return new Fields(fields.toArray(new Field[fields.size()]));
 	}
 
 }

@@ -3,8 +3,8 @@ package TIG.scripts.compiler;
 import java.util.ArrayList;
 import java.util.List;
 
-import TIG.scripts.compiler.exceptions.compileExceptions.ExceptionList;
-import TIG.scripts.compiler.exceptions.compileExceptions.LexerException;
+import TIG.utils.exceptions.compileExceptions.ExceptionList;
+import TIG.utils.exceptions.compileExceptions.LexerException;
 
 public class Lexer {
 	

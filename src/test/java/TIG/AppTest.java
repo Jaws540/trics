@@ -7,20 +7,42 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.regex.Pattern;
+
 import org.junit.Test;
 
 import TIG.characterSheet.CharacterSheet;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.compiler.Interpreter;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.Def;
 import TIG.utils.TestData;
 import TIG.utils.Utils;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class AppTest {
 	
 	private final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
 	private final String characterSavePath = testSavePath + "testSave2.json";
+	
+	@Test public void testIdentifierRegex() {
+		// Identifiers can contain and [a-zA-Z0-9_:] as long as they
+		//	- dont start with [0-9:]
+		// 	- dont start with d[0-9]
+    	assertFalse(Pattern.matches(Def.ID_REGEX, "d2"));		// false
+    	assertFalse(Pattern.matches(Def.ID_REGEX, "d2ata"));	// false
+    	assertFalse(Pattern.matches(Def.ID_REGEX, ":test"));	// false
+    	assertFalse(Pattern.matches(Def.ID_REGEX, "2day"));		// false
+    	
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "ad2ata"));	// true
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "display"));	// true
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "i"));			// true
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "test"));		// true
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "std:test"));	// true
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "i2"));		// true
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "test2"));		// true
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "__d2"));		// true
+	}
 	
     @Test public void testCharacterSaveToJson() {
     	boolean output = Utils.saveJSON(TestData.testCharacter, characterSavePath);

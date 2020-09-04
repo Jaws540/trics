@@ -4,15 +4,14 @@ import TIG.features.Feature;
 import TIG.features.Features;
 import TIG.features.Field;
 import TIG.features.Fields;
-import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
+import TIG.utils.Def;
 import TIG.utils.Log;
 import TIG.utils.Utils;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class Item extends Taggable implements Environment {
 	
@@ -89,12 +88,12 @@ public class Item extends Taggable implements Environment {
 	}
 	
 	private void addBaseFeature(double weight, double value, int itemCount) {
-		Field<?>[] baseFieldList = null;
+		Field[] baseFieldList = null;
 		try {
-			Field<?>[] tmp = {
-					new Field<Double>("weight", weight, Field.Type.DOUBLE), 
-					new Field<Double>("value", value, Field.Type.DOUBLE),
-					new Field<Integer>("count", itemCount, Field.Type.INT)
+			Field[] tmp = {
+					new Field("weight", new Entry(Entry.Type.DOUBLE, weight, false)), 
+					new Field("value", new Entry(Entry.Type.DOUBLE, value, false)),
+					new Field("count", new Entry(Entry.Type.INTEGER, itemCount, true))
 				  };
 			baseFieldList = tmp;
 		} catch(Exception e) {
@@ -126,22 +125,11 @@ public class Item extends Taggable implements Environment {
 	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.DISPLAY_NAME:
-				return new Entry(Entry.Type.STRING, displayName);
+				return new Entry(Entry.Type.STRING, displayName, false);
 			case Def.DESCRIPTION:
-				return new Entry(Entry.Type.STRING, description);
+				return new Entry(Entry.Type.STRING, description, false);
 			default:
 				return feats.envGet(identifier, pos);
-		}
-	}
-
-	@Override
-	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
-		switch(identifier) {
-		case Def.DISPLAY_NAME:
-		case Def.DESCRIPTION:
-			throw new ImmutableException(pos);
-		default:
-			return feats.envPut(identifier, obj, pos);
 		}
 	}
 
