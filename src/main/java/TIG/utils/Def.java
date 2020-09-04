@@ -24,6 +24,6 @@ public class Def {
 	public static final String SCRIPTS = "scripts";
 	
 	// Standard Library Functions
-	public static final String DISPLAY = "Display";
+	public static final String DISPLAY = "display";
 
 }

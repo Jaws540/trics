@@ -1,9 +1,9 @@
 script {
     # Directly set a character field
-    Display(Info.Level);
+    display(Info.Level);
     Info.Level += 1;
-    Display(Info.Level);
-    Display(Info.Class1);
+    display(Info.Level);
+    display(Info.Class1);
 
-    Display(1'd'200);
+    display(1'd'200);
 }
