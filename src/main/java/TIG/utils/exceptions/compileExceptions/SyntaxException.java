@@ -1,4 +1,4 @@
-package TIG.scripts.compiler.exceptions.compileExceptions;
+package TIG.utils.exceptions.compileExceptions;
 
 public class SyntaxException extends CompileException {
 	

@@ -1,4 +1,4 @@
-package TIG.scripts.compiler.exceptions.interpreterExceptions;
+package TIG.utils.exceptions.interpreterExceptions;
 
 public class ExistenceException extends InterpreterRuntimeException {
 
