@@ -1,8 +1,10 @@
 {
     "name": "character-instruction-script",
     "displayName": "Character Instruction Script",
-    "description": "Syntax highlighting for CIS in VS Code",
+    "description": "Syntax highlighting for CIS for Visual Studio Code",
     "version": "0.0.1",
+    "icon": "images/cis_icon.png",
+    "publisher": "QuantumRetrofit",
     "engines": {
         "vscode": "^1.48.0"
     },
