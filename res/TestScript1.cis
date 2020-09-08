@@ -1,19 +1,23 @@
 script {
-    # This is a comment
-    x = 1;
-    Display("x = " + x);
-    if(true) {
-        i = 0;
-        Display(i);
-        x += 1;
-    }
-    Display("x = " + x);
+    # Directly set a character field
+    display(Info.Level)
+    Info.Level += 1
+    display(Info.Level)
+    display(Info.Class1)
 
-    {
-        j = 5;
-        Display(j);
-    }
-    Display(j); # Error, j is out of scope
+    # Roll a 1d200
+    display(1'd'200)
 
-    Display(i); # Error, i is out of scope
+    # Test string printing with quote escaping
+    display("This is a \"valid\" test\nAnd I don't have to worry about new-line characters either!\n\tOr Tabs!\nOr '\\'s!")
+
+    if(1 == 1) {
+        display(true)
+    }
+
+    x = 0
+    while(x < 3) {
+        x += 1
+        display("Hello")display(x)
+    }
 }

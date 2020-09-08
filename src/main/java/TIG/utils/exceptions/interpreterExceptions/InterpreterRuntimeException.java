@@ -1,6 +1,6 @@
-package TIG.scripts.compiler.exceptions.interpreterExceptions;
+package TIG.utils.exceptions.interpreterExceptions;
 
-import TIG.scripts.compiler.exceptions.PositionalException;
+import TIG.utils.exceptions.PositionalException;
 
 public class InterpreterRuntimeException extends PositionalException {
 	

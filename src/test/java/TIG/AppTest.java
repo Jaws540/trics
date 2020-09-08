@@ -7,20 +7,61 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.regex.Pattern;
+
 import org.junit.Test;
 
 import TIG.characterSheet.CharacterSheet;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.compiler.Interpreter;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.scripts.compiler.Token;
+import TIG.utils.Def;
 import TIG.utils.TestData;
 import TIG.utils.Utils;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class AppTest {
 	
 	private final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
 	private final String characterSavePath = testSavePath + "testSave2.json";
+	
+	@Test public void testStringEscapes() {
+		String test1 = "\"This is a valid test\"";
+		String test2 = "\"This is a 'valid' test\"";
+		String test3 = "\"This is a \n valid test\"";
+		String test4 = "\"This is a \\\"valid\\\" test\"";
+		String test5 = "\"This is a \"valid\" test\"";
+		System.out.println(Token.STRING_LITERAL.matches(test1) + ":" + test1.length() + ": '" + test1 + "'");
+		System.out.println(Token.STRING_LITERAL.matches(test2) + ":" + test2.length() + ": '" + test2 + "'");
+		System.out.println(Token.STRING_LITERAL.matches(test3) + ":" + test3.length() + ": '" + test3 + "'");
+		System.out.println(Token.STRING_LITERAL.matches(test4) + ":" + test4.length() + ": '" + test4 + "'");
+		System.out.println(Token.STRING_LITERAL.matches(test5) + ":" + test5.length() + ": '" + test5 + "'");
+		assertTrue(Token.STRING_LITERAL.matches(test1) == 22);
+		assertTrue(Token.STRING_LITERAL.matches(test2) == 24);
+		assertTrue(Token.STRING_LITERAL.matches(test3) == 24);
+		assertTrue(Token.STRING_LITERAL.matches(test4) == 26);
+		assertTrue(Token.STRING_LITERAL.matches(test5) == 12);
+	}
+	
+	@Test public void testIdentifierRegex() {
+		// Identifiers can contain and [a-zA-Z0-9_:] as long as they
+		//	- dont start with [0-9:]
+    	assertFalse(Pattern.matches(Def.ID_REGEX, ":test"));
+    	assertFalse(Pattern.matches(Def.ID_REGEX, "2day"));
+    	
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "d2"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "d2ata"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "ad2ata"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "display"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "i"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "test"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "std:test"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "i2"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "test2"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "__d2"));
+    	assertTrue(Pattern.matches(Def.ID_REGEX, "__:d2"));
+	}
 	
     @Test public void testCharacterSaveToJson() {
     	boolean output = Utils.saveJSON(TestData.testCharacter, characterSavePath);

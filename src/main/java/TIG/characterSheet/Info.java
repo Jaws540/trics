@@ -1,11 +1,10 @@
 package TIG.characterSheet;
 
 import TIG.features.Fields;
-import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.Def;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 /**
  * Basic information needed for a character
@@ -47,23 +46,11 @@ public class Info implements Environment {
 	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.PLAYER_NAME:
-				return new Entry(Entry.Type.STRING, playerName);
+				return new Entry(Entry.Type.STRING, playerName, false);
 			case Def.CHARACTER_NAME:
-				return new Entry(Entry.Type.STRING, characterName);
+				return new Entry(Entry.Type.STRING, characterName, false);
 			default:
 				return otherData.envGet(identifier, pos);
 		}
 	}
-
-	@Override
-	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
-		switch(identifier) {
-		case Def.PLAYER_NAME:
-		case Def.CHARACTER_NAME:
-			throw new ImmutableException(pos);
-		default:
-			return otherData.envPut(identifier, obj, pos);
-	}
-	}
-
 }

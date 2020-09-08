@@ -2,11 +2,10 @@ package TIG.characterSheet;
 
 import TIG.features.Features;
 import TIG.items.Items;
-import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.Def;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class Inventory implements Environment {
 	
@@ -51,15 +50,10 @@ public class Inventory implements Environment {
 	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.FEATURES:
-				return new Entry(Entry.Type.ENV, features);
+				return new Entry(Entry.Type.ENV, features, false);
 			default:
 				return items.envGet(identifier, pos);
 		}
-	}
-
-	@Override
-	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
-		throw new ImmutableException(pos);
 	}
 
 }

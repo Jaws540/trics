@@ -5,21 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.scripts.compiler.exceptions.compileExceptions.CompileException;
-import TIG.scripts.compiler.exceptions.compileExceptions.ExceptionList;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.ExistenceException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InvalidArgumentsException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InvalidOperationException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.TypeException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.UndefinedFunctionException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.UnretrievableException;
 import TIG.scripts.compiler.parse_tree.Tree;
 import TIG.scripts.compiler.parse_tree.TreeType;
+import TIG.utils.Def;
 import TIG.utils.Utils;
+import TIG.utils.exceptions.compileExceptions.CompileException;
+import TIG.utils.exceptions.compileExceptions.ExceptionList;
+import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
+import TIG.utils.exceptions.interpreterExceptions.ImmutableException;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.exceptions.interpreterExceptions.InvalidArgumentsException;
+import TIG.utils.exceptions.interpreterExceptions.InvalidOperationException;
+import TIG.utils.exceptions.interpreterExceptions.TypeException;
+import TIG.utils.exceptions.interpreterExceptions.UndefinedFunctionException;
+import TIG.utils.exceptions.interpreterExceptions.UnretrievableException;
 
 /**
  * Runs script source files
@@ -131,7 +132,7 @@ public class Interpreter {
 	
 	private void interpretIf(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
 		Entry exprResult = interpretExpression(tree.left, mem);
-		if(exprResult.type == Entry.Type.BOOL) {
+		if(exprResult.type == Entry.Type.BOOLEAN) {
 			boolean result = ((Boolean) exprResult.val).booleanValue();
 			if(tree.right.type == TreeType.ELSE) {
 				if(result)
@@ -150,7 +151,7 @@ public class Interpreter {
 		boolean result = false;
 		do {
 			Entry exprResult = interpretExpression(tree.left, mem);
-			if(exprResult.type == Entry.Type.BOOL) {
+			if(exprResult.type == Entry.Type.BOOLEAN) {
 				result = ((Boolean) exprResult.val).booleanValue();
 				if(result) {
 					interpret(tree.right, mem);
@@ -168,7 +169,7 @@ public class Interpreter {
 			case Def.DISPLAY:
 				if(args.length == 1) {
 					interpretDisplay(args[0], mem);
-					return new Entry(Entry.Type.BOOL, true);
+					return new Entry(Entry.Type.BOOLEAN, true, false);
 				}else {
 					throw new InvalidArgumentsException("Display has one string parameter.", pos);
 				}
@@ -180,9 +181,9 @@ public class Interpreter {
 	private void interpretDisplay(Entry arg, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
 		String output = "";
 		switch(arg.type) {
-			case INT:
+			case INTEGER:
 			case DOUBLE:
-			case BOOL:
+			case BOOLEAN:
 				output = "" + arg.val;
 				break;
 			case STRING:
@@ -216,48 +217,50 @@ public class Interpreter {
 		pos = tree.token.offset;
 		
 		Entry id = interpretIDExpression(tree.left, mem);
-		Entry value = interpretExpression(tree.right, mem);
+		Entry value = interpretExpression(tree.right, mem); // This returns an immutable entry
 		if(id == null && tree.token.token == Token.ASSIGN) {
-			mem.put(interpretLeaf(tree.left.left), value);
+			// Ensure a local variable is mutable
+			mem.put(interpretLeaf(tree.left.left), new Entry(value.type, value.val, true));
 		}else if(id == null && tree.token.token != Token.ASSIGN) {
+			// Can't do math on a non-existant variable;
 			throw new InvalidOperationException(pos);
 		}else if(id.type == value.type) {
 			switch(tree.token.token) {
 				case PLUS_ASSIGN:
-					if(id.type == Entry.Type.BOOL)
+					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					
 					value = interpretExpression(refactorMathAssign(TreeType.ADD_EXPR, tree.left, tree.right, Token.PLUS, tree.token), mem);
 					break;
 				case MINUS_ASSIGN:
-					if(id.type == Entry.Type.BOOL)
+					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					if(id.type == Entry.Type.STRING)
-						throw new TypeException(pos, "Non-addition math is undefined for type string.");
+						throw new TypeException(pos, "Non-addition math/non-integer multiplication is undefined for type string.");
 					
 					value = interpretExpression(refactorMathAssign(TreeType.ADD_EXPR, tree.left, tree.right, Token.MINUS, tree.token), mem);
 					break;
 				case MULT_ASSIGN:
-					if(id.type == Entry.Type.BOOL)
+					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
-					if(id.type == Entry.Type.STRING)
-						throw new TypeException(pos, "Non-addition math is undefined for type string.");
+					if(id.type == Entry.Type.STRING && value.type != Entry.Type.INTEGER)
+						throw new TypeException(pos, "Non-addition math/non-integer multiplication is undefined for type string.");
 					
 					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.MULT, tree.token), mem);
 					break;
 				case DIV_ASSIGN:
-					if(id.type == Entry.Type.BOOL)
+					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					if(id.type == Entry.Type.STRING)
-						throw new TypeException(pos, "Non-addition math is undefined for type string.");
+						throw new TypeException(pos, "Non-addition math/non-integer multiplication is undefined for type string.");
 					
 					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.DIV, tree.token), mem);
 					break;
 				case MOD_ASSIGN:
-					if(id.type == Entry.Type.BOOL)
+					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					if(id.type == Entry.Type.STRING)
-						throw new TypeException(pos, "Non-addition math is undefined for type string.");
+						throw new TypeException(pos, "Non-addition math/non-integer multiplication is undefined for type string.");
 					
 					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.MOD, tree.token), mem);
 					break;
@@ -265,7 +268,10 @@ public class Interpreter {
 					break;
 			}
 			
-			id.val = value.val;
+			if(id.mutable)
+				id.val = value.val;
+			else
+				throw new ImmutableException(pos);
 		}else {
 			throw new TypeException(pos, "Expected type " + id.type.name + ".");
 		}
@@ -300,8 +306,8 @@ public class Interpreter {
 		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
-		if(left.type == Entry.Type.BOOL && right.type == Entry.Type.BOOL) {
-			return new Entry(Entry.Type.BOOL, ((Boolean) left.val) || ((Boolean) right.val));
+		if(left.type == Entry.Type.BOOLEAN && right.type == Entry.Type.BOOLEAN) {
+			return new Entry(Entry.Type.BOOLEAN, ((Boolean) left.val) || ((Boolean) right.val), false);
 		}
 		
 		throw new TypeException(pos, "Expected bool.");
@@ -311,8 +317,8 @@ public class Interpreter {
 		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
-		if(left.type == Entry.Type.BOOL && right.type == Entry.Type.BOOL) {
-			return new Entry(Entry.Type.BOOL, ((Boolean) left.val) && ((Boolean) right.val));
+		if(left.type == Entry.Type.BOOLEAN && right.type == Entry.Type.BOOLEAN) {
+			return new Entry(Entry.Type.BOOLEAN, ((Boolean) left.val) && ((Boolean) right.val), false);
 		}
 		
 		throw new TypeException(pos, "Expected bool.");
@@ -324,14 +330,14 @@ public class Interpreter {
 		Entry right = interpretExpression(tree.right, mem);
 		if(left.type == right.type) {
 			switch(left.type) {
-				case INT:
-					return new Entry(Entry.Type.BOOL, ((Integer) left.val) == ((Integer) right.val));
+				case INTEGER:
+					return new Entry(Entry.Type.BOOLEAN, ((Integer) left.val) == ((Integer) right.val), false);
 				case DOUBLE:
-					return new Entry(Entry.Type.BOOL, ((Double) left.val) == ((Double) right.val));
-				case BOOL:
-					return new Entry(Entry.Type.BOOL, ((Boolean) left.val) == ((Boolean) right.val));
+					return new Entry(Entry.Type.BOOLEAN, ((Double) left.val) == ((Double) right.val), false);
+				case BOOLEAN:
+					return new Entry(Entry.Type.BOOLEAN, ((Boolean) left.val) == ((Boolean) right.val), false);
 				case STRING:
-					return new Entry(Entry.Type.BOOL, ((String) left.val).equals((String) right.val));
+					return new Entry(Entry.Type.BOOLEAN, ((String) left.val).equals((String) right.val), false);
 				default:
 					throw new InvalidOperationException(pos);
 			}
@@ -348,23 +354,23 @@ public class Interpreter {
 		// Defined for all base types except boolean
 		if(left.type == right.type) {
 			switch(left.type) {
-				case INT:
-					return new Entry(Entry.Type.BOOL, interpretRelation((Integer) left.val, (Integer) right.val, op));
+				case INTEGER:
+					return new Entry(Entry.Type.BOOLEAN, interpretRelation((Integer) left.val, (Integer) right.val, op), false);
 				case DOUBLE:
-					return new Entry(Entry.Type.BOOL, interpretRelation((Double) left.val, (Double) right.val, op));
-				case BOOL:
+					return new Entry(Entry.Type.BOOLEAN, interpretRelation((Double) left.val, (Double) right.val, op), false);
+				case BOOLEAN:
 					throw new TypeException(pos, "Relational expressions are undefined for type bool.");
 				case STRING:
-					return new Entry(Entry.Type.BOOL, interpretRelation((String) left.val, (String) right.val, op));
+					return new Entry(Entry.Type.BOOLEAN, interpretRelation((String) left.val, (String) right.val, op), false);
 				default:
 					throw new InvalidOperationException(pos);
 			}
 			
 		// Also defined for comparissons between numerical types (i.e. integers and doubles are comparable)
-		}else if (left.type == Entry.Type.INT && right.type == Entry.Type.DOUBLE) {
-			return new Entry(Entry.Type.BOOL, interpretRelation((Integer) left.val, (Double) right.val, op));
-		}else if (left.type == Entry.Type.DOUBLE && right.type == Entry.Type.INT) {
-			return new Entry(Entry.Type.BOOL, interpretRelation((Double) left.val, (Integer) right.val, op));
+		}else if (left.type == Entry.Type.INTEGER && right.type == Entry.Type.DOUBLE) {
+			return new Entry(Entry.Type.BOOLEAN, interpretRelation((Integer) left.val, (Double) right.val, op), false);
+		}else if (left.type == Entry.Type.DOUBLE && right.type == Entry.Type.INTEGER) {
+			return new Entry(Entry.Type.BOOLEAN, interpretRelation((Double) left.val, (Integer) right.val, op), false);
 		}
 		
 		throw new TypeException(pos, "Undefined relation for " + left.type.name + " and " + right.type.name + ".");
@@ -453,32 +459,32 @@ public class Interpreter {
 		Token op = tree.token.token;
 		if(left.type == right.type) {
 			switch(left.type) {
-				case INT:
-					return new Entry(Entry.Type.INT, interpretAdd((Integer) left.val, (Integer) right.val, op));
+				case INTEGER:
+					return new Entry(Entry.Type.INTEGER, interpretAdd((Integer) left.val, (Integer) right.val, op), false);
 				case DOUBLE:
-					return new Entry(Entry.Type.DOUBLE, interpretAdd((Double) left.val, (Double) right.val, op));
-				case BOOL:
+					return new Entry(Entry.Type.DOUBLE, interpretAdd((Double) left.val, (Double) right.val, op), false);
+				case BOOLEAN:
 					throw new TypeException(pos, "Math is undefined for type bool.");
 				case STRING:
 					if(op == Token.PLUS)
-						return new Entry(Entry.Type.STRING, ((String) left.val) + ((String) right.val));
+						return new Entry(Entry.Type.STRING, ((String) left.val) + ((String) right.val), false);
 					else
 						throw new TypeException(pos, "Non-addition math is undefined for type string.");
 				default:
 					throw new InvalidOperationException(pos);
 			}
-		}else if(left.type == Entry.Type.INT && right.type == Entry.Type.DOUBLE) {
-			return new Entry(Entry.Type.DOUBLE, interpretAdd((Integer) left.val, (Double) right.val, op));
-		}else if(left.type == Entry.Type.DOUBLE && right.type == Entry.Type.INT) {
-			return new Entry(Entry.Type.DOUBLE, interpretAdd((Double) left.val, (Integer) right.val, op));
+		}else if(left.type == Entry.Type.INTEGER && right.type == Entry.Type.DOUBLE) {
+			return new Entry(Entry.Type.DOUBLE, interpretAdd((Integer) left.val, (Double) right.val, op), false);
+		}else if(left.type == Entry.Type.DOUBLE && right.type == Entry.Type.INTEGER) {
+			return new Entry(Entry.Type.DOUBLE, interpretAdd((Double) left.val, (Integer) right.val, op), false);
 		}else if(left.type == Entry.Type.STRING && op == Token.PLUS) {
 			switch(right.type) {
-				case INT:
-					return new Entry(Entry.Type.STRING, ((String) left.val) + ((Integer) right.val).intValue());
+				case INTEGER:
+					return new Entry(Entry.Type.STRING, ((String) left.val) + ((Integer) right.val).intValue(), false);
 				case DOUBLE:
-					return new Entry(Entry.Type.STRING, ((String) left.val) + ((Double) right.val).doubleValue());
-				case BOOL:
-					return new Entry(Entry.Type.STRING, ((String) left.val) + ((Boolean) right.val).booleanValue());
+					return new Entry(Entry.Type.STRING, ((String) left.val) + ((Double) right.val).doubleValue(), false);
+				case BOOLEAN:
+					return new Entry(Entry.Type.STRING, ((String) left.val) + ((Boolean) right.val).booleanValue(), false);
 				default:
 					throw new InvalidOperationException(pos);
 			}
@@ -538,27 +544,27 @@ public class Interpreter {
 		Token op = tree.token.token;
 		if(left.type == right.type) {
 			switch(left.type) {
-			case INT:
-				return new Entry(Entry.Type.INT, interpretMultiply((Integer) left.val, (Integer) right.val, op));
+			case INTEGER:
+				return new Entry(Entry.Type.INTEGER, interpretMultiply((Integer) left.val, (Integer) right.val, op), false);
 			case DOUBLE:
-				return new Entry(Entry.Type.DOUBLE, interpretMultiply((Double) left.val, (Double) right.val, op));
-			case BOOL:
+				return new Entry(Entry.Type.DOUBLE, interpretMultiply((Double) left.val, (Double) right.val, op), false);
+			case BOOLEAN:
 				throw new TypeException(pos, "Math is undefined for type bool.");
 			case STRING:
 				throw new TypeException(pos, "Non-addition math is undefined for type string.");
 			default:
 				throw new InvalidOperationException(pos);
 			}
-		}else if(left.type == Entry.Type.INT && right.type == Entry.Type.DOUBLE) {
-			return new Entry(Entry.Type.DOUBLE, interpretMultiply((Integer) left.val, (Double) right.val, op));
-		}else if(left.type == Entry.Type.DOUBLE && right.type == Entry.Type.INT) {
-			return new Entry(Entry.Type.DOUBLE, interpretMultiply((Double) left.val, (Integer) right.val, op));
-		}else if(left.type == Entry.Type.STRING && right.type == Entry.Type.INT) {
+		}else if(left.type == Entry.Type.INTEGER && right.type == Entry.Type.DOUBLE) {
+			return new Entry(Entry.Type.DOUBLE, interpretMultiply((Integer) left.val, (Double) right.val, op), false);
+		}else if(left.type == Entry.Type.DOUBLE && right.type == Entry.Type.INTEGER) {
+			return new Entry(Entry.Type.DOUBLE, interpretMultiply((Double) left.val, (Integer) right.val, op), false);
+		}else if(left.type == Entry.Type.STRING && right.type == Entry.Type.INTEGER) {
 			// Python-like string multiplication
 			String out = "";
 			for(int i = 0; i < (Integer) right.val; i++) 
 				out += (String) left.val;
-			return new Entry(Entry.Type.STRING, out);
+			return new Entry(Entry.Type.STRING, out, false);
 		}
 		
 		throw new TypeException(pos, "Addition is undefined for " + left.type.name + " and " + right.type.name + ".");
@@ -620,8 +626,8 @@ public class Interpreter {
 		pos = tree.token.offset;
 		if(tree.left.type == TreeType.LEAF && tree.left.token.token == Token.NOT) {
 			Entry right = interpretExpression(tree.right, mem);
-			if(right.type == Entry.Type.BOOL) {
-				return new Entry(Entry.Type.BOOL, !((Boolean) right.val));
+			if(right.type == Entry.Type.BOOLEAN) {
+				return new Entry(Entry.Type.BOOLEAN, !((Boolean) right.val), false);
 			}
 			
 			throw new TypeException(pos, "Expected bool.");
@@ -684,13 +690,13 @@ public class Interpreter {
 			String data = interpretLeaf(tree);
 			switch(tree.token.token) {
 				case INT_LITERAL:
-					return new Entry(Entry.Type.INT, Integer.parseInt(data));
+					return new Entry(Entry.Type.INTEGER, Integer.parseInt(data), false);
 				case DOUBLE_LITERAL:
-					return new Entry(Entry.Type.DOUBLE, Double.parseDouble(data));
+					return new Entry(Entry.Type.DOUBLE, Double.parseDouble(data), false);
 				case BOOL_LITERAL:
-					return new Entry(Entry.Type.BOOL, Boolean.parseBoolean(data));
+					return new Entry(Entry.Type.BOOLEAN, Boolean.parseBoolean(data), false);
 				case STRING_LITERAL:
-					return new Entry(Entry.Type.STRING, data);
+					return new Entry(Entry.Type.STRING, data, false);
 				default:
 					throw new TypeException(pos, "Unknown literal type.");
 			}
@@ -703,7 +709,7 @@ public class Interpreter {
 	private Entry interpretRollExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
-		if(left.type == Entry.Type.INT && right.type == Entry.Type.INT) {
+		if(left.type == Entry.Type.INTEGER && right.type == Entry.Type.INTEGER) {
 			int numDie = ((Integer) left.val).intValue();
 			int numFaces = ((Integer) right.val).intValue();
 			int sum = 0;
@@ -711,10 +717,10 @@ public class Interpreter {
 			for(int i = 0; i < numDie; i++) {
 				sum += rand.nextInt(numFaces) + 1;
 			}
-			return new Entry(Entry.Type.INT, sum);
+			return new Entry(Entry.Type.INTEGER, sum, false);
 		}
 		
-		throw new TypeException(pos, "Expected <int>d<int>.");
+		throw new TypeException(pos, "Expected <int>'d'<int>.");
 	}
 	
 	private String interpretLeaf(Tree tree) throws InterpreterRuntimeException {

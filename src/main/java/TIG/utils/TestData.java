@@ -14,6 +14,7 @@ import TIG.items.Items;
 import TIG.notes.Note;
 import TIG.notes.NoteTree;
 import TIG.notes.Notes;
+import TIG.scripts.Entry;
 import TIG.tags.Tag;
 
 public class TestData {
@@ -22,12 +23,12 @@ public class TestData {
 	static {
 		try {
 			// INFO
-			Field<?>[] otherInfo = {
-				new Field<Integer>("Level", 6, Field.Type.INT),
-				new Field<Integer>("EXP", 25000, Field.Type.INT),
-				new Field<String>("Race", "Dragonborn", Field.Type.STRING),
-				new Field<String>("Class1", "Fighter", Field.Type.STRING),
-				new Field<String>("Class2", "Wizard", Field.Type.STRING),
+			Field[] otherInfo = {
+				new Field("Level", new Entry(Entry.Type.INTEGER, 6, true)),
+				new Field("EXP", new Entry(Entry.Type.INTEGER, 25000, true)),
+				new Field("Race", new Entry(Entry.Type.STRING, "Dragonborn", true)),
+				new Field("Class1", new Entry(Entry.Type.STRING, "Fighter", true)),
+				new Field("Class2", new Entry(Entry.Type.STRING, "Wizard", true)),
 			};
 			Info characterInfo = new Info("Jacob", "Illra", new Fields(otherInfo));
 			
@@ -37,29 +38,29 @@ public class TestData {
 				new Tag("Modifier")
 			};
 			
-			Field<?>[] strFields = {
-				new Field<Integer>("Value", 18, Field.Type.INT),
-				new Field<Integer>("Modifier", 4, Field.Type.INT)
+			Field[] strFields = {
+				new Field("Value", new Entry(Entry.Type.INTEGER, 18, true)),
+				new Field("Modifier", new Entry(Entry.Type.INTEGER, 4, true))
 			};
-			Field<?>[] dexFields = {
-				new Field<Integer>("Value", 18, Field.Type.INT),
-				new Field<Integer>("Modifier", 4, Field.Type.INT)
+			Field[] dexFields = {
+				new Field("Value", new Entry(Entry.Type.INTEGER, 18, true)),
+				new Field("Modifier", new Entry(Entry.Type.INTEGER, 4, true))
 			};
-			Field<?>[] conFields = {
-				new Field<Integer>("Value", 18, Field.Type.INT),
-				new Field<Integer>("Modifier", 4, Field.Type.INT)
+			Field[] conFields = {
+				new Field("Value", new Entry(Entry.Type.INTEGER, 18, true)),
+				new Field("Modifier", new Entry(Entry.Type.INTEGER, 4, true))
 			};
-			Field<?>[] intFields = {
-				new Field<Integer>("Value", 18, Field.Type.INT),
-				new Field<Integer>("Modifier", 4, Field.Type.INT)
+			Field[] intFields = {
+				new Field("Value", new Entry(Entry.Type.INTEGER, 18, true)),
+				new Field("Modifier", new Entry(Entry.Type.INTEGER, 4, true))
 			};
-			Field<?>[] wisFields = {
-				new Field<Integer>("Value", 18, Field.Type.INT),
-				new Field<Integer>("Modifier", 4, Field.Type.INT)
+			Field[] wisFields = {
+				new Field("Value", new Entry(Entry.Type.INTEGER, 18, true)),
+				new Field("Modifier", new Entry(Entry.Type.INTEGER, 4, true))
 			};
-			Field<?>[] chaFields = {
-				new Field<Integer>("Value", 18, Field.Type.INT),
-				new Field<Integer>("Modifier", 4, Field.Type.INT)
+			Field[] chaFields = {
+				new Field("Value", new Entry(Entry.Type.INTEGER, 18, true)),
+				new Field("Modifier", new Entry(Entry.Type.INTEGER, 4, true))
 			};
 			Feature[] featsList = {
 				new Feature("Strength", "Strength", "Strength Ability", new Fields(strFields), null, abilityTags),
@@ -77,9 +78,9 @@ public class TestData {
 				new Item("sword", "Sword", "Stab with it from farther away lol", 15, 10, 1, null),
 				new Item("potion_of_healing", "Potion of Healing", "Get them life points back", 0.5, 20, 3, null),
 			};
-			Field<?>[] inventoryBaseFields = {
-				new Field<Double>("Carry_Weight", 250.0, Field.Type.DOUBLE),
-				new Field<Double>("Current_Weight", 0.0, Field.Type.DOUBLE),
+			Field[] inventoryBaseFields = {
+				new Field("Carry_Weight", new Entry(Entry.Type.DOUBLE, 250.0, true)),
+				new Field("Current_Weight", new Entry(Entry.Type.DOUBLE, 0.0, true)),
 			};
 			Feature[] inventoryFeatList = {
 				new Feature("dnd::inventory", "Base", "Basic inventory feature.", new Fields(inventoryBaseFields), null, null),

@@ -1,6 +1,6 @@
-package TIG.scripts.compiler.exceptions.compileExceptions;
+package TIG.utils.exceptions.compileExceptions;
 
-import TIG.scripts.compiler.exceptions.PositionalException;
+import TIG.utils.exceptions.PositionalException;
 
 public abstract class CompileException extends PositionalException {
 	

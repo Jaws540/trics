@@ -1,14 +1,13 @@
 package TIG.features;
 
-import TIG.scripts.Def;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.Scripts;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.ImmutableException;
-import TIG.scripts.compiler.exceptions.interpreterExceptions.InterpreterRuntimeException;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
+import TIG.utils.Def;
 import TIG.utils.Utils;
+import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 /**
  * The main unit for values a character has
@@ -102,25 +101,13 @@ public class Feature extends Taggable implements Environment {
 	public Entry envGet(String identifier, int pos) throws InterpreterRuntimeException {
 		switch(identifier) {
 			case Def.DISPLAY_NAME:
-				return new Entry(Entry.Type.STRING, displayName);
+				return new Entry(Entry.Type.STRING, displayName, false);
 			case Def.DESCRIPTION:
-				return new Entry(Entry.Type.STRING, description);
+				return new Entry(Entry.Type.STRING, description, false);
 			case Def.SCRIPTS:
-				return new Entry(Entry.Type.ENV, scripts);
+				return new Entry(Entry.Type.ENV, scripts, false);
 			default:
 				return fields.envGet(identifier, pos);
-		}
-	}
-
-	@Override
-	public boolean envPut(String identifier, Entry obj, int pos) throws InterpreterRuntimeException {
-		switch(identifier) {
-			case Def.DISPLAY_NAME:
-			case Def.DESCRIPTION:
-			case Def.SCRIPTS:
-				throw new ImmutableException(pos);
-			default:
-				return fields.envPut(identifier, obj, pos);
 		}
 	}
 

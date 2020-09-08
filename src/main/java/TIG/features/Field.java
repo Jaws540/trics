@@ -1,7 +1,7 @@
 package TIG.features;
 
-import TIG.scripts.Def;
 import TIG.scripts.Entry;
+import TIG.scripts.Entry.Type;
 import TIG.utils.Utils;
 
 /**
@@ -9,53 +9,19 @@ import TIG.utils.Utils;
  * @author Jacob
  *
  */
-public class Field<T> {
+public class Field {
 	
-	public enum Type {
-		INT(Def.INT),
-		DOUBLE(Def.DOUBLE),
-		BOOL(Def.BOOL),
-		STRING(Def.STRING);
-		
-		public final String name;
-		
-		private Type(String name) {
-			this.name = name;
-		}
-		
-		public boolean isEntryType(Entry.Type type) {
-			switch(type) {
-				case BOOL:
-					if(this == Type.BOOL)
-						return true;
-				case DOUBLE:
-					if(this == Type.DOUBLE)
-						return true;
-				case INT:
-					if(this == Type.INT)
-						return true;
-				case STRING:
-					if(this == Type.STRING)
-						return true;
-				default:
-					return false;
-			}
-		}
-	}
-	
-	private T value;
 	private final String id;
-	private final Type type;
+	private final Entry data;
 	
 	/**
 	 * Create a Field that contains a single piece of information
 	 * @param id - Name of the field
 	 * @param value - Value the field will contain
 	 */
-	public Field(String id, T value, Type type) throws Exception {
+	public Field(String id, Entry data) {
 		this.id = Utils.validateID(id);
-		this.value = value;
-		this.type = type;
+		this.data = data;
 	}
 	
 	/**
@@ -67,26 +33,15 @@ public class Field<T> {
 	}
 	
 	/**
-	 * Gets the value of this field
+	 * Gets the Entry data for this field
 	 * @return
 	 */
-	public T getValue() {
-		return this.value;
-	}
-	
-	/**
-	 * Sets a new value for this field
-	 * @param newValue
-	 * @return The old value of this field
-	 */
-	public T setValue(T newValue) {
-		T oldValue = this.value;
-		this.value  = newValue;
-		return oldValue;
+	public Entry getData() {
+		return this.data;
 	}
 	
 	public Type getType() {
-		return type;
+		return data.type;
 	}
 	
 }

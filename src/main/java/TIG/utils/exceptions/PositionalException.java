@@ -1,4 +1,4 @@
-package TIG.scripts.compiler.exceptions;
+package TIG.utils.exceptions;
 
 public class PositionalException extends Exception {
 
