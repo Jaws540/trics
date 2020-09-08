@@ -168,7 +168,7 @@ public class Interpreter {
 		switch(tree.left.token.match) {
 			case Def.DISPLAY:
 				if(args.length == 1) {
-					interpretDisplay(args[0], mem);
+					StdLibrary.interpretDisplay(args[0], mem, pos);
 					return new Entry(Entry.Type.BOOLEAN, true, false);
 				}else {
 					throw new InvalidArgumentsException("Display has one string parameter.", pos);
@@ -176,24 +176,6 @@ public class Interpreter {
 			default:
 				throw new UndefinedFunctionException(tree.left.token.match, pos);
 		}
-	}
-	
-	private void interpretDisplay(Entry arg, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
-		String output = "";
-		switch(arg.type) {
-			case INTEGER:
-			case DOUBLE:
-			case BOOLEAN:
-				output = "" + arg.val;
-				break;
-			case STRING:
-				output = (String) arg.val;
-				break;
-			default:
-				throw new TypeException(pos, "Unknown type given.");
-		}
-		
-		System.out.println(output);
 	}
 	
 	private Entry[] interpretList(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
