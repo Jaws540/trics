@@ -15,6 +15,7 @@ import TIG.characterSheet.CharacterSheet;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.compiler.Interpreter;
+import TIG.scripts.compiler.Token;
 import TIG.utils.Def;
 import TIG.utils.TestData;
 import TIG.utils.Utils;
@@ -24,6 +25,24 @@ public class AppTest {
 	
 	private final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
 	private final String characterSavePath = testSavePath + "testSave2.json";
+	
+	@Test public void testStringEscapes() {
+		String test1 = "\"This is a valid test\"";
+		String test2 = "\"This is a 'valid' test\"";
+		String test3 = "\"This is a \n valid test\"";
+		String test4 = "\"This is a \\\"valid\\\" test\"";
+		String test5 = "\"This is a \"valid\" test\"";
+		System.out.println(Token.STRING_LITERAL.matches(test1) + ":" + test1.length() + ": '" + test1 + "'");
+		System.out.println(Token.STRING_LITERAL.matches(test2) + ":" + test2.length() + ": '" + test2 + "'");
+		System.out.println(Token.STRING_LITERAL.matches(test3) + ":" + test3.length() + ": '" + test3 + "'");
+		System.out.println(Token.STRING_LITERAL.matches(test4) + ":" + test4.length() + ": '" + test4 + "'");
+		System.out.println(Token.STRING_LITERAL.matches(test5) + ":" + test5.length() + ": '" + test5 + "'");
+		assertTrue(Token.STRING_LITERAL.matches(test1) == 22);
+		assertTrue(Token.STRING_LITERAL.matches(test2) == 24);
+		assertTrue(Token.STRING_LITERAL.matches(test3) == 24);
+		assertTrue(Token.STRING_LITERAL.matches(test4) == 26);
+		assertTrue(Token.STRING_LITERAL.matches(test5) == 12);
+	}
 	
 	@Test public void testIdentifierRegex() {
 		// Identifiers can contain and [a-zA-Z0-9_:] as long as they

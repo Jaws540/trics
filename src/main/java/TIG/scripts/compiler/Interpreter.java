@@ -720,7 +720,7 @@ public class Interpreter {
 			return new Entry(Entry.Type.INTEGER, sum, false);
 		}
 		
-		throw new TypeException(pos, "Expected <int>d<int>.");
+		throw new TypeException(pos, "Expected <int>'d'<int>.");
 	}
 	
 	private String interpretLeaf(Tree tree) throws InterpreterRuntimeException {
