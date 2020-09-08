@@ -1,13 +1,23 @@
 script {
     # Directly set a character field
-    display(Info.Level);
-    Info.Level += 1;
-    display(Info.Level);
-    display(Info.Class1);
+    display(Info.Level)
+    Info.Level += 1
+    display(Info.Level)
+    display(Info.Class1)
 
     # Roll a 1d200
-    display(1'd'200);
+    display(1'd'200)
 
     # Test string printing with quote escaping
-    display("This is a \"valid\" test\nAnd I don't have to worry about new-line characters either!\n\tOr Tabs!\nOr '\\'s!");
+    display("This is a \"valid\" test\nAnd I don't have to worry about new-line characters either!\n\tOr Tabs!\nOr '\\'s!")
+
+    if(1 == 1) {
+        display(true)
+    }
+
+    x = 0
+    while(x < 3) {
+        x += 1
+        display("Hello")display(x)
+    }
 }

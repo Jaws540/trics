@@ -135,7 +135,7 @@ public class Parser {
 			case WHILE:
 				return parseWhileStatement();
 			default:
-				return parseLineStatement();
+				return parseLine();
 		}
 	}
 	
@@ -163,11 +163,14 @@ public class Parser {
 		return new Tree(TreeType.WHILE, expr, stmt);
 	}
 	
+	/*
+	 * Removed the need for semi-colons
 	private Tree parseLineStatement() throws SyntaxException {
 		Tree line = parseLine();
 		matchToken(Token.EOL);
 		return line;
 	}
+	*/
 	
 	private Tree parseLine() throws SyntaxException {
 		if(lookahead2() == Token.LPAREN) {

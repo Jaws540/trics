@@ -20,7 +20,8 @@ public enum Token {
 	LBRACE("\\{", "{"),
 	RBRACE("\\}", "}"),
 	NULL("null"),
-	EOL(";"),
+	// Semi-colons as line endings are not needed!
+	//EOL(";"),
 	COMMA("\\,", ","),
 	
 	// Logic
@@ -56,7 +57,6 @@ public enum Token {
 	INT_LITERAL("\\-?\\d+", "integer literal"),
 	DOUBLE_LITERAL("\\-?\\d+\\.\\d+", "double literal"),
 	BOOL_LITERAL("(true|false)", "bool literal"),
-	//STRING_LITERAL("\"(\\\\\"|\\\\n|\\\\t|[^\"])*\"", "string literal"), // A sequence of characters that are not the " character surrounded by "s
 	STRING_LITERAL("\"(\\\\\"|[^\"])*\"", "string literal"), // A sequence of characters that are not the " character surrounded by "s
 
 	// IDs
