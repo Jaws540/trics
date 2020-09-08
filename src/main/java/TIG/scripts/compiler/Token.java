@@ -56,7 +56,8 @@ public enum Token {
 	INT_LITERAL("\\-?\\d+", "integer literal"),
 	DOUBLE_LITERAL("\\-?\\d+\\.\\d+", "double literal"),
 	BOOL_LITERAL("(true|false)", "bool literal"),
-	STRING_LITERAL("\"(\\\\\"|\\\\n|\\\\t|[^\"])*\"", "string literal"), // A sequence of characters that are not the " character surrounded by "s
+	//STRING_LITERAL("\"(\\\\\"|\\\\n|\\\\t|[^\"])*\"", "string literal"), // A sequence of characters that are not the " character surrounded by "s
+	STRING_LITERAL("\"(\\\\\"|[^\"])*\"", "string literal"), // A sequence of characters that are not the " character surrounded by "s
 
 	// IDs
 	ID(Def.ID_REGEX, "identifier"),
@@ -65,7 +66,7 @@ public enum Token {
 	WHITESPACE("\\s+", "whitespace"),
 	
 	// Comment
-	COMMENT("#[^\\n]*\\n");
+	COMMENT("#[^\\n]*\n");
 	
 	private Pattern pattern;
 	private String name;

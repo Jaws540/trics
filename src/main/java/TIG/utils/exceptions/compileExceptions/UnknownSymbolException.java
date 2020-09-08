@@ -1,10 +1,10 @@
 package TIG.utils.exceptions.compileExceptions;
 
-public class LexerException extends CompileException {
+public class UnknownSymbolException extends CompileException {
 	
 	private static final long serialVersionUID = 1L;
 
-	public LexerException(int pos) {
+	public UnknownSymbolException(int pos) {
 		super("Unknown symbol.", pos);
 	}
 
