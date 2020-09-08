@@ -39,7 +39,8 @@ public class Lexer {
 					if(len > longestCount) {
 						if(t != Token.WHITESPACE && t != Token.COMMENT) {
 							if(t == Token.STRING_LITERAL) {
-								longestMatch = new MToken(t, sub.substring(1, len - 1).replaceAll("\\\\\"", "\""), pos, len);
+								// Handle excaped characters
+								longestMatch = new MToken(t, sub.substring(1, len - 1).replaceAll("\\\\\"", "\"").replaceAll("\\\\n", "\n").replaceAll("\\\\t", "\t"), pos, len);
 							}else {
 								longestMatch = new MToken(t, sub.substring(0, len), pos, len);
 							}

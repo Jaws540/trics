@@ -9,5 +9,5 @@ script {
     display(1'd'200);
 
     # Test string printing with quote escaping
-    display("This is a \"valid\" test");
+    display("This is a \"valid\" test\nAnd I don't have to worry about new-line characters either!\n\tOr Tabs?");
 }
