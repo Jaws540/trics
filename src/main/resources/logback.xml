@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="1 minute">
+	<property name="LOG_PATH" value="logs/" />
+	<property name="LOG_ARCHIVE" value="${LOG_PATH}/archive/" />
+	<property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} |-%-5level in %logger{36}[%thread] - %msg%n" />
+	
+	<timestamp key="timestamp-by-date" datePattern="MMM-dd-yyyy" />
+	
+	<!-- CONSOLE PRINTER -->
+	<appender name="Console-Adapter" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- FILE PRINTER -->
+    <appender name="File-Appender" class="ch.qos.logback.core.FileAppender">
+    	<file>${LOG_PATH}/${timestamp-by-date}.log</file>
+    	<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+    		<pattern>${LOG_PATTERN}}</pattern>
+    	</encoder>
+    </appender>
+    
+    <!-- ROLLING FILE PRINTER -->
+    <appender name="RollingFile-Appender" class="ch.qos.Logback.core.rolling.RollingFileAppender">
+	    <file>${LOG_PATH}/rollingfile.log</file>
+	    <rollingPolicy class="ch.qos.Logback.core.rolling.TimeBasedRollingPolicy">
+	        <fileNamePattern>${LOG_ARCHIVE}/rollingfile.%d{yyyy-MM-dd}.log</fileNamePattern>
+	        <maxHistory>30</maxHistory>
+	        <totalSizeCap>1MB</totalSizeCap>
+	    </rollingPolicy>
+	    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+	        <pattern>${LOG_PATTERN}</pattern>
+	    </encoder>
+	</appender>
+    
+    <!-- APPLICATION LOGGER -->
+    <logger name="TIG" level="debug">
+    	<appender-ref ref="File-Appender" />
+    	<appender-ref ref="RollingFile-Appender" />
+    </logger>
+
+	<!-- ROOT LOGGER -->
+	<root level="debug">
+		<appender-ref ref="Console-Adapter" />
+    </root>
+</configuration>
