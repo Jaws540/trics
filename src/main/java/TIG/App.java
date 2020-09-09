@@ -4,6 +4,7 @@
 package TIG;
 
 import TIG.characterSheet.CharacterSheet;
+import TIG.gui.CharacterSheetPane;
 import TIG.scripts.compiler.Interpreter;
 import TIG.utils.TestData;
 import TIG.utils.Utils;
@@ -14,6 +15,16 @@ public class App {
 	private static final String characterSavePath = testSavePath + "testSave2.json";
 
     public static void main(String[] args) {
+    	runGuiTest(args);
+    	//runCharacterTests();
+    }
+    
+    private static void runGuiTest(String[] args) {
+    	CharacterSheetPane.main(args);
+    }
+    
+    @SuppressWarnings("unused")
+	private static void runCharacterTests() {
     	Utils.saveJSON(TestData.testCharacter, characterSavePath);
     	
     	CharacterSheet character = null;

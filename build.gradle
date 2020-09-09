@@ -42,4 +42,5 @@ application {
 
 javafx {
     version = "14"
+	modules = [ 'javafx.controls' ]
 }
