@@ -7,42 +7,50 @@
 	
 	<timestamp key="timestamp-by-date" datePattern="MMM-dd-yyyy" />
 	
-	<!-- CONSOLE PRINTER -->
+	<!-- CONSOLE -->
 	<appender name="Console-Adapter" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
     
-    <!-- FILE PRINTER -->
+    <!-- FILE (non-rolling) -->
+    <!--
     <appender name="File-Appender" class="ch.qos.logback.core.FileAppender">
     	<file>${LOG_PATH}/${timestamp-by-date}.log</file>
+    	<append>true</append>
+    	<immediateFlush>true</immediateFlush>
     	<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
     		<pattern>${LOG_PATTERN}}</pattern>
     	</encoder>
     </appender>
+    -->
     
-    <!-- ROLLING FILE PRINTER -->
-    <appender name="RollingFile-Appender" class="ch.qos.Logback.core.rolling.RollingFileAppender">
-	    <file>${LOG_PATH}/rollingfile.log</file>
-	    <rollingPolicy class="ch.qos.Logback.core.rolling.TimeBasedRollingPolicy">
-	        <fileNamePattern>${LOG_ARCHIVE}/rollingfile.%d{yyyy-MM-dd}.log</fileNamePattern>
-	        <maxHistory>30</maxHistory>
-	        <totalSizeCap>1MB</totalSizeCap>
-	    </rollingPolicy>
-	    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-	        <pattern>${LOG_PATTERN}</pattern>
-	    </encoder>
+    <!-- ROLLING FILE -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${timestamp-by-date}.rolling.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+        	<fileNamePattern>${LOG_ARCHIVE}/%d{MMM-dd-yyyy}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history capped at 3GB total size -->
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+		
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
 	</appender>
     
     <!-- APPLICATION LOGGER -->
-    <logger name="TIG" level="debug">
-    	<appender-ref ref="File-Appender" />
-    	<appender-ref ref="RollingFile-Appender" />
+    <logger name="TIG" level="DEBUG">
+		<appender-ref ref="Console-Adapter" />
+    	<!-- <appender-ref ref="File-Appender" /> -->
+   		<appender-ref ref="FILE" />
     </logger>
 
 	<!-- ROOT LOGGER -->
-	<root level="debug">
+	<root level="TRACE" additivity="false">
 		<appender-ref ref="Console-Adapter" />
     </root>
 </configuration>
