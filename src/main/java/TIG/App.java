@@ -14,36 +14,39 @@ import TIG.utils.Utils;
 
 public class App {
 	
-	private static final Logger logger = LoggerFactory.getLogger(App.class);
+	private static final Logger LOG = LoggerFactory.getLogger(App.class);
 	
 	private static final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
 	private static final String characterSavePath = testSavePath + "testSave2.json";
 
     public static void main(String[] args) {
-    	logger.debug("This is a test message!");
-    	runGuiTest(args);
-    	//runCharacterTests();
+    	LOG.info("Application started");
+    	//runGuiTest(args);
+    	runCharacterTests();
     }
     
+    @SuppressWarnings("unused")
     private static void runGuiTest(String[] args) {
     	CharacterSheetPane.main(args);
     }
     
-    @SuppressWarnings("unused")
 	private static void runCharacterTests() {
+    	LOG.debug("Saving test data");
     	Utils.saveJSON(TestData.testCharacter, characterSavePath);
-    	
+
     	CharacterSheet character = null;
     	try {
     		character = Utils.loadCharacter(characterSavePath);
     	}catch(Exception e) {
     		e.printStackTrace();
     	}
-    	
+
+    	LOG.debug("Loading and running interpreter on test script");
     	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.cis", character);
     	interp.compile();
     	interp.run();
-    	
+
+    	LOG.debug("Saving modified test data");
     	Utils.saveJSON(character, testSavePath + "testSave3.json");
     }
 }

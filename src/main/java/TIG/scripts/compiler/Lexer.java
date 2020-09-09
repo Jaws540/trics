@@ -3,6 +3,9 @@ package TIG.scripts.compiler;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import TIG.utils.exceptions.compileExceptions.CompileException;
 import TIG.utils.exceptions.compileExceptions.ExceptionList;
 import TIG.utils.exceptions.compileExceptions.InvalidEscapeSequenceException;
@@ -10,12 +13,15 @@ import TIG.utils.exceptions.compileExceptions.UnknownSymbolException;
 
 public class Lexer {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(Lexer.class);
+	
 	/**
 	 * Marches through a script source string to find all its tokens
 	 * @param source - Script source string
 	 * @return A list of tokens found sequentially in source
 	 */
 	public static List<MToken> lex(String source) throws ExceptionList {
+		LOG.debug("Lexing");
 		List<CompileException> exceptions = new ArrayList<>();
 		
 		// Token accumulator
@@ -36,32 +42,31 @@ public class Lexer {
 				// If the token matches the substring
 				int len = t.matches(sub); // Length of the match
 				
-				if(len > 0) {
-					// Select this token if it is not whitespace and is the longest match
-					if(len > longestCount) {
-						if(t != Token.WHITESPACE && t != Token.COMMENT) {
-							if(t == Token.STRING_LITERAL) {
-								try {
-									String escaped = escapeCharacters(sub.substring(1, len - 1), pos);
-									longestMatch = new MToken(t, escaped, pos, len);
-								} catch (InvalidEscapeSequenceException e) {
-									exceptions.add(e);
-									// Put in a dummy token so the lexer doesn't throw an unknown symbol exception
-									longestMatch = new MToken(t, "", pos, len);
-								}
-							}else {
-								longestMatch = new MToken(t, sub.substring(0, len), pos, len);
+				if(len > longestCount) {
+					if(t != Token.WHITESPACE && t != Token.COMMENT) {
+						if(t == Token.STRING_LITERAL) {
+							try {
+								String escaped = escapeCharacters(sub.substring(1, len - 1), pos);
+								longestMatch = new MToken(t, escaped, pos, len);
+							} catch (InvalidEscapeSequenceException e) {
+								exceptions.add(e);
+								// Put in a dummy token so the lexer doesn't throw an unknown symbol exception
+								longestMatch = new MToken(t, "", pos, len);
 							}
 						}else {
-							whitespace = true;
+							longestMatch = new MToken(t, sub.substring(0, len), pos, len);
 						}
-						longestCount = len;
+					}else {
+						whitespace = true;
 					}
+					
+					longestCount = len;
 				}
 			}
 			
 			if(longestMatch != null) {
 				tokens.add(longestMatch);
+				LOG.trace("Found " + longestMatch.token.toString());
 			}else if(whitespace != true) {
 				exceptions.add(new UnknownSymbolException(pos));
 			}
