@@ -43,7 +43,7 @@
 	</appender>
     
     <!-- APPLICATION LOGGER -->
-    <logger name="TIG" level="INFO">
+    <logger name="TIG" level="DEBUG">
 		<appender-ref ref="Console-Adapter" />
     	<!-- <appender-ref ref="File-Appender" /> -->
    		<appender-ref ref="FILE" />
