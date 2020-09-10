@@ -2,6 +2,9 @@ package TIG.utils;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import TIG.characterSheet.CharacterSheet;
 import TIG.characterSheet.Info;
 import TIG.characterSheet.Inventory;
@@ -18,6 +21,8 @@ import TIG.scripts.Entry;
 import TIG.tags.Tag;
 
 public class TestData {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(TestData.class);
 	
 	public static CharacterSheet testCharacter;
 	static {
@@ -74,7 +79,7 @@ public class TestData {
 			
 			// INVENTORY
 			Item[] itemList = {
-				new Item("dagger", "Dagger", "Stab with it lol", 1, 1, 1, null),
+				new Item("$dagger", "Dagger", "Stab with it lol", 1, 1, 1, null),
 				new Item("sword", "Sword", "Stab with it from farther away lol", 15, 10, 1, null),
 				new Item("potion_of_healing", "Potion of Healing", "Get them life points back", 0.5, 20, 3, null),
 			};
@@ -101,7 +106,7 @@ public class TestData {
 			
 			testCharacter = new CharacterSheet(characterInfo, feats, inventory, notes);
 		} catch(Exception e) {
-			Log.fatal("Could not initialize test data!  Check field names/tag texts for invalid strings.");
+			LOG.error("Could not initialize test data");
 		}
 	}
 
