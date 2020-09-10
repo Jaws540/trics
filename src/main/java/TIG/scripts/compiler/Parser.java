@@ -2,16 +2,22 @@ package TIG.scripts.compiler;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import TIG.scripts.compiler.parse_tree.Tree;
 import TIG.scripts.compiler.parse_tree.TreeType;
 import TIG.utils.exceptions.compileExceptions.SyntaxException;
 
 public class Parser {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(Parser.class);
+	
 	private List<MToken> tokens;
 	private int pos = 0;
 	
 	public Parser(List<MToken> tokens) {
+		LOG.debug("Initialized parser");
 		this.tokens = tokens;
 	}
 	
@@ -50,6 +56,7 @@ public class Parser {
 	 */
 	private MToken matchToken(Token t) throws SyntaxException {
 		if(tokens.get(pos).token == t) {
+			LOG.trace("Matched " + t.toString());
 			pos++;
 			return tokens.get(pos - 1);
 		}
@@ -60,6 +67,7 @@ public class Parser {
 	// TODO: Add functions.
 	
 	public Tree parse() throws SyntaxException {
+		LOG.debug("Parsing");
 		matchToken(Token.ENTRY);
 		return parseBlock();
 	}
@@ -72,6 +80,7 @@ public class Parser {
 	}
 	
 	private Tree parseBlockStatements() throws SyntaxException {
+			LOG.trace("Parsing empty tree");
 		if(lookahead() == Token.RBRACE) {
 			return new Tree(TreeType.EMPTY);
 		}
@@ -82,8 +91,9 @@ public class Parser {
 			return stmt;
 		
 		Tree rtree = parseBlockStatements();
-		if(rtree != null)
+		if(rtree != null) {
 			return new Tree(TreeType.SEQ, stmt, rtree);
+		}
 		return stmt;
 	}
 	
@@ -140,6 +150,7 @@ public class Parser {
 	}
 	
 	private Tree parseIfStatement() throws SyntaxException {
+		LOG.trace("Parsing if");
 		matchToken(Token.IF);
 		matchToken(Token.LPAREN);
 		Tree expr = parseExpression();
@@ -148,18 +159,22 @@ public class Parser {
 		if(lookahead() == Token.ELSE) {
 			matchToken(Token.ELSE);
 			Tree elseStmt = parseStatement();
+			LOG.trace("Parsed if-else tree");
 			return new Tree(TreeType.IF, expr, new Tree(TreeType.ELSE, stmt, elseStmt));
 		}
 		
+		LOG.trace("Parsed if tree");
 		return new Tree(TreeType.IF, expr, stmt);
 	}
 	
 	private Tree parseWhileStatement() throws SyntaxException {
+		LOG.trace("Parsing while");
 		matchToken(Token.WHILE);
 		matchToken(Token.LPAREN);
 		Tree expr = parseExpression();
 		matchToken(Token.RPAREN);
 		Tree stmt = parseStatement();
+		LOG.trace("Parsed while tree");
 		return new Tree(TreeType.WHILE, expr, stmt);
 	}
 	
@@ -181,6 +196,7 @@ public class Parser {
 	}
 	
 	private Tree parseAssignment() throws SyntaxException {
+		LOG.trace("Parsing assignment");
 		Tree id = parseIdentifier();
 		MToken op = parseAssignmentOperator();
 		Tree expr = parseExpression();
@@ -188,6 +204,7 @@ public class Parser {
 	}
 	
 	private Tree parseIdentifier() throws SyntaxException {
+		LOG.trace("Parsing ID");
 		Tree id = new Tree(TreeType.LEAF, matchToken(Token.ID));
 		
 		Tree rem = new Tree(TreeType.EMPTY);
@@ -219,6 +236,7 @@ public class Parser {
 	}
 	
 	private Tree parseCall() throws SyntaxException {
+		LOG.trace("Parsing call");
 		Tree id = new Tree(TreeType.LEAF, matchToken(Token.ID));
 		matchToken(Token.LPAREN);
 		Tree params = parseParameters();
@@ -227,6 +245,7 @@ public class Parser {
 	}
 	
 	private Tree parseParameters() throws SyntaxException {
+		LOG.trace("Parsing call parameters");
 		if(lookahead() == Token.RPAREN) {
 			return new Tree(TreeType.EMPTY);
 		}
@@ -248,6 +267,7 @@ public class Parser {
 	private Tree parseOrExpression() throws SyntaxException {
 		Tree andExpr = parseAndExpression();
 		if(lookahead() == Token.OR) {
+			LOG.trace("Parsing or expression");
 			MToken or = matchToken(Token.OR);
 			Tree orExpr = parseOrExpression();
 			return new Tree(TreeType.OR_EXPR, andExpr, orExpr, or);
@@ -259,6 +279,7 @@ public class Parser {
 	private Tree parseAndExpression() throws SyntaxException {
 		Tree equalityExpr = parseEqualityExpression();
 		if(lookahead() == Token.AND) {
+			LOG.trace("Parsing and expression");
 			MToken and = matchToken(Token.AND);
 			Tree andExpr = parseAndExpression();
 			return new Tree(TreeType.AND_EXPR, equalityExpr, andExpr, and);
@@ -272,10 +293,12 @@ public class Parser {
 		Tree equalityExpr;
 		switch(lookahead()) {
 			case EQUAL:
+				LOG.trace("Parsing equals expression");
 				MToken eq = matchToken(Token.EQUAL);
 				equalityExpr = parseEqualityExpression();
 				return new Tree(TreeType.EQ_EXPR, relationExpr, equalityExpr, eq);
 			case NOT_EQUAL:
+				LOG.trace("Parsing not-equals expression");
 				MToken neq = matchToken(Token.NOT_EQUAL);
 				equalityExpr = parseEqualityExpression();
 				return new Tree(TreeType.EQ_EXPR, relationExpr, equalityExpr, neq);
@@ -289,18 +312,22 @@ public class Parser {
 		Tree relationExpr;
 		switch(lookahead()) {
 			case LESS:
+				LOG.trace("Parsing less than expression");
 				MToken less = matchToken(Token.LESS);
 				relationExpr = parseRelationExpression();
 				return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, less);
 			case GREATER:
+				LOG.trace("Parsing greater than expression");
 				MToken greater = matchToken(Token.GREATER);
 				relationExpr = parseRelationExpression();
 				return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, greater);
 			case LESS_EQUAL:
+				LOG.trace("Parsing less than or equal expression");
 				MToken less_eq = matchToken(Token.LESS_EQUAL);
 				relationExpr = parseRelationExpression();
 				return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, less_eq);
 			case GREATER_EQUAL:
+				LOG.trace("Parsing greater than or equal expression");
 				MToken greater_eq = matchToken(Token.GREATER_EQUAL);
 				relationExpr = parseRelationExpression();
 				return new Tree(TreeType.REL_EXPR, addExpr, relationExpr, greater_eq);
@@ -314,10 +341,12 @@ public class Parser {
 		Tree addExpr;
 		switch(lookahead()) {
 			case PLUS:
+				LOG.trace("Parsing addition expression");
 				MToken plus = matchToken(Token.PLUS);
 				addExpr = parseAddExpression();
 				return new Tree(TreeType.ADD_EXPR, mulExpr, addExpr, plus);
 			case MINUS:
+				LOG.trace("Parsing subtraction expression");
 				MToken minus = matchToken(Token.MINUS);
 				addExpr = parseAddExpression();
 				return new Tree(TreeType.ADD_EXPR, mulExpr, addExpr, minus);
@@ -331,14 +360,17 @@ public class Parser {
 		Tree mulExpr;
 		switch(lookahead()) {
 			case MULT:
+				LOG.trace("Parsing multiplication expression");
 				MToken mul = matchToken(Token.MULT);
 				mulExpr = parseMulExpression();
 				return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, mul);
 			case DIV:
+				LOG.trace("Parsing division expression");
 				MToken div = matchToken(Token.DIV);
 				mulExpr = parseMulExpression();
 				return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, div);
 			case MOD:
+				LOG.trace("Parsing modulus expression");
 				MToken mod = matchToken(Token.MOD);
 				mulExpr = parseMulExpression();
 				return new Tree(TreeType.MUL_EXPR, unaryExpr, mulExpr, mod);
@@ -349,6 +381,7 @@ public class Parser {
 	
 	private Tree parseUnaryExpression() throws SyntaxException {
 		if(lookahead() == Token.NOT) {
+			LOG.trace("Parsing not expression");
 			MToken not = matchToken(Token.NOT);
 			Tree unaryExpr = parseUnaryExpression();
 			return new Tree(TreeType.UNARY_EXPR, new Tree(TreeType.LEAF, not), unaryExpr);
@@ -385,6 +418,7 @@ public class Parser {
 	}
 	
 	private Tree parseLiteral() throws SyntaxException {
+		LOG.trace("Parsing literal expression");
 		switch(lookahead()) {
 			case INT_LITERAL:
 				return new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
@@ -402,6 +436,7 @@ public class Parser {
 	}
 	
 	private Tree parseRoll() throws SyntaxException {
+		LOG.trace("Parsing roll expression");
 		Tree numDie = new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));
 		matchToken(Token.DIE);
 		Tree numFaces = new Tree(TreeType.LEAF, matchToken(Token.INT_LITERAL));

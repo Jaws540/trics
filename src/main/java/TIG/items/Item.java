@@ -9,7 +9,6 @@ import TIG.scripts.Environment;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
 import TIG.utils.Def;
-import TIG.utils.Log;
 import TIG.utils.Utils;
 import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
@@ -89,17 +88,12 @@ public class Item extends Taggable implements Environment {
 	
 	private void addBaseFeature(double weight, double value, int itemCount) {
 		Field[] baseFieldList = null;
-		try {
-			Field[] tmp = {
-					new Field("weight", new Entry(Entry.Type.DOUBLE, weight, false)), 
-					new Field("value", new Entry(Entry.Type.DOUBLE, value, false)),
-					new Field("count", new Entry(Entry.Type.INTEGER, itemCount, true))
-				  };
-			baseFieldList = tmp;
-		} catch(Exception e) {
-			Log.warn("Failed to initialize std::item Feature.  ID: " + id);
-			return;
+		Field[] tmp = {
+			new Field("weight", new Entry(Entry.Type.DOUBLE, weight, false)), 
+			new Field("value", new Entry(Entry.Type.DOUBLE, value, false)),
+			new Field("count", new Entry(Entry.Type.INTEGER, itemCount, true))
 		};
+		baseFieldList = tmp;
 		Fields baseFields = new Fields(baseFieldList);
 		Feature base = new Feature("std::item", "Item", "Basic attributes for all items", baseFields, null, null);
 		this.feats.addFeature(base);

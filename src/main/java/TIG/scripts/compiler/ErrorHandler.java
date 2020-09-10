@@ -1,11 +1,16 @@
 package TIG.scripts.compiler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import TIG.utils.exceptions.PositionalException;
 import TIG.utils.exceptions.compileExceptions.CompileException;
 import TIG.utils.exceptions.compileExceptions.ExceptionList;
 import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class ErrorHandler {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(ErrorHandler.class);
 	
 	private static String fixedLengthString(String string, int length) {
 	    return String.format("%1$"+length+ "s", string);
@@ -48,6 +53,17 @@ public class ErrorHandler {
 		System.err.println(prefix + line);
 		System.err.println(fixedLengthString(" ", numSpaces) + "^");
 		System.err.println(e.getMessage());
+		
+		// Log error messages
+		LOG.error("-------------------------------------");
+		if(e instanceof CompileException)
+			LOG.error("Syntax ");
+		else if(e instanceof InterpreterRuntimeException)
+			LOG.error("Runtime ");
+		LOG.error("Error on line " + (i + 1));
+		LOG.error(prefix + line);
+		LOG.error(fixedLengthString(" ", numSpaces) + "^");
+		LOG.error(e.getMessage());
 	}
 	
 	public static void handleCompileException(CompileException e, String src) {

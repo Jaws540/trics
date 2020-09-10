@@ -51,7 +51,7 @@ public class Items implements Environment {
 	}
 
 	public Item[] getItems() {
-		return (Item[]) this.items.toArray();
+		return this.items.toArray(new Item[this.items.size()]);
 	}
 	
 	public Item getItem(String id) {

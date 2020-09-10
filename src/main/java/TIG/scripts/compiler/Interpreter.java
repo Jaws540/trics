@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
 import TIG.scripts.compiler.parse_tree.Tree;
@@ -29,6 +32,8 @@ import TIG.utils.exceptions.interpreterExceptions.UnretrievableException;
  */
 public class Interpreter {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(Interpreter.class);
+	
 	private final String src;
 	private final Environment env;
 	
@@ -51,6 +56,7 @@ public class Interpreter {
 	 * @return <code>true</code> on a successful compile, false otherwise.
 	 */
 	public boolean compile() {
+		LOG.debug("Compiling script");
 		if(src != null) {
 			// Attempt to interpret the source file
 			try {
@@ -68,6 +74,7 @@ public class Interpreter {
 	}
 	
 	public boolean run() {
+		LOG.info("Running script");
 		if(ast != null) {
 			try {
 				pos = 0;
@@ -97,9 +104,11 @@ public class Interpreter {
 			case SEQ:
 				interpretSequence(tree, mem);
 				break;
+				/*
 			case DECLARE:
 				interpretDeclare(tree, mem);
 				break;
+				*/
 			case IF:
 				interpretIf(tree, mem);
 				break;
@@ -125,21 +134,28 @@ public class Interpreter {
 		interpret(tree.right, mem);
 	}
 	
+	/*
 	private void interpretDeclare(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting declaration");
 		pos = tree.token.offset;
-		
 	}
+	*/
 	
 	private void interpretIf(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting if statement");
 		Entry exprResult = interpretExpression(tree.left, mem);
 		if(exprResult.type == Entry.Type.BOOLEAN) {
 			boolean result = ((Boolean) exprResult.val).booleanValue();
 			if(tree.right.type == TreeType.ELSE) {
-				if(result)
+				if(result) {
+					LOG.trace("Interpreting if statement true");
 					interpret(tree.right.left, mem);
-				else
+				}else {
+					LOG.trace("Interpreting if statement else");
 					interpret(tree.right.right, mem);
+				}
 			}else if(result) {
+				LOG.trace("Interpreting if statement true");
 				interpret(tree.right, mem);
 			}
 		}else {
@@ -148,12 +164,14 @@ public class Interpreter {
 	}
 	
 	private void interpretWhile(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting while loop");
 		boolean result = false;
 		do {
 			Entry exprResult = interpretExpression(tree.left, mem);
 			if(exprResult.type == Entry.Type.BOOLEAN) {
 				result = ((Boolean) exprResult.val).booleanValue();
 				if(result) {
+					LOG.trace("Interpreting while loop true");
 					interpret(tree.right, mem);
 				}
 			}else {
@@ -163,6 +181,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretCall(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting call statement");
 		pos = tree.left.token.offset;
 		Entry[] args = interpretList(tree.right, mem);
 		switch(tree.left.token.match) {
@@ -179,6 +198,7 @@ public class Interpreter {
 	}
 	
 	private Entry[] interpretList(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting list");
 		if(tree.type == TreeType.EMPTY) {
 			return new Entry[0];
 		}
@@ -196,25 +216,29 @@ public class Interpreter {
 	}
 	
 	private void interpretAssign(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting assignment statement");
 		pos = tree.token.offset;
 		
 		Entry id = interpretIDExpression(tree.left, mem);
 		Entry value = interpretExpression(tree.right, mem); // This returns an immutable entry
 		if(id == null && tree.token.token == Token.ASSIGN) {
+			LOG.trace("Creating local variable");
 			// Ensure a local variable is mutable
 			mem.put(interpretLeaf(tree.left.left), new Entry(value.type, value.val, true));
 		}else if(id == null && tree.token.token != Token.ASSIGN) {
 			// Can't do math on a non-existant variable;
-			throw new InvalidOperationException(pos);
+			throw new ExistenceException(pos);
 		}else if(id.type == value.type) {
 			switch(tree.token.token) {
 				case PLUS_ASSIGN:
+					LOG.trace("Interpreting plus-assign");
 					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					
 					value = interpretExpression(refactorMathAssign(TreeType.ADD_EXPR, tree.left, tree.right, Token.PLUS, tree.token), mem);
 					break;
 				case MINUS_ASSIGN:
+					LOG.trace("Interpreting minus-assign");
 					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					if(id.type == Entry.Type.STRING)
@@ -223,6 +247,7 @@ public class Interpreter {
 					value = interpretExpression(refactorMathAssign(TreeType.ADD_EXPR, tree.left, tree.right, Token.MINUS, tree.token), mem);
 					break;
 				case MULT_ASSIGN:
+					LOG.trace("Interpreting mult-assign");
 					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					if(id.type == Entry.Type.STRING && value.type != Entry.Type.INTEGER)
@@ -231,6 +256,7 @@ public class Interpreter {
 					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.MULT, tree.token), mem);
 					break;
 				case DIV_ASSIGN:
+					LOG.trace("Interpreting div-assign");
 					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					if(id.type == Entry.Type.STRING)
@@ -239,6 +265,7 @@ public class Interpreter {
 					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.DIV, tree.token), mem);
 					break;
 				case MOD_ASSIGN:
+					LOG.trace("Interpreting mod-assign");
 					if(id.type == Entry.Type.BOOLEAN)
 						throw new TypeException(pos, "Undefined for type bool.");
 					if(id.type == Entry.Type.STRING)
@@ -247,7 +274,7 @@ public class Interpreter {
 					value = interpretExpression(refactorMathAssign(TreeType.MUL_EXPR, tree.left, tree.right, Token.MOD, tree.token), mem);
 					break;
 				default:
-					break;
+					throw new InvalidOperationException(pos);
 			}
 			
 			if(id.mutable)
@@ -264,6 +291,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting expression");
 		switch(tree.type) {
 			case OR_EXPR:
 				return interpretOrExpression(tree, mem);
@@ -285,6 +313,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretOrExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting or expression");
 		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
@@ -296,6 +325,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretAndExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting and expression");
 		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
@@ -307,6 +337,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretEqualityExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting equality expression");
 		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
@@ -329,6 +360,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretRelationalExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting relational expression");
 		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
@@ -435,6 +467,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretAddExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting add expression");
 		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
@@ -520,6 +553,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretMultiplyExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting multiply expression");
 		pos = tree.token.offset;
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
@@ -605,6 +639,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretUnaryExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting not expression");
 		pos = tree.token.offset;
 		if(tree.left.type == TreeType.LEAF && tree.left.token.token == Token.NOT) {
 			Entry right = interpretExpression(tree.right, mem);
@@ -642,11 +677,14 @@ public class Interpreter {
 			return id;
 		
 		// Local variable
-		Entry var = mem.get(interpretLeaf(tree.left));
+		String idName = interpretLeaf(tree.left);
+		LOG.trace("Retrieving ID '" + idName + "' from memory");
+		Entry var = mem.get(idName);
 		return var;
 	}
 	
 	private Entry interpretIDExpressionHelper(Tree tree, HashMap<String, Entry> mem, Environment env) throws InterpreterRuntimeException {
+		LOG.trace("Resolving ID '" + tree.left.token.match + "'");
 		if(tree.type == TreeType.EMPTY)
 			throw new UnretrievableException(pos);
 		
@@ -667,6 +705,7 @@ public class Interpreter {
 	}
 	
 	private Entry interpretLiteralExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting literal expression");
 		pos = tree.token.offset;
 		if(tree.type == TreeType.LEAF) {
 			String data = interpretLeaf(tree);
@@ -689,6 +728,7 @@ public class Interpreter {
 	
 	// TODO: Implement custom dice rolling.  Probably through a 'standard library' call to roll()?
 	private Entry interpretRollExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {
+		LOG.trace("Interpreting roll expression");
 		Entry left = interpretExpression(tree.left, mem);
 		Entry right = interpretExpression(tree.right, mem);
 		if(left.type == Entry.Type.INTEGER && right.type == Entry.Type.INTEGER) {
