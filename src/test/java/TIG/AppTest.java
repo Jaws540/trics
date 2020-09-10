@@ -23,7 +23,7 @@ import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class AppTest {
 	
-	private final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
+	private final String testSavePath = "res\\";
 	private final String characterSavePath = testSavePath + "testSave2.json";
 	
 	@Test public void testStringEscapes() {
@@ -189,7 +189,7 @@ public class AppTest {
     // TODO: Add more specific lexer and parser tests
     
     @Test public void testInterpreterCompile() {
-    	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.cis", null);
+    	Interpreter interp = new Interpreter("res\\TestScript1.cis", null);
     	assertTrue(interp.compile());
     }
 }

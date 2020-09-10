@@ -16,7 +16,7 @@ public class App {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(App.class);
 	
-	private static final String testSavePath = "D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\";
+	private static final String testSavePath = "res\\";
 	private static final String characterSavePath = testSavePath + "testSave2.json";
 
     public static void main(String[] args) {
@@ -42,7 +42,7 @@ public class App {
     	}
 
     	LOG.debug("Loading and running interpreter on test script");
-    	Interpreter interp = new Interpreter("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\TestScript1.cis", character);
+    	Interpreter interp = new Interpreter("res\\TestScript1.cis", character);
     	interp.compile();
     	interp.run();
 
