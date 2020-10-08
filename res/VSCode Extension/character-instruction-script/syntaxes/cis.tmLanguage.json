@@ -29,7 +29,7 @@
 	],
 	"repository": {
 		"comments": {
-			"name": "comment.line.number-sign",
+			"name": "comment.line.number-sign.cis",
 			"match": "#.*$"
 		},
 		"keywords": {
@@ -68,5 +68,5 @@
 			"match": "\\b[0-9]+\\b"
 		}
 	},
-	"scopeName": "source.cis"
+	"scopeName": "source.rpgs"
 }

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.regex.Pattern;
 
 import org.junit.Test;
@@ -17,14 +18,14 @@ import TIG.scripts.Environment;
 import TIG.scripts.compiler.Interpreter;
 import TIG.scripts.compiler.Token;
 import TIG.utils.Def;
+import TIG.utils.IO;
 import TIG.utils.TestData;
-import TIG.utils.Utils;
 import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
 
 public class AppTest {
 	
-	private final String testSavePath = "res\\";
-	private final String characterSavePath = testSavePath + "testSave2.json";
+	private static final String characterSavePath = "test" + File.separator + "testSave1" + Def.characterFileExtension;
+	private static final String characterSavePath2 = "test" + File.separator + "testSave2" + Def.characterFileExtension;
 	
 	@Test public void testStringEscapes() {
 		String test1 = "\"This is a valid test\"";
@@ -64,13 +65,13 @@ public class AppTest {
 	}
 	
     @Test public void testCharacterSaveToJson() {
-    	boolean output = Utils.saveJSON(TestData.testCharacter, characterSavePath);
+    	boolean output = IO.saveCharacter(TestData.testCharacter, characterSavePath2);
     	assertTrue(output);
     }
     
     @Test public void testCharacterLoadFromJson() {
     	try {
-    		CharacterSheet character = Utils.loadCharacter(characterSavePath);
+    		CharacterSheet character = IO.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
     		e.printStackTrace();
@@ -81,7 +82,7 @@ public class AppTest {
     @Test public void testCharacterInfoEnvironment() {
     	CharacterSheet character = null;
     	try {
-    		character = Utils.loadCharacter(characterSavePath);
+    		character = IO.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
     		e.printStackTrace();
@@ -113,7 +114,7 @@ public class AppTest {
     @Test public void testCharacterFeaturesEnvironment() {
     	CharacterSheet character = null;
     	try {
-    		character = Utils.loadCharacter(characterSavePath);
+    		character = IO.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
     		e.printStackTrace();
@@ -145,7 +146,7 @@ public class AppTest {
     @Test public void testCharacterInventoryEnvironment() {
     	CharacterSheet character = null;
     	try {
-    		character = Utils.loadCharacter(characterSavePath);
+    		character = IO.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
     		e.printStackTrace();

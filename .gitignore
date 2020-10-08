@@ -10,3 +10,9 @@ logs
 
 # Ignore all Json files
 *.json
+*.rpgc
+
+# Ignore Character, Test and Bundle directories
+bundles
+characters
+test

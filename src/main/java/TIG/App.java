@@ -9,24 +9,25 @@ import org.slf4j.LoggerFactory;
 import TIG.characterSheet.CharacterSheet;
 import TIG.gui.CharacterSheetPane;
 import TIG.scripts.compiler.Interpreter;
+import TIG.utils.Def;
+import TIG.utils.IO;
 import TIG.utils.TestData;
-import TIG.utils.Utils;
-import TIG.utils.bundler.Bundle;
 
 public class App {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(App.class);
 	
-	private static final String testSavePath = "res\\";
-	private static final String characterSavePath = testSavePath + "testSave2.json";
+	// For testing
+	private static final String characterSavePath = TestData.testCharacter.getGeneralInfo().getCharacterName() + Def.characterFileExtension;
 
     public static void main(String[] args) {
     	LOG.debug("Application started");
-    	Bundle.test();
-    	runGuiTest(args);
-    	//runCharacterTests();
+    	//runGuiTest(args);
+    	runCharacterTests();
+    	//runIOTests();
     }
     
+    @SuppressWarnings("unused")
     private static void runGuiTest(String[] args) {
     	CharacterSheetPane.main(args);
     }
@@ -34,11 +35,11 @@ public class App {
     @SuppressWarnings("unused")
 	private static void runCharacterTests() {
     	LOG.debug("Saving test data");
-    	Utils.saveJSON(TestData.testCharacter, characterSavePath);
+    	IO.saveCharacter(TestData.testCharacter, null);
 
     	CharacterSheet character = null;
     	try {
-    		character = Utils.loadCharacter(characterSavePath);
+    		character = IO.loadCharacter(characterSavePath);
     	}catch(Exception e) {
     		e.printStackTrace();
     	}
@@ -49,6 +50,31 @@ public class App {
     	interp.run();
 
     	LOG.debug("Saving modified test data");
-    	Utils.saveJSON(character, testSavePath + "testSave3.json");
+    	IO.saveCharacter(character, "PostScriptTestSave" + Def.characterFileExtension);
+    }
+    
+    @SuppressWarnings("unused")
+    private static void runIOTests() {
+    	System.out.println(IO.getDirectoryPath("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System"));
+    	System.out.println(IO.getDirectoryPath("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\"));
+    	System.out.println(IO.getDirectoryPath("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\bogus\\dir\\"));
+    	System.out.println(IO.getDirectoryPath("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\CFG2.txt"));
+    	System.out.println(IO.getDirectoryPath("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\bogus\\dir\\CFG2.txt"));
+    	System.out.println(IO.getDirectoryPath("Test.txt"));
+    	System.out.println(IO.getDirectoryPath("characters\\Test.txt"));
+    	System.out.println();
+    	System.out.println(IO.getFileName("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System"));
+    	System.out.println(IO.getFileName("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\"));
+    	System.out.println(IO.getFileName("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\bogus\\dir"));
+    	System.out.println(IO.getFileName("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\CFG3.txt"));
+    	System.out.println(IO.getFileName("D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\ress\\bogus\\dir\\CFG12.txt"));
+    	System.out.println(IO.getFileName("Test.txt"));
+    	System.out.println(IO.getFileName("characters\\Test.txt"));
+    	/* Requires changing IO.saveCharacter() to return the final path
+    	System.out.println();
+    	System.out.println(IO.saveCharacter(TestData.testCharacter, "testSave2.rpgc"));
+    	System.out.println(IO.saveCharacter(TestData.testCharacter, "D:\\Users\\Jacob\\Documents"));
+    	System.out.println(IO.saveCharacter(TestData.testCharacter, "D:\\Users\\Jacob\\Documents\\testSave2.rpgc"));
+    	*/
     }
 }

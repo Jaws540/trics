@@ -13,7 +13,7 @@ import TIG.scripts.Environment;
 import TIG.scripts.compiler.parse_tree.Tree;
 import TIG.scripts.compiler.parse_tree.TreeType;
 import TIG.utils.Def;
-import TIG.utils.Utils;
+import TIG.utils.IO;
 import TIG.utils.exceptions.compileExceptions.CompileException;
 import TIG.utils.exceptions.compileExceptions.ExceptionList;
 import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
@@ -47,7 +47,7 @@ public class Interpreter {
 	 */
 	public Interpreter(String srcPath, Environment env) {
 		// Read the source file as a String
-		this.src = Utils.loadScript(srcPath);
+		this.src = IO.loadScript(srcPath);
 		this.env = env;
 	}
 	
