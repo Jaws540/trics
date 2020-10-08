@@ -27,26 +27,26 @@
     -->
     
     <!-- ROLLING FILE -->
-	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<!-- <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_PATH}/${timestamp-by-date}.rolling.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> -->
 			<!-- daily rollover -->
-        	<fileNamePattern>${LOG_ARCHIVE}/%d{MMM-dd-yyyy}.log</fileNamePattern>
+        	<!-- <fileNamePattern>${LOG_ARCHIVE}/%d{MMM-dd-yyyy}.log</fileNamePattern> -->
 			<!-- keep 30 days' worth of history capped at 3GB total size -->
-			<maxHistory>30</maxHistory>
+			<!-- <maxHistory>30</maxHistory>
 			<totalSizeCap>1GB</totalSizeCap>
 		</rollingPolicy>
 		
 		<encoder>
 			<pattern>${LOG_PATTERN}</pattern>
 		</encoder>
-	</appender>
+	</appender> -->
     
     <!-- APPLICATION LOGGER -->
     <logger name="TIG" level="DEBUG">
 		<appender-ref ref="Console-Adapter" />
     	<!-- <appender-ref ref="File-Appender" /> -->
-   		<appender-ref ref="FILE" />
+   		<!-- <appender-ref ref="FILE" /> -->
     </logger>
 
 	<!-- ROOT LOGGER -->

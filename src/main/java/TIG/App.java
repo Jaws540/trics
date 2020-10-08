@@ -11,6 +11,7 @@ import TIG.gui.CharacterSheetPane;
 import TIG.scripts.compiler.Interpreter;
 import TIG.utils.TestData;
 import TIG.utils.Utils;
+import TIG.utils.bundler.Bundle;
 
 public class App {
 	
@@ -20,16 +21,17 @@ public class App {
 	private static final String characterSavePath = testSavePath + "testSave2.json";
 
     public static void main(String[] args) {
-    	LOG.info("Application started");
-    	//runGuiTest(args);
-    	runCharacterTests();
+    	LOG.debug("Application started");
+    	Bundle.test();
+    	runGuiTest(args);
+    	//runCharacterTests();
     }
     
-    @SuppressWarnings("unused")
     private static void runGuiTest(String[] args) {
     	CharacterSheetPane.main(args);
     }
-    
+
+    @SuppressWarnings("unused")
 	private static void runCharacterTests() {
     	LOG.debug("Saving test data");
     	Utils.saveJSON(TestData.testCharacter, characterSavePath);

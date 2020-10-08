@@ -15,7 +15,7 @@ public class CharacterSheetPane extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		LOG.debug("Starting FX Window...");
+		LOG.debug("Building FX Window");
 		String javaVersion = System.getProperty("java.version");
 		String javafxVersion = System.getProperty("javafx.version");
 		Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion);
