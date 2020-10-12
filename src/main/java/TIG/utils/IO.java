@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
+import TIG.bundler.Bundle;
 import TIG.characterSheet.CharacterSheet;
 import TIG.features.Features;
 import TIG.features.Field;
@@ -207,6 +208,16 @@ public class IO {
 		}
 		
 		return new String(raw);
+	}
+	
+	/**
+	 * Loads a bundle from the path
+	 * @param name - Name of the bundle in the bundle directory
+	 * @return A Bundle object
+	 */
+	public static Bundle loadBundle(String name) {
+		// TODO: Implement bundle loading
+		return null;
 	}
 	
 	/**

@@ -44,6 +44,7 @@ public class ErrorHandler {
 		int numSpaces = prefix.length() + errorOffset;
 		
 		// Print error messages
+		/*
 		System.err.println("-------------------------------------");
 		if(e instanceof CompileException)
 			System.err.print("Syntax ");
@@ -53,17 +54,20 @@ public class ErrorHandler {
 		System.err.println(prefix + line);
 		System.err.println(fixedLengthString(" ", numSpaces) + "^");
 		System.err.println(e.getMessage());
+		*/
 		
 		// Log error messages
-		LOG.error("-------------------------------------");
+		String logMsg = "Error running script\n";
+		logMsg += "\t-------------------------------------\n";
 		if(e instanceof CompileException)
-			LOG.error("Syntax ");
+			logMsg += "\tSyntax ";
 		else if(e instanceof InterpreterRuntimeException)
-			LOG.error("Runtime ");
-		LOG.error("Error on line " + (i + 1));
-		LOG.error(prefix + line);
-		LOG.error(fixedLengthString(" ", numSpaces) + "^");
-		LOG.error(e.getMessage());
+			logMsg += "\tRuntime ";
+		logMsg += "Error on line " + (i + 1) + "\n";
+		logMsg += "\t" + prefix + line + "\n";
+		logMsg += "\t" + fixedLengthString(" ", numSpaces) + "^\n";
+		logMsg += "\t" + e.getMessage();
+		LOG.error(logMsg);
 	}
 	
 	public static void handleCompileException(CompileException e, String src) {

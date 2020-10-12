@@ -1,5 +1,6 @@
 package TIG.scripts;
 
+import TIG.scripts.compiler.Interpreter;
 import TIG.utils.Def;
 import TIG.utils.Utils;
 import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
@@ -23,11 +24,13 @@ public class Script implements Environment {
 	private final String displayName;
 	private final String description;
 	
+	private final Interpreter interp;
+	
 	public Script(String id, String sourcePath, String displayName, String description) {
 		this.id = Utils.validateID(id);
-		this.sourcePath = sourcePath;
 		this.displayName = displayName;
 		this.description = description;
+		this.interp = new Interpreter(sourcePath);
 	}
 	
 	/**
@@ -49,7 +52,8 @@ public class Script implements Environment {
 	 * @param env
 	 */
 	public void run(Environment env) {
-		// TODO
+		Interpreter interp = new Interpreter(this.sourcePath, env);
+		interp.compile();
 	}
 	
 	public String getDisplayName() {

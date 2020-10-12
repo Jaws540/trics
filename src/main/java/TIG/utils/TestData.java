@@ -18,6 +18,8 @@ import TIG.notes.Note;
 import TIG.notes.NoteTree;
 import TIG.notes.Notes;
 import TIG.scripts.Entry;
+import TIG.scripts.Script;
+import TIG.scripts.Scripts;
 import TIG.tags.Tag;
 
 public class TestData {
@@ -36,6 +38,12 @@ public class TestData {
 				new Field("Class2", new Entry(Entry.Type.STRING, "Wizard", true)),
 			};
 			Info characterInfo = new Info("Jacob", "Illra", new Fields(otherInfo));
+			
+			// SCRIPTS
+			Script[] scriptList = {
+					new Script("test_script", "bundles/testBundle/scripts/TestScript1.rpgs", "Test Script 1", "A script for testing the base application")
+			};
+			Scripts testScripts = new Scripts(scriptList);
 			
 			// FEATURES
 			Tag[] abilityTags = {
@@ -68,7 +76,7 @@ public class TestData {
 				new Field("Modifier", new Entry(Entry.Type.INTEGER, 4, true))
 			};
 			Feature[] featsList = {
-				new Feature("Strength", "Strength", "Strength Ability", new Fields(strFields), null, abilityTags),
+				new Feature("Strength", "Strength", "Strength Ability", new Fields(strFields), testScripts, abilityTags),
 				new Feature("Dexterity", "Dexterity", "Dexterity Ability", new Fields(dexFields), null, abilityTags),
 				new Feature("Constitution", "Constitution", "Constitution Ability", new Fields(conFields), null, abilityTags),
 				new Feature("Intelligence", "Intelligence", "Intelligence Ability", new Fields(intFields), null, abilityTags),
