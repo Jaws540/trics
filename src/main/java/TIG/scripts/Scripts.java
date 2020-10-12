@@ -22,8 +22,8 @@ public class Scripts implements Environment {
 			this.scripts = new ArrayList<Script>();
 	}
 	
-	public Scripts[] getScripts() {
-		return this.scripts.toArray(new Scripts[this.scripts.size()]);
+	public Script[] getScripts() {
+		return this.scripts.toArray(new Script[this.scripts.size()]);
 	}
 	
 	/**

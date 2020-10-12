@@ -35,7 +35,7 @@ public class Interpreter {
 	private static final Logger LOG = LoggerFactory.getLogger(Interpreter.class);
 	
 	private final String src;
-	private final Environment env;
+	private Environment env;
 	
 	private Tree ast;
 	private int pos = 0;
@@ -45,10 +45,9 @@ public class Interpreter {
 	 * @param srcPath - Relative path to the source file
 	 * @param env - The Environment containing relavant data
 	 */
-	public Interpreter(String srcPath, Environment env) {
+	public Interpreter(String srcPath) {
 		// Read the source file as a String
 		this.src = IO.loadScript(srcPath);
-		this.env = env;
 	}
 	
 	/**
@@ -73,9 +72,10 @@ public class Interpreter {
 		return false;
 	}
 	
-	public boolean run() {
-		LOG.info("Running script");
+	public boolean run(Environment env) {
+		LOG.debug("Running script");
 		if(ast != null) {
+			this.env = env;
 			try {
 				pos = 0;
 				HashMap<String, Entry> memory = new HashMap<String, Entry>();
@@ -87,6 +87,8 @@ public class Interpreter {
 				ErrorHandler.handleUnknown(pos, src);
 				e.printStackTrace();
 			}
+		}else {
+			LOG.error("Script was not compiled!  The script must be compiled before being run.");
 		}
 		
 		return false;
@@ -699,9 +701,10 @@ public class Interpreter {
 			}catch(ExistenceException e) {}
 			
 			return res;
+		}else {
+			// No environment was given when running the interpreter so no environment IDs are resolvable
+			throw new ExistenceException(pos);
 		}
-		
-		return null;
 	}
 	
 	private Entry interpretLiteralExpression(Tree tree, HashMap<String, Entry> mem) throws InterpreterRuntimeException {

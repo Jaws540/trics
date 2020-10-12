@@ -25,12 +25,16 @@ public class Script implements Environment {
 	private final String description;
 	
 	private final Interpreter interp;
+	private boolean compiled = false;
 	
 	public Script(String id, String sourcePath, String displayName, String description) {
 		this.id = Utils.validateID(id);
+		this.sourcePath = sourcePath;
 		this.displayName = displayName;
 		this.description = description;
 		this.interp = new Interpreter(sourcePath);
+		
+		compiled = interp.compile();
 	}
 	
 	/**
@@ -52,8 +56,7 @@ public class Script implements Environment {
 	 * @param env
 	 */
 	public void run(Environment env) {
-		Interpreter interp = new Interpreter(this.sourcePath, env);
-		interp.compile();
+		interp.run(env);
 	}
 	
 	public String getDisplayName() {
@@ -62,6 +65,14 @@ public class Script implements Environment {
 
 	public String getDescription() {
 		return description;
+	}
+	
+	/**
+	 * Used to determine if a script compiled correctly or not
+	 * @return true if a correct compile, false if the script failed to compile
+	 */
+	public boolean isCompiled() {
+		return compiled;
 	}
 
 	@Override

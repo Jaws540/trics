@@ -41,7 +41,7 @@ public class TestData {
 			
 			// SCRIPTS
 			Script[] scriptList = {
-					new Script("test_script", "bundles/testBundle/scripts/TestScript1.rpgs", "Test Script 1", "A script for testing the base application")
+					new Script("test_script", "bundles/testBundle/scripts/dnd_test1.rpgs", "Test Script 1", "A script for testing the base application")
 			};
 			Scripts testScripts = new Scripts(scriptList);
 			

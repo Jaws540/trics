@@ -20,9 +20,9 @@ public class Feature extends Taggable implements Environment {
 	private final String displayName;
 	private final String description;
 	
-	private final Fields fields;
+	public final Fields fields;
 	
-	private final Scripts scripts;
+	public final Scripts scripts;
 	
 	public Feature(String id, String displayName, String desc, Fields fields, Scripts scripts) {
 		super();

@@ -48,7 +48,7 @@ public class App {
     	/*Interpreter interp = new Interpreter("res\\TestScript1.rpgs", character);
     	interp.compile();
     	interp.run();*/
-    	character.getFeatures().getFeature("Strength").getScripts().getScript("test_script").run(character);
+    	character.features.getFeature("Strength").scripts.getScript("test_script").run(character);
 
     	LOG.debug("Saving modified test data");
     	IO.saveCharacter(character, "PostScriptTestSave" + Def.characterFileExtension);

@@ -15,10 +15,10 @@ import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
  */
 public class CharacterSheet implements Environment {
 	
-	private final Info info;
-	private final Features features;
-	private final Inventory inventory;
-	private final Notes notes;
+	public final Info info;
+	public final Features features;
+	public final Inventory inventory;
+	public final Notes notes;
 	
 	public CharacterSheet(Info info, Features feats, Inventory inventory, Notes notes) {
 		this.info = info;
