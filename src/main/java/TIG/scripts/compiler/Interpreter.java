@@ -45,9 +45,9 @@ public class Interpreter {
 	 * @param srcPath - Relative path to the source file
 	 * @param env - The Environment containing relavant data
 	 */
-	public Interpreter(String srcPath) {
-		// Read the source file as a String
-		this.src = IO.loadScript(srcPath);
+	public Interpreter(String rawSrc) {
+		// Set the source
+		this.src = rawSrc;
 	}
 	
 	/**

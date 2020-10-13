@@ -1,7 +1,8 @@
 package TIG.scripts;
 
-import TIG.scripts.compiler.Interpreter;
+import TIG.scripts.compiler.Interpretable;
 import TIG.utils.Def;
+import TIG.utils.IO;
 import TIG.utils.Utils;
 import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
 import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
@@ -11,7 +12,7 @@ import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
  * @author Jacob
  *
  */
-public class Script implements Environment {
+public class Script extends Interpretable implements Environment {
 	/**
 	 * String unique identifier
 	 */
@@ -24,17 +25,14 @@ public class Script implements Environment {
 	private final String displayName;
 	private final String description;
 	
-	private final Interpreter interp;
-	private boolean compiled = false;
 	
 	public Script(String id, String sourcePath, String displayName, String description) {
 		this.id = Utils.validateID(id);
 		this.sourcePath = sourcePath;
 		this.displayName = displayName;
 		this.description = description;
-		this.interp = new Interpreter(sourcePath);
 		
-		compiled = interp.compile();
+		compile(IO.loadScript(sourcePath));
 	}
 	
 	/**
@@ -51,28 +49,12 @@ public class Script implements Environment {
 		return sourcePath;
 	}
 	
-	/**
-	 * Runs this script given an environment
-	 * @param env
-	 */
-	public void run(Environment env) {
-		interp.run(env);
-	}
-	
 	public String getDisplayName() {
 		return displayName;
 	}
 
 	public String getDescription() {
 		return description;
-	}
-	
-	/**
-	 * Used to determine if a script compiled correctly or not
-	 * @return true if a correct compile, false if the script failed to compile
-	 */
-	public boolean isCompiled() {
-		return compiled;
 	}
 
 	@Override

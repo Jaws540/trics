@@ -25,6 +25,7 @@ import TIG.scripts.Script;
 import TIG.scripts.Scripts;
 import TIG.tags.Tag;
 import TIG.tags.Taggable;
+import TIG.utils.gsonAdapters.CharacterSheetSerializer;
 import TIG.utils.gsonAdapters.FeaturesSerializer;
 import TIG.utils.gsonAdapters.FieldSerializer;
 import TIG.utils.gsonAdapters.FieldsSerializer;
@@ -45,6 +46,7 @@ public class IO {
 		// GSON initialization
 		LOG.debug("Initializing GSON builder");
 		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(CharacterSheet.class, new CharacterSheetSerializer());
 		builder.registerTypeAdapter(Features.class, new FeaturesSerializer());
 		builder.registerTypeAdapter(Scripts.class, new ScriptsSerializer());
 		builder.registerTypeAdapter(Script.class, new ScriptSerializer());

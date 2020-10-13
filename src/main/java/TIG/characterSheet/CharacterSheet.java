@@ -4,6 +4,7 @@ import TIG.features.Features;
 import TIG.notes.Notes;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
+import TIG.scripts.compiler.Interpretable;
 import TIG.utils.Def;
 import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
 import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
@@ -13,7 +14,7 @@ import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
  * @author Jacob
  *
  */
-public class CharacterSheet implements Environment {
+public class CharacterSheet extends Interpretable implements Environment {
 	
 	public final Info info;
 	public final Features features;
@@ -55,6 +56,10 @@ public class CharacterSheet implements Environment {
 			default:
 				throw new ExistenceException(pos);
 		}
+	}
+	
+	public void run() {
+		super.run(this);
 	}
 
 }
