@@ -292,4 +292,12 @@ public class IO {
 		
 		return null;
 	}
+	
+	public static String loadView(String path) {
+		if(path == null || path.isEmpty() || path.isBlank())
+			return null;
+		
+		byte[] data = loadBytes(path);
+		return new String(data);
+	}
 }

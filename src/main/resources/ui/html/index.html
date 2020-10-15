@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<script>
+			function openSheet() {
+				var success = rpgsys.loadSheet();
+				if(success) {
+					var str = rpgsys.getData("Features.Strength.Value");
+					document.getElementById("test").innerHTML = str;
+
+					alert("Loading character sheet...");
+					rpgsys.loadCharacterPage();
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h1>RPG Tabletop Integrated System</h1>
+		<button type="submit" onclick="openSheet()">Load Character</button>
+		<p id="test"></p>
+	</body>
+<html>

@@ -4,6 +4,8 @@ import java.io.File;
 
 public class Def {
 	
+	public static final String TITLE = "RPG Character Sheet";
+	
 	// Fields with all caps should not be changed
 	// Fields with lowercase may be changed
 

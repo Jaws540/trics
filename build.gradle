@@ -15,6 +15,9 @@ plugins {
     
     // Apply the OpenJFX plugin to add support for JavaFX
 	id 'org.openjfx.javafxplugin' version '0.0.8'
+	
+	// Generate a fat jar with packaged dependencies
+	id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 repositories {
@@ -44,6 +47,8 @@ application {
 }
 
 javafx {
-    version = "14"
-	modules = [ 'javafx.controls' ]
+    version = "15"
+	modules = [ 'javafx.base', 'javafx.controls', 'javafx.media', 'javafx.web' ]
 }
+
+

@@ -3,9 +3,7 @@
  */
 package TIG;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.regex.Pattern;
@@ -190,7 +188,52 @@ public class AppTest {
     // TODO: Add more specific lexer and parser tests
     
     @Test public void testInterpreterCompile() {
-    	Interpreter interp = new Interpreter("res\\TestScript1.cis", null);
+    	Interpreter interp = new Interpreter(IO.loadScript("test\\TestScript1.rpgs"));
     	assertTrue(interp.compile());
+    }
+    
+    @Test public void testIOPathParsing() {
+    	assertEquals(IO.getDirectoryPath(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System"), 
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\");
+    	assertEquals(IO.getDirectoryPath(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\"), 
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\");
+    	assertEquals(IO.getDirectoryPath(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\bogus\\dir\\"), 
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\bogus\\dir\\");
+    	assertEquals(IO.getDirectoryPath(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\CFG2.txt"),
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\");
+    	assertEquals(IO.getDirectoryPath(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\bogus\\dir\\CFG2.txt"),
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\bogus\\dir\\");
+    	assertEquals(IO.getDirectoryPath(
+    			"Test.txt"),
+    			null);
+    	assertEquals(IO.getDirectoryPath(
+    			"characters\\Test.txt"),
+    			"characters\\");
+    	assertEquals(IO.getFileName(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System"),
+    			null);
+    	assertEquals(IO.getFileName(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\"),
+    			null);
+    	assertEquals(IO.getFileName(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\bogus\\dir"),
+    			null);
+    	assertEquals(IO.getFileName(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\res\\CFG3.txt"),
+    			"CFG3");
+    	assertEquals(IO.getFileName(
+    			"D:\\Users\\Jacob\\Coding\\Java\\RPGIS\\RPG-Integrated-System\\ress\\bogus\\dir\\CFG12.txt"),
+    			"CFG12");
+    	assertEquals(IO.getFileName(
+    			"Test.txt"),
+    			"Test");
+    	assertEquals(IO.getFileName(
+    			"characters\\Test.txt"),
+    			"Test");
     }
 }
