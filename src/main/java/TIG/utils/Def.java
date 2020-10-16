@@ -43,8 +43,14 @@ public class Def {
 		public static final String bundleDirPath = "bundles" + File.separator;
 		public static final String characterDirPath = "characters" + File.separator;
 
-		public static final String scriptFileExtension = ".rpgs";
-		public static final String characterFileExtension = ".rpgc";
-		public static final String bundleFileExtension = ".rpgb";
+		public static final String featFileExtension = "rpgf";
+		public static final String scriptFileExtension = "rpgs";
+		public static final String characterFileExtension = "rpgc";
+		
+		public static final String bundleFeatsDirName = "features";
+		public static final String bundleScriptsDirName = "scripts";
+		public static final String bundleUIDirName = "ui";
+		public static final String bundleCSSDirName = "css";
+		public static final String bundleHTMLDirName = "html";
 
 }

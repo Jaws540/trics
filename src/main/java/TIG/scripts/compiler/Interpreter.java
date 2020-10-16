@@ -13,7 +13,6 @@ import TIG.scripts.Environment;
 import TIG.scripts.compiler.parse_tree.Tree;
 import TIG.scripts.compiler.parse_tree.TreeType;
 import TIG.utils.Def;
-import TIG.utils.IO;
 import TIG.utils.exceptions.compileExceptions.CompileException;
 import TIG.utils.exceptions.compileExceptions.ExceptionList;
 import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
@@ -24,6 +23,7 @@ import TIG.utils.exceptions.interpreterExceptions.InvalidOperationException;
 import TIG.utils.exceptions.interpreterExceptions.TypeException;
 import TIG.utils.exceptions.interpreterExceptions.UndefinedFunctionException;
 import TIG.utils.exceptions.interpreterExceptions.UnretrievableException;
+import TIG.utils.io.IO;
 
 /**
  * Runs script source files

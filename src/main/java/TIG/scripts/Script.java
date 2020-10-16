@@ -2,10 +2,10 @@ package TIG.scripts;
 
 import TIG.scripts.compiler.Interpretable;
 import TIG.utils.Def;
-import TIG.utils.IO;
 import TIG.utils.Utils;
 import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
 import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.io.ScriptIO;
 
 /**
  * Source code that can be run by the user or system.
@@ -32,7 +32,7 @@ public class Script extends Interpretable implements Environment {
 		this.displayName = displayName;
 		this.description = description;
 		
-		compile(IO.loadScript(sourcePath));
+		compile(ScriptIO.loadScript(sourcePath));
 	}
 	
 	/**

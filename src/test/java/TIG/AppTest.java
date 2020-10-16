@@ -3,7 +3,10 @@
  */
 package TIG;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.regex.Pattern;
@@ -16,9 +19,11 @@ import TIG.scripts.Environment;
 import TIG.scripts.compiler.Interpreter;
 import TIG.scripts.compiler.Token;
 import TIG.utils.Def;
-import TIG.utils.IO;
 import TIG.utils.TestData;
 import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.io.CharacterIO;
+import TIG.utils.io.IO;
+import TIG.utils.io.ScriptIO;
 
 public class AppTest {
 	
@@ -63,13 +68,13 @@ public class AppTest {
 	}
 	
     @Test public void testCharacterSaveToJson() {
-    	boolean output = IO.saveCharacter(TestData.testCharacter, characterSavePath2);
+    	boolean output = CharacterIO.saveCharacter(TestData.getTestCharacter(), characterSavePath2);
     	assertTrue(output);
     }
     
     @Test public void testCharacterLoadFromJson() {
     	try {
-    		CharacterSheet character = IO.loadCharacter(characterSavePath);
+    		CharacterSheet character = CharacterIO.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
     		e.printStackTrace();
@@ -80,7 +85,7 @@ public class AppTest {
     @Test public void testCharacterInfoEnvironment() {
     	CharacterSheet character = null;
     	try {
-    		character = IO.loadCharacter(characterSavePath);
+    		character = CharacterIO.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
     		e.printStackTrace();
@@ -112,7 +117,7 @@ public class AppTest {
     @Test public void testCharacterFeaturesEnvironment() {
     	CharacterSheet character = null;
     	try {
-    		character = IO.loadCharacter(characterSavePath);
+    		character = CharacterIO.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
     		e.printStackTrace();
@@ -144,7 +149,7 @@ public class AppTest {
     @Test public void testCharacterInventoryEnvironment() {
     	CharacterSheet character = null;
     	try {
-    		character = IO.loadCharacter(characterSavePath);
+    		character = CharacterIO.loadCharacter(characterSavePath);
     		assertNotNull(character);
     	}catch(Exception e) {
     		e.printStackTrace();
@@ -188,7 +193,7 @@ public class AppTest {
     // TODO: Add more specific lexer and parser tests
     
     @Test public void testInterpreterCompile() {
-    	Interpreter interp = new Interpreter(IO.loadScript("test\\TestScript1.rpgs"));
+    	Interpreter interp = new Interpreter(ScriptIO.loadScript("test\\TestScript1.rpgs"));
     	assertTrue(interp.compile());
     }
     

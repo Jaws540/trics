@@ -9,18 +9,17 @@ import org.slf4j.LoggerFactory;
 import TIG.characterSheet.CharacterSheet;
 import TIG.gui.GUI;
 import TIG.utils.Def;
-import TIG.utils.IO;
 import TIG.utils.TestData;
+import TIG.utils.io.BundleIO;
+import TIG.utils.io.CharacterIO;
 
 public class App {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(App.class);
-	
-	// For testing
-	private static final String characterSavePath = TestData.testCharacter.getGeneralInfo().getCharacterName() + Def.characterFileExtension;
 
     public static void main(String[] args) {
     	LOG.debug("Application started");
+    	BundleIO.loadBundles();
     	runGuiTest(args);
     	//runCharacterTests();
     }
@@ -32,12 +31,14 @@ public class App {
 
     @SuppressWarnings("unused")
 	private static void runCharacterTests() {
+    	String characterSavePath = TestData.getTestCharacter().getGeneralInfo().getCharacterName() + Def.characterFileExtension;
+    	
     	LOG.debug("Saving test data");
-    	IO.saveCharacter(TestData.testCharacter, null);
+    	CharacterIO.saveCharacter(TestData.getTestCharacter(), null);
 
     	CharacterSheet character = null;
     	try {
-    		character = IO.loadCharacter(characterSavePath);
+    		character = CharacterIO.loadCharacter(characterSavePath);
     	}catch(Exception e) {
     		e.printStackTrace();
     	}
@@ -49,6 +50,6 @@ public class App {
     	character.features.getFeature("Strength").scripts.getScript("test_script").run(character);
 
     	LOG.debug("Saving modified test data");
-    	IO.saveCharacter(character, "PostScriptTestSave" + Def.characterFileExtension);
+    	CharacterIO.saveCharacter(character, "PostScriptTestSave" + Def.characterFileExtension);
     }
 }

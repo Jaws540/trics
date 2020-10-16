@@ -3,7 +3,7 @@ package TIG.gui;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import TIG.utils.IO;
+import TIG.utils.io.CharacterIO;
 import javafx.concurrent.Worker.State;
 import javafx.scene.input.KeyCode;
 import javafx.scene.web.WebEngine;
@@ -49,7 +49,7 @@ public class CharacterSheetPane {
 		});
 		
 		// TEMP: Load a character sheet
-		sheetController.setCharacterSheet(IO.loadCharacter("characters\\Illra.rpgc"));
+		sheetController.setCharacterSheet(CharacterIO.loadCharacter("characters\\Illra.rpgc"));
 		
 		// Load page
 		currentPage = new Page(getClass().getResource("/ui/html/index.html"));

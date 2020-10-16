@@ -26,8 +26,7 @@ public class TestData {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(TestData.class);
 	
-	public static CharacterSheet testCharacter;
-	static {
+	public static CharacterSheet getTestCharacter() {
 		try {
 			// INFO
 			Field[] otherInfo = {
@@ -112,9 +111,10 @@ public class TestData {
 			sessionNotes.addNote(new Note("Session 2", "It t'was a long and grueling session, but I think I will prevail!", new Date()));
 			notes.addFolder(sessionNotes);
 			
-			testCharacter = new CharacterSheet(characterInfo, feats, inventory, notes);
+			return new CharacterSheet(characterInfo, feats, inventory, notes);
 		} catch(Exception e) {
 			LOG.error("Could not initialize test data");
+			return null;
 		}
 	}
 

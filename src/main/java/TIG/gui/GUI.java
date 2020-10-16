@@ -42,7 +42,7 @@ public class GUI extends Application {
 		root.setTop(menu);
 		root.setCenter(csView.getView());
 		
-		Scene scene = new Scene(root, 640, 480);
+		Scene scene = new Scene(root, 800, 600);
 		stage.setTitle(Def.TITLE);
 		stage.setScene(scene);
 		stage.show();

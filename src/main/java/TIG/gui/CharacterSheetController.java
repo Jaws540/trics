@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import TIG.characterSheet.CharacterSheet;
 import TIG.scripts.Entry;
 import TIG.scripts.Environment;
-import TIG.utils.IO;
 import TIG.utils.exceptions.interpreterExceptions.ExistenceException;
 import TIG.utils.exceptions.interpreterExceptions.InterpreterRuntimeException;
+import TIG.utils.io.CharacterIO;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -38,7 +38,7 @@ public class CharacterSheetController {
 		chooser.setInitialDirectory(new File("characters/"));
 		File selectedFile = chooser.showOpenDialog(mainStage);
 		if (selectedFile != null) {
-			CharacterSheet sheet = IO.loadCharacter(selectedFile.getAbsolutePath());
+			CharacterSheet sheet = CharacterIO.loadCharacter(selectedFile.getAbsolutePath());
 			setCharacterSheet(sheet);
 			if(sheet != null)
 				return true;
