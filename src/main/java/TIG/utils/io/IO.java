@@ -137,7 +137,7 @@ public final class IO {
 		if(path == null)
 			return null;
 		
-		Matcher m = Pattern.compile("^.+\\.([a-zA-Z0-9]+)$").matcher(path);
+		Matcher m = Pattern.compile("^.+(\\.[a-zA-Z0-9]+)$").matcher(path);
 		if(m.matches()) {
 			return m.group(1);
 		}
