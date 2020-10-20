@@ -18,6 +18,4 @@ logs
 *.rpgc
 
 # Ignore Character, Test and Bundle directories
-bundles
 characters
-test

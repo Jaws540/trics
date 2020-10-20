@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="1 minute">
+	<property name="LOG_PATH" value="logs/" />
+	<property name="LOG_PATH" value="${LOG_PATH}/archive/" />
+	
+	<timestamp key="timestamp-by-second" datePattern="yyyMMdd'T'HHmmss" />
+	
+	<appender name="Console-Adapter" class="ch.qos.Logback.core.ConsoleAdapter">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} [%thread] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="File-Appender" class="ch.qos.Logback.core.FileAppender">
+    	<file>${LOG_PATH}/${timestamp-by-second}.log</file>
+    	<encoder>
+    		<pattern>%msg%n</pattern>
+    		<outputPatternAsHeader>true</outputPatternAsHeader>
+    	</encoder>
+    </appender>
+    
+    <logger name="TIG.logbackxml" level="info">
+    	<appender-ref ref="File-Appender" />
+    </logger>
+
+	<root>
+		<appender-ref ref="Console-Adapter" />
+    </root>
+</configuration>
