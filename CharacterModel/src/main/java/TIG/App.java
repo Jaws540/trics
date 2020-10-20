@@ -21,7 +21,7 @@ public class App {
     	LOG.debug("Application started");
     	BundleIO.loadBundles();
     	runGuiTest(args);
-    	//runCharacterTests();
+    	runCharacterTests();
     }
     
     @SuppressWarnings("unused")
