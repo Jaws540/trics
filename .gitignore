@@ -1,5 +1,10 @@
 /bin/
 
+# Ignore Eclipse files
+.metadata
+.settings
+.project
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
