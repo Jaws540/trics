@@ -37,7 +37,7 @@
     </logger>
 
 	<!-- ROOT LOGGER -->
-	<root level="TRACE" additivity="false">
+	<root level="DEBUG" additivity="false">
 		<appender-ref ref="Console-Adapter" />
     </root>
 </configuration>

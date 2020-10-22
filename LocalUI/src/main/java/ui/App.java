@@ -3,12 +3,69 @@
  */
 package ui;
 
-public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
+import java.awt.Toolkit;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-    }
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import characterModel.CharacterSystem;
+import characterModel.utils.Def;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
+public class App extends Application {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(App.class);
+	
+	private CharacterSheetPane csView;
+	
+	public static void main(String[] args) {
+		LOG.info("Starting application...");
+		
+		// Initialize the character model sub-system
+		CharacterSystem.init();
+		
+		// Launch the GUI
+		launch();
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		LOG.debug("Building FX Window");
+		
+		// Create CharacterSheetPane
+		csView = new CharacterSheetPane(stage);
+		
+		// Setup menu
+		MenuItem refreshPage = new MenuItem("Hard Page Reload");
+		refreshPage.setOnAction(e -> {
+			csView.hardReload();
+		});
+		refreshPage.setMnemonicParsing(true);
+		
+		Menu debug = new Menu("Debug");
+		debug.getItems().add(refreshPage);
+		
+		MenuBar menu = new MenuBar(debug);
+		
+		// Layout UI elements and display UI
+		BorderPane root = new BorderPane();
+		root.setTop(menu);
+		root.setCenter(csView.getView());
+		
+		int width = Toolkit.getDefaultToolkit().getScreenSize().width / 2;
+		int height = Toolkit.getDefaultToolkit().getScreenSize().height / 2;
+		
+		Scene scene = new Scene(root, width, height);
+		stage.setTitle(Def.TITLE);
+		stage.setScene(scene);
+		stage.show();
+		
+		LOG.debug("FX Window shown");
+	}
 }

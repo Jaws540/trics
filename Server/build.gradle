@@ -26,6 +26,12 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
+    
+    // Logging
+    implementation 'ch.qos.logback:logback-classic:1.3.0-alpha5'
+    
+    // Include CharacterModel
+    compile project(":CharacterModel")
 }
 
 application {
